@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import {Card, CardText, CardBody, CardFooter, CardHeader, Container, Row, Col, Button} from 'reactstrap';
+import Header from "./Layout/Header";
+import Home from "./Static/Home";
 
 
 class App extends Component {
@@ -18,24 +19,8 @@ class App extends Component {
     render() {
         return (
             <BrowserRouter>
-                <Container>
-                    <Row className="justify-content-center">
-                        <Col md="8">
-                            <Card>
-                                <CardHeader>Example Component</CardHeader>
-                                <CardBody>
-                                    <CardText>I'm an example component!</CardText>
-                                </CardBody>
-                                <CardFooter>
-                                    <Button color="danger" onClick={this.onClickHandle}>
-                                        <i className="fas fa-coffee"/>
-                                        &nbsp;Test!!
-                                    </Button>
-                                </CardFooter>
-                            </Card>
-                        </Col>
-                    </Row>
-                </Container>
+                <Header/>
+                <Route exact path="/" component={Home} />
             </BrowserRouter>
         );
     }
