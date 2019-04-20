@@ -19,9 +19,9 @@ Homestead.json
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
-src/.phpstorm.meta.php
-src/_ide_helper.php
-src/composer.lock
+.phpstorm.meta.php
+_ide_helper.php
+composer.lock
 src/public/css/app.css
 src/public/js/app.js
 src/public/mix-manifest.json
