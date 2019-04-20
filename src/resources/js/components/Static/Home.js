@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-//import {} from 'react-router-dom';
 import {Card, CardText, CardBody, CardFooter, CardHeader, Container, Row, Col, Button} from 'reactstrap';
 
 export default class Home extends Component {

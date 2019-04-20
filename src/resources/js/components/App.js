@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Header from "./Layout/Header";
 import Home from "./Static/Home";
+import Error404 from "./Static/Error404";
+import Footer from "./Layout/Footer";
 
 
 class App extends Component {
@@ -20,7 +22,11 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <Header/>
-                <Route exact path="/" component={Home} />
+                <Switch>
+                    <Route exact path="/" component={Home}/>
+                    <Route component={Error404}/>
+                </Switch>
+                <Footer/>
             </BrowserRouter>
         );
     }
