@@ -151,6 +151,7 @@ echo "Installing HG19 genome ..."
   gunzip hg19.fa.gz
   samtools faidx hg19.fa
   ../bin/prepare-refseqs.pl --indexed_fasta hg19.fa --key "Reference sequence"
+  ../bin/flatfile-to-json.pl --gff ../conf.template/tRNAs.gff --key "tRNA Genes" --trackLabel tRNAGenes --urltemplate "http://gtrnadb.ucsc.edu/genomes/eukaryota/Hsapi19/genes/{id}.html"
   ../bin/flatfile-to-json.pl --gff ../conf.template/tRNA.fragments.hg19.short.gff --key "tRNA Fragments" --trackLabel tRNAFragments
   mv data/ ../
   cd $OLD_PATH
