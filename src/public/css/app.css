@@ -16421,7 +16421,7 @@ readers do not read off random characters that represent icons */
   width: auto;
 }
 
-body {
+/*body {
   padding-top: 54px;
 }
 
@@ -16429,6 +16429,23 @@ body {
   body {
     padding-top: 56px;
   }
+}*/
+
+main > .container {
+  padding: 56px 15px 0;
+}
+
+.footer {
+  background-color: #f5f5f5;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+code {
+  font-size: 80%;
 }
 
 .carousel-item {

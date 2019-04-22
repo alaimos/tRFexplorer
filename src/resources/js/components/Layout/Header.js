@@ -38,7 +38,7 @@ export default class Header extends Component {
     };
 
     render() {
-        return <React.Fragment>
+        return <header>
             <Navbar color="dark" dark expand="md" fixed="top">
                 <Container>
                     <NavbarBrand href="/" tag={MyLink}>tRFexplorer</NavbarBrand>
@@ -46,32 +46,27 @@ export default class Header extends Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink href="/components/" tag={MyNavLink}>Components</NavLink>
+                                <NavLink href="/browse" tag={MyNavLink}>Browse</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                                <NavLink href="/de-analysis" tag={MyNavLink}>Diff. Exp. Analysis</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="/correlation-analysis" tag={MyNavLink}>Correlation Analysis</NavLink>
                             </NavItem>
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle nav caret>
-                                    Options
+                                    <i className="fas fa-question-circle"/>
                                 </DropdownToggle>
                                 <DropdownMenu right>
-                                    <DropdownItem>
-                                        Option 1
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        Option 2
-                                    </DropdownItem>
-                                    <DropdownItem divider/>
-                                    <DropdownItem>
-                                        Reset
-                                    </DropdownItem>
+                                    <DropdownItem href="/help" tag={MyNavLink}>Help</DropdownItem>
+                                    <DropdownItem href="/contactus" tag={MyNavLink}>Contact Us</DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
                         </Nav>
                     </Collapse>
                 </Container>
             </Navbar>
-        </React.Fragment>;
+        </header>;
     }
 }

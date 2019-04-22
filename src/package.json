@@ -30,7 +30,8 @@
     "i": "^0.3.6",
     "npm": "^6.9.0",
     "react-router-dom": "^5.0.0",
-    "reactstrap": "^8.0.0"
+    "reactstrap": "^8.0.0",
+    "styled-components": "^4.2.0"
   },
   "babel": {
     "presets": [
