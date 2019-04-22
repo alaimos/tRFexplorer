@@ -27,5 +27,8 @@ src/public/js/app.js
 src/public/mix-manifest.json
 
 src/public/ext/jbrowse/extlib/
+src/public/ext/jbrowse/data/
 src/public/ext/jbrowse/MYMETA.json
 src/public/ext/jbrowse/MYMETA.yml
+src/public/ext/jbrowse/Makefile
+src/public/ext/jbrowse/setup.log

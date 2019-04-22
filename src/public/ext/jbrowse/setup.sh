@@ -141,3 +141,20 @@ fi;
   bin/cpanm -v --notest -l extlib/ --installdeps . < /dev/null;
 ) >>setup.log 2>&1;
 done_message "" "As a first troubleshooting step, make sure development libraries and header files for GD, Zlib, and libpng are installed and try again.";
+
+echo "Installing HG19 genome ..."
+(
+  OLD_PATH=$(pwd)
+  mkdir tmp
+  cd tmp
+  curl -L http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz > hg19.fa.gz
+  gunzip hg19.fa.gz
+  samtools faidx hg19.fa
+  ../bin/prepare-refseqs.pl --indexed_fasta hg19.fa --key "Reference sequence"
+  ../bin/flatfile-to-json.pl --gff ../conf.template/tRNA.fragments.hg19.short.gff --key "tRNA Fragments" --trackLabel tRNAFragments
+  mv data/ ../
+  cd $OLD_PATH
+  rm -r tmp
+);
+done_message "" "";
+#>>setup.log 2>&1;
