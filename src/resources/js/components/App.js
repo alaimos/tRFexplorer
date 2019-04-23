@@ -7,6 +7,8 @@ import Error404 from "./Static/Error404";
 import Footer from "./Layout/Footer";
 import ContactUs from "./Static/ContactUs";
 import Help from "./Static/Help";
+import Browse from "./Static/Browse";
+import BrowseByLocation from "./Static/BrowseByLocation";
 
 class App extends Component {
     constructor(props) {
@@ -26,8 +28,10 @@ class App extends Component {
                 <main role="main" className="flex-shrink-0">
                     <Switch>
                         <Route exact path="/" component={Home}/>
-                        <Route exact path="/help" component={Help}/>
-                        <Route exact path="/contactus" component={ContactUs}/>
+                        <Route path="/browse/byLocation" component={BrowseByLocation}/>
+                        <Route path="/browse" component={Browse}/>
+                        <Route path="/help" component={Help}/>
+                        <Route path="/contactus" component={ContactUs}/>
                         <Route component={Error404}/>
                     </Switch>
                 </main>
