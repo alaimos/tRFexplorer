@@ -107,8 +107,6 @@ if [ $? -eq 0 ]; then
     fi
 fi
 
-log_echo "NOTE: Legacy scripts wig-to-json.pl and bam-to-json.pl have been removed from setup. Their functionality has been superseded by add-bam-track.pl and add-bw-track.pl. If you require the old versions, please use JBrowse 1.12.3 or earlier."
-
 # if we are running in a development build, then run npm install and run the webpack build.
 if [ -f "src/JBrowse/Browser.js" ]; then
     log_echo -n "Installing node.js dependencies and building with webpack ..."
@@ -142,20 +140,79 @@ fi;
 ) >>setup.log 2>&1;
 done_message "" "As a first troubleshooting step, make sure development libraries and header files for GD, Zlib, and libpng are installed and try again.";
 
+download_and_extract () {
+  local OLDP=$(pwd)
+  mkdir hg19
+  cd hg19
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr1.fa.gz > chr1.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr2.fa.gz > chr2.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr3.fa.gz > chr3.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr4.fa.gz > chr4.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr5.fa.gz > chr5.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr6.fa.gz > chr6.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr7.fa.gz > chr7.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr8.fa.gz > chr8.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr9.fa.gz > chr9.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr10.fa.gz > chr10.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr11.fa.gz > chr11.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr12.fa.gz > chr12.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr13.fa.gz > chr13.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr14.fa.gz > chr14.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr15.fa.gz > chr15.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr16.fa.gz > chr16.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr17.fa.gz > chr17.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr18.fa.gz > chr18.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr19.fa.gz > chr19.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr20.fa.gz > chr20.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr21.fa.gz > chr21.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chr22.fa.gz > chr22.fa.gz
+  curl -L http://hgdownload.soe.ucsc.edu/goldenPath/hg19/chromosomes/chrX.fa.gz > chrX.fa.gz
+  gunzip *.gz
+  cat chr1.fa chr2.fa chr3.fa chr4.fa chr5.fa chr6.fa chr7.fa chr8.fa chr9.fa chr10.fa chr11.fa chr12.fa chr13.fa  \
+      chr14.fa chr15.fa chr16.fa chr17.fa chr18.fa chr19.fa chr20.fa chr21.fa chr22.fa chrX.fa > $OLDP/hg19.fa
+  cd $OLDP
+  rm -r hg19
+}
+
 echo "Installing HG19 genome ..."
 (
   OLD_PATH=$(pwd)
   mkdir tmp
   cd tmp
-  curl -L http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/hg19.fa.gz > hg19.fa.gz
-  gunzip hg19.fa.gz
+  download_and_extract
   samtools faidx hg19.fa
-  ../bin/prepare-refseqs.pl --indexed_fasta hg19.fa --key "Reference sequence"
-  ../bin/flatfile-to-json.pl --gff ../conf.template/tRNAs.gff --key "tRNA Genes" --trackLabel tRNAGenes --urltemplate "http://gtrnadb.ucsc.edu/genomes/eukaryota/Hsapi19/genes/{id}.html"
-  ../bin/flatfile-to-json.pl --gff ../conf.template/tRNA.fragments.hg19.short.gff --key "tRNA Fragments" --trackLabel tRNAFragments
+  ../bin/prepare-refseqs.pl --indexed_fasta hg19.fa --key "Reference sequence" --compress --seqType dna
+  CNF="{
+  \"menuTemplate\" : [
+    {
+      \"label\" : \"Search in GtRNAdb\",
+      \"title\" : \"Search in GtRNAdb\",
+      \"iconClass\" : \"dijitIconDatabase\",
+      \"action\": \"iframeDialog\",
+      \"url\" : \"http://gtrnadb.ucsc.edu/Hsapi19/genes/{id}.html\"
+    },
+    {
+      \"label\" : \"Search in Genome Browser\",
+      \"title\" : \"Search in Genome Browser\",
+      \"iconClass\" : \"dijitIconDatabase\",
+      \"action\": \"iframeDialog\",
+      \"url\" : \"http://genome.ucsc.edu/cgi-bin/hgc?g=tRNAs&i={id}\"
+    },
+    {
+      \"label\" : \"Search in GeneCards\",
+      \"title\" : \"Search in GeneCards\",
+      \"iconClass\" : \"dijitIconDatabase\",
+      \"action\": \"iframeDialog\",
+      \"url\" : \"https://www.genecards.org/Search/Keyword?queryString={id}\"
+    }
+  ]
+}";
+  ../bin/flatfile-to-json.pl --gff ../conf.template/tRNAs.gff --key "tRNA Genes" --trackLabel tRNAGenes --compress --config "$CNF"
+  ../bin/flatfile-to-json.pl --gff ../conf.template/tRNA.fragments.hg19.short.gff --key "tRNA Fragments" --trackLabel tRNAFragments --compress --urltemplate "/fragments/{geneID}"
   mv data/ ../
   cd $OLD_PATH
   rm -r tmp
+  bin/generate-names.pl --compress
 );
 done_message "" "";
 #>>setup.log 2>&1;

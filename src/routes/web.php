@@ -12,3 +12,5 @@
 */
 
 Route::view('/{path?}', 'app');
+Route::view('/{path?}/{path1?}', 'app');
+Route::view('/{path?}/{path1?}/{path2}?', 'app');

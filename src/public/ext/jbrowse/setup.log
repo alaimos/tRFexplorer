@@ -21,16 +21,13 @@ MemTotal:       64414780 kB
 done.
 
 
-NOTE: Legacy scripts wig-to-json.pl and bam-to-json.pl have been removed from setup. Their functionality has been superseded by add-bam-track.pl and add-bw-track.pl. If you require the old versions, please use JBrowse 1.12.3 or earlier.
-
-
 Minimal release, skipping node and Webpack build
 
 
 Installing Perl prerequisites ...
 + bin/cpanm -v --notest -l extlib/ Bio::Perl@1.7.2
 cpanm (App::cpanminus) 1.7043 on perl 5.028001 built for x86_64-linux-gnu-thread-multi
-Work directory is /home/alaimos/.cpanm/work/1555964534.28481
+Work directory is /home/alaimos/.cpanm/work/1556014802.15545
 You have make /usr/bin/make
 You have LWP 6.36
 You have /bin/tar: tar (GNU tar) 1.30
@@ -2382,14 +2379,14 @@ Created MYMETA.yml and MYMETA.json
 Creating new 'Build' script for 'BioPerl' version '1.007002'
 Checking dependencies from MYMETA.json ...
 Checking if you have Test::Most 0 ... Yes (0.35)
+Checking if you have Scalar::Util 0 ... Yes (1.50)
 Checking if you have CPAN 1.81 ... Yes (2.20)
-Checking if you have Test::Harness 2.62 ... Yes (3.42)
-Checking if you have ExtUtils::Manifest 1.52 ... Yes (1.70)
-Checking if you have IO::String 0 ... Yes (1.08)
+Checking if you have URI::Escape 0 ... Yes (3.31)
 Checking if you have Module::Build 0.42 ... Yes (0.4229)
 Checking if you have Data::Stag 0.11 ... Yes (0.14)
-Checking if you have Scalar::Util 0 ... Yes (1.50)
-Checking if you have URI::Escape 0 ... Yes (3.31)
+Checking if you have ExtUtils::Manifest 1.52 ... Yes (1.70)
+Checking if you have IO::String 0 ... Yes (1.08)
+Checking if you have Test::Harness 2.62 ... Yes (3.42)
 OK
 Building BioPerl-1.007002 ... Building BioPerl
 Building BioPerl
@@ -4103,7 +4100,7 @@ Installing /home/alaimos/repos/tRFexplorer/src/public/ext/jbrowse/extlib/lib/per
 1 distribution installed
 + bin/cpanm -v --notest -l extlib/ Bio::Perl@1.7.2
 cpanm (App::cpanminus) 1.7043 on perl 5.028001 built for x86_64-linux-gnu-thread-multi
-Work directory is /home/alaimos/.cpanm/work/1555964544.30431
+Work directory is /home/alaimos/.cpanm/work/1556014812.17299
 You have make /usr/bin/make
 You have LWP 6.36
 You have /bin/tar: tar (GNU tar) 1.30
@@ -6410,8 +6407,8 @@ BioPerl-1.007002/travis_scripts/dependency_installs
 BioPerl-1.007002/travis_scripts/trigger-dockerhub.sh
 Entering BioPerl-1.007002
 Checking configure dependencies from META.json
-Checking if you have ExtUtils::Install 1.46 ... Yes (2.14)
 Checking if you have Module::Build 0.42 ... Yes (0.4229)
+Checking if you have ExtUtils::Install 1.46 ... Yes (2.14)
 Running Build.PL
 Configuring BioPerl-1.007002 ... Checking prerequisites...
   recommends:
@@ -6454,15 +6451,15 @@ Do you want to run tests that require connection to servers across the internet
 Created MYMETA.yml and MYMETA.json
 Creating new 'Build' script for 'BioPerl' version '1.007002'
 Checking dependencies from MYMETA.json ...
-Checking if you have URI::Escape 0 ... Yes (3.31)
-Checking if you have Data::Stag 0.11 ... Yes (0.14)
-Checking if you have Scalar::Util 0 ... Yes (1.50)
-Checking if you have ExtUtils::Manifest 1.52 ... Yes (1.70)
-Checking if you have CPAN 1.81 ... Yes (2.20)
-Checking if you have Module::Build 0.42 ... Yes (0.4229)
-Checking if you have Test::Harness 2.62 ... Yes (3.42)
 Checking if you have Test::Most 0 ... Yes (0.35)
 Checking if you have IO::String 0 ... Yes (1.08)
+Checking if you have URI::Escape 0 ... Yes (3.31)
+Checking if you have Module::Build 0.42 ... Yes (0.4229)
+Checking if you have ExtUtils::Manifest 1.52 ... Yes (1.70)
+Checking if you have Test::Harness 2.62 ... Yes (3.42)
+Checking if you have Data::Stag 0.11 ... Yes (0.14)
+Checking if you have CPAN 1.81 ... Yes (2.20)
+Checking if you have Scalar::Util 0 ... Yes (1.50)
 OK
 Building BioPerl-1.007002 ... Building BioPerl
 Building BioPerl
@@ -8177,7 +8174,7 @@ Installing /home/alaimos/repos/tRFexplorer/src/public/ext/jbrowse/extlib/lib/per
 + set -e
 + bin/cpanm -v --notest -l extlib/ Bio::Perl@1.7.2
 cpanm (App::cpanminus) 1.7043 on perl 5.028001 built for x86_64-linux-gnu-thread-multi
-Work directory is /home/alaimos/.cpanm/work/1555964554.32174
+Work directory is /home/alaimos/.cpanm/work/1556014821.19035
 You have make /usr/bin/make
 You have LWP 6.36
 You have /bin/tar: tar (GNU tar) 1.30
@@ -10484,8 +10481,8 @@ BioPerl-1.007002/travis_scripts/dependency_installs
 BioPerl-1.007002/travis_scripts/trigger-dockerhub.sh
 Entering BioPerl-1.007002
 Checking configure dependencies from META.json
-Checking if you have Module::Build 0.42 ... Yes (0.4229)
 Checking if you have ExtUtils::Install 1.46 ... Yes (2.14)
+Checking if you have Module::Build 0.42 ... Yes (0.4229)
 Running Build.PL
 Configuring BioPerl-1.007002 ... Checking prerequisites...
   recommends:
@@ -10528,15 +10525,15 @@ Do you want to run tests that require connection to servers across the internet
 Created MYMETA.yml and MYMETA.json
 Creating new 'Build' script for 'BioPerl' version '1.007002'
 Checking dependencies from MYMETA.json ...
-Checking if you have Module::Build 0.42 ... Yes (0.4229)
 Checking if you have IO::String 0 ... Yes (1.08)
 Checking if you have CPAN 1.81 ... Yes (2.20)
-Checking if you have URI::Escape 0 ... Yes (3.31)
+Checking if you have ExtUtils::Manifest 1.52 ... Yes (1.70)
+Checking if you have Data::Stag 0.11 ... Yes (0.14)
 Checking if you have Test::Harness 2.62 ... Yes (3.42)
 Checking if you have Test::Most 0 ... Yes (0.35)
-Checking if you have Data::Stag 0.11 ... Yes (0.14)
-Checking if you have ExtUtils::Manifest 1.52 ... Yes (1.70)
 Checking if you have Scalar::Util 0 ... Yes (1.50)
+Checking if you have Module::Build 0.42 ... Yes (0.4229)
+Checking if you have URI::Escape 0 ... Yes (3.31)
 OK
 Building BioPerl-1.007002 ... Building BioPerl
 Building BioPerl
@@ -12251,7 +12248,7 @@ Installing /home/alaimos/repos/tRFexplorer/src/public/ext/jbrowse/extlib/lib/per
 + set -x
 + bin/cpanm -v --notest -l extlib/ --installdeps .
 cpanm (App::cpanminus) 1.7043 on perl 5.028001 built for x86_64-linux-gnu-thread-multi
-Work directory is /home/alaimos/.cpanm/work/1555964563.1791
+Work directory is /home/alaimos/.cpanm/work/1556014830.20771
 You have make /usr/bin/make
 You have LWP 6.36
 You have /bin/tar: tar (GNU tar) 1.30
@@ -12271,64 +12268,64 @@ Generating a Unix-style Makefile
 Writing Makefile for JBrowse
 Writing MYMETA.yml and MYMETA.json
 Checking dependencies from MYMETA.json ...
-Checking if you have Carp 0 ... Yes (1.50)
-Checking if you have File::Path 2 ... Yes (2.15)
-Checking if you have Bio::SeqFeature::Lite 0 ... Yes (undef)
-Checking if you have IO::Uncompress::Gunzip 0 ... Yes (2.074)
-Checking if you have Bio::GFF3::LowLevel 1.8 ... Yes (2.0)
-Checking if you have Bio::Index::Fasta 0 ... Yes (undef)
-Checking if you have File::Temp 0 ... Yes (0.2304)
-Checking if you have List::Util 0 ... Yes (1.50)
-Checking if you have base 0 ... Yes (2.27)
-Checking if you have Pod::Usage 0 ... Yes (1.69)
-Checking if you have File::Next 0 ... Yes (1.16)
-Checking if you have POSIX 0 ... Yes (1.84)
-Checking if you have local::lib 0 ... Yes (2.000024)
-Checking if you have Bio::FeatureIO 0 ... Yes (1.6.905)
-Checking if you have List::MoreUtils 0.28 ... Yes (0.416)
-Checking if you have File::Spec 0 ... Yes (3.74)
-Checking if you have Data::Dumper 0 ... Yes (2.170)
-Checking if you have JSON 2 ... Yes (4.02)
-Checking if you have Bio::OntologyIO 0 ... Yes (undef)
-Checking if you have Fcntl 0 ... Yes (1.13)
 Checking if you have Heap::Simple 0 ... Yes (0.13)
-Checking if you have IO::File 0 ... Yes (1.39)
-Checking if you have DB_File 0 ... Yes (1.840)
-Checking if you have Hash::Merge 0 ... Yes (0.300)
-Checking if you have Bio::SeqFeature::Annotated 0 ... Yes (1.6.905)
-Checking if you have URI::Escape 0 ... Yes (3.31)
-Checking if you have Heap::Simple::XS 0 ... Yes (0.10)
-Checking if you have Bio::Annotation::SimpleValue 0 ... Yes (undef)
-Checking if you have File::Basename 0 ... Yes (2.85)
 Checking if you have Parse::RecDescent 0 ... Yes (1.967015)
-Checking if you have FindBin 0 ... Yes (1.51)
-Checking if you have Exporter 0 ... Yes (5.73)
-Checking if you have JSON::XS 0 ... Yes (4.02)
-Checking if you have DBD::SQLite 0 ... Yes (1.62)
-Checking if you have DBI 0 ... Yes (1.642)
+Checking if you have Heap::Simple::XS 0 ... Yes (0.10)
+Checking if you have List::Util 0 ... Yes (1.50)
 Checking if you have Test::More 0 ... Yes (1.302133)
-Checking if you have Devel::Size 0 ... Yes (0.82)
-Checking if you have PerlIO::gzip 0 ... Yes (0.19)
-Checking if you have File::Copy::Recursive 0 ... Yes (0.44)
-Checking if you have Bio::Root::Version 1.006000 ... Yes (1.007002)
-Checking if you have Bio::GFF3::LowLevel::Parser 1.8 ... Yes (2.0)
-Checking if you have warnings 0 ... Yes (1.42)
-Checking if you have Test::Warn 0 ... Yes (0.36)
-Checking if you have strict 0 ... Yes (1.11)
 Checking if you have Getopt::Long 0 ... Yes (2.5)
-Checking if you have vars 0 ... Yes (1.04)
+Checking if you have Bio::Root::Version 1.006000 ... Yes (1.007002)
+Checking if you have DBI 0 ... Yes (1.642)
 Checking if you have Scalar::Util 0 ... Yes (1.50)
-Checking if you have Digest::Crc32 0 ... Yes (0.01)
-Checking if you have File::Spec::Functions 0 ... Yes (3.74)
-Checking if you have Capture::Tiny 0 ... Yes (0.48)
-Checking if you have constant 0 ... Yes (1.33)
-Checking if you have Storable 0 ... Yes (3.08)
+Checking if you have JSON::XS 0 ... Yes (4.02)
+Checking if you have base 0 ... Yes (2.27)
+Checking if you have Bio::Annotation::SimpleValue 0 ... Yes (undef)
+Checking if you have Bio::SeqFeature::Lite 0 ... Yes (undef)
+Checking if you have PerlIO::gzip 0 ... Yes (0.19)
+Checking if you have Bio::OntologyIO 0 ... Yes (undef)
+Checking if you have vars 0 ... Yes (1.04)
 Checking if you have Cwd 0 ... Yes (3.74)
+Checking if you have File::Spec::Functions 0 ... Yes (3.74)
+Checking if you have Bio::SeqFeature::Annotated 0 ... Yes (1.6.905)
+Checking if you have JSON 2 ... Yes (4.02)
+Checking if you have Carp 0 ... Yes (1.50)
+Checking if you have local::lib 0 ... Yes (2.000024)
+Checking if you have File::Spec 0 ... Yes (3.74)
+Checking if you have DBD::SQLite 0 ... Yes (1.62)
+Checking if you have IO::File 0 ... Yes (1.39)
+Checking if you have Exporter 0 ... Yes (5.73)
+Checking if you have Capture::Tiny 0 ... Yes (0.48)
+Checking if you have Devel::Size 0 ... Yes (0.82)
+Checking if you have Fcntl 0 ... Yes (1.13)
+Checking if you have Hash::Merge 0 ... Yes (0.300)
+Checking if you have Bio::GFF3::LowLevel 1.8 ... Yes (2.0)
+Checking if you have Storable 0 ... Yes (3.08)
+Checking if you have strict 0 ... Yes (1.11)
+Checking if you have File::Copy::Recursive 0 ... Yes (0.44)
+Checking if you have Test::Warn 0 ... Yes (0.36)
+Checking if you have Bio::GFF3::LowLevel::Parser 1.8 ... Yes (2.0)
+Checking if you have File::Next 0 ... Yes (1.16)
+Checking if you have File::Temp 0 ... Yes (0.2304)
+Checking if you have Digest::Crc32 0 ... Yes (0.01)
+Checking if you have constant 0 ... Yes (1.33)
+Checking if you have IO::Uncompress::Gunzip 0 ... Yes (2.074)
+Checking if you have warnings 0 ... Yes (1.42)
+Checking if you have List::MoreUtils 0.28 ... Yes (0.416)
+Checking if you have Data::Dumper 0 ... Yes (2.170)
+Checking if you have Bio::FeatureIO 0 ... Yes (1.6.905)
+Checking if you have File::Path 2 ... Yes (2.15)
+Checking if you have Bio::Index::Fasta 0 ... Yes (undef)
+Checking if you have POSIX 0 ... Yes (1.84)
+Checking if you have URI::Escape 0 ... Yes (3.31)
+Checking if you have FindBin 0 ... Yes (1.51)
+Checking if you have DB_File 0 ... Yes (1.840)
+Checking if you have Pod::Usage 0 ... Yes (1.69)
+Checking if you have File::Basename 0 ... Yes (2.85)
 OK
 <== Installed dependencies for .. Finishing.
 + bin/cpanm -v --notest -l extlib/ --installdeps .
 cpanm (App::cpanminus) 1.7043 on perl 5.028001 built for x86_64-linux-gnu-thread-multi
-Work directory is /home/alaimos/.cpanm/work/1555964564.1801
+Work directory is /home/alaimos/.cpanm/work/1556014830.20781
 You have make /usr/bin/make
 You have LWP 6.36
 You have /bin/tar: tar (GNU tar) 1.30
@@ -12348,65 +12345,65 @@ Generating a Unix-style Makefile
 Writing Makefile for JBrowse
 Writing MYMETA.yml and MYMETA.json
 Checking dependencies from MYMETA.json ...
-Checking if you have Test::Warn 0 ... Yes (0.36)
-Checking if you have Bio::SeqFeature::Lite 0 ... Yes (undef)
-Checking if you have File::Temp 0 ... Yes (0.2304)
-Checking if you have Getopt::Long 0 ... Yes (2.5)
-Checking if you have JSON::XS 0 ... Yes (4.02)
-Checking if you have Fcntl 0 ... Yes (1.13)
-Checking if you have Devel::Size 0 ... Yes (0.82)
-Checking if you have strict 0 ... Yes (1.11)
-Checking if you have Data::Dumper 0 ... Yes (2.170)
-Checking if you have Scalar::Util 0 ... Yes (1.50)
-Checking if you have Heap::Simple 0 ... Yes (0.13)
-Checking if you have Bio::GFF3::LowLevel::Parser 1.8 ... Yes (2.0)
-Checking if you have POSIX 0 ... Yes (1.84)
-Checking if you have Storable 0 ... Yes (3.08)
-Checking if you have FindBin 0 ... Yes (1.51)
-Checking if you have List::MoreUtils 0.28 ... Yes (0.416)
-Checking if you have List::Util 0 ... Yes (1.50)
-Checking if you have constant 0 ... Yes (1.33)
-Checking if you have IO::File 0 ... Yes (1.39)
-Checking if you have File::Spec::Functions 0 ... Yes (3.74)
-Checking if you have Capture::Tiny 0 ... Yes (0.48)
-Checking if you have local::lib 0 ... Yes (2.000024)
-Checking if you have Bio::SeqFeature::Annotated 0 ... Yes (1.6.905)
-Checking if you have PerlIO::gzip 0 ... Yes (0.19)
-Checking if you have Carp 0 ... Yes (1.50)
-Checking if you have Bio::Index::Fasta 0 ... Yes (undef)
-Checking if you have File::Copy::Recursive 0 ... Yes (0.44)
-Checking if you have Test::More 0 ... Yes (1.302133)
-Checking if you have Bio::Root::Version 1.006000 ... Yes (1.007002)
-Checking if you have warnings 0 ... Yes (1.42)
-Checking if you have Parse::RecDescent 0 ... Yes (1.967015)
-Checking if you have DBD::SQLite 0 ... Yes (1.62)
-Checking if you have URI::Escape 0 ... Yes (3.31)
-Checking if you have DBI 0 ... Yes (1.642)
-Checking if you have Bio::GFF3::LowLevel 1.8 ... Yes (2.0)
-Checking if you have IO::Uncompress::Gunzip 0 ... Yes (2.074)
-Checking if you have File::Path 2 ... Yes (2.15)
 Checking if you have Bio::FeatureIO 0 ... Yes (1.6.905)
-Checking if you have Hash::Merge 0 ... Yes (0.300)
-Checking if you have JSON 2 ... Yes (4.02)
-Checking if you have Heap::Simple::XS 0 ... Yes (0.10)
-Checking if you have vars 0 ... Yes (1.04)
-Checking if you have Pod::Usage 0 ... Yes (1.69)
-Checking if you have Bio::OntologyIO 0 ... Yes (undef)
-Checking if you have File::Spec 0 ... Yes (3.74)
-Checking if you have Bio::Annotation::SimpleValue 0 ... Yes (undef)
-Checking if you have Cwd 0 ... Yes (3.74)
-Checking if you have Exporter 0 ... Yes (5.73)
-Checking if you have File::Next 0 ... Yes (1.16)
-Checking if you have Digest::Crc32 0 ... Yes (0.01)
-Checking if you have File::Basename 0 ... Yes (2.85)
+Checking if you have warnings 0 ... Yes (1.42)
 Checking if you have DB_File 0 ... Yes (1.840)
+Checking if you have Parse::RecDescent 0 ... Yes (1.967015)
+Checking if you have Bio::SeqFeature::Annotated 0 ... Yes (1.6.905)
+Checking if you have Digest::Crc32 0 ... Yes (0.01)
+Checking if you have vars 0 ... Yes (1.04)
+Checking if you have Capture::Tiny 0 ... Yes (0.48)
+Checking if you have Heap::Simple 0 ... Yes (0.13)
+Checking if you have Bio::Annotation::SimpleValue 0 ... Yes (undef)
+Checking if you have DBD::SQLite 0 ... Yes (1.62)
+Checking if you have File::Spec 0 ... Yes (3.74)
+Checking if you have Hash::Merge 0 ... Yes (0.300)
+Checking if you have Bio::OntologyIO 0 ... Yes (undef)
+Checking if you have List::Util 0 ... Yes (1.50)
+Checking if you have Cwd 0 ... Yes (3.74)
+Checking if you have Bio::SeqFeature::Lite 0 ... Yes (undef)
+Checking if you have Storable 0 ... Yes (3.08)
+Checking if you have Pod::Usage 0 ... Yes (1.69)
+Checking if you have Fcntl 0 ... Yes (1.13)
+Checking if you have DBI 0 ... Yes (1.642)
+Checking if you have Test::More 0 ... Yes (1.302133)
+Checking if you have URI::Escape 0 ... Yes (3.31)
+Checking if you have Data::Dumper 0 ... Yes (2.170)
+Checking if you have List::MoreUtils 0.28 ... Yes (0.416)
+Checking if you have JSON 2 ... Yes (4.02)
+Checking if you have File::Spec::Functions 0 ... Yes (3.74)
+Checking if you have JSON::XS 0 ... Yes (4.02)
+Checking if you have File::Temp 0 ... Yes (0.2304)
+Checking if you have POSIX 0 ... Yes (1.84)
+Checking if you have Getopt::Long 0 ... Yes (2.5)
+Checking if you have File::Path 2 ... Yes (2.15)
+Checking if you have PerlIO::gzip 0 ... Yes (0.19)
+Checking if you have IO::File 0 ... Yes (1.39)
+Checking if you have File::Copy::Recursive 0 ... Yes (0.44)
+Checking if you have strict 0 ... Yes (1.11)
+Checking if you have Bio::Index::Fasta 0 ... Yes (undef)
+Checking if you have Bio::GFF3::LowLevel 1.8 ... Yes (2.0)
+Checking if you have Exporter 0 ... Yes (5.73)
+Checking if you have Scalar::Util 0 ... Yes (1.50)
+Checking if you have IO::Uncompress::Gunzip 0 ... Yes (2.074)
+Checking if you have File::Basename 0 ... Yes (2.85)
+Checking if you have Bio::GFF3::LowLevel::Parser 1.8 ... Yes (2.0)
+Checking if you have FindBin 0 ... Yes (1.51)
 Checking if you have base 0 ... Yes (2.27)
+Checking if you have Bio::Root::Version 1.006000 ... Yes (1.007002)
+Checking if you have Heap::Simple::XS 0 ... Yes (0.10)
+Checking if you have constant 0 ... Yes (1.33)
+Checking if you have Test::Warn 0 ... Yes (0.36)
+Checking if you have local::lib 0 ... Yes (2.000024)
+Checking if you have Carp 0 ... Yes (1.50)
+Checking if you have File::Next 0 ... Yes (1.16)
+Checking if you have Devel::Size 0 ... Yes (0.82)
 OK
 <== Installed dependencies for .. Finishing.
 + set -e
 + bin/cpanm -v --notest -l extlib/ --installdeps .
 cpanm (App::cpanminus) 1.7043 on perl 5.028001 built for x86_64-linux-gnu-thread-multi
-Work directory is /home/alaimos/.cpanm/work/1555964564.1811
+Work directory is /home/alaimos/.cpanm/work/1556014831.20791
 You have make /usr/bin/make
 You have LWP 6.36
 You have /bin/tar: tar (GNU tar) 1.30
@@ -12426,59 +12423,59 @@ Generating a Unix-style Makefile
 Writing Makefile for JBrowse
 Writing MYMETA.yml and MYMETA.json
 Checking dependencies from MYMETA.json ...
-Checking if you have PerlIO::gzip 0 ... Yes (0.19)
-Checking if you have URI::Escape 0 ... Yes (3.31)
-Checking if you have warnings 0 ... Yes (1.42)
-Checking if you have Hash::Merge 0 ... Yes (0.300)
 Checking if you have Parse::RecDescent 0 ... Yes (1.967015)
-Checking if you have Digest::Crc32 0 ... Yes (0.01)
-Checking if you have Data::Dumper 0 ... Yes (2.170)
-Checking if you have Bio::Root::Version 1.006000 ... Yes (1.007002)
-Checking if you have POSIX 0 ... Yes (1.84)
-Checking if you have IO::File 0 ... Yes (1.39)
-Checking if you have IO::Uncompress::Gunzip 0 ... Yes (2.074)
-Checking if you have Exporter 0 ... Yes (5.73)
-Checking if you have Bio::Index::Fasta 0 ... Yes (undef)
-Checking if you have Heap::Simple 0 ... Yes (0.13)
-Checking if you have Bio::Annotation::SimpleValue 0 ... Yes (undef)
-Checking if you have Scalar::Util 0 ... Yes (1.50)
-Checking if you have Bio::SeqFeature::Annotated 0 ... Yes (1.6.905)
-Checking if you have Pod::Usage 0 ... Yes (1.69)
-Checking if you have Cwd 0 ... Yes (3.74)
-Checking if you have File::Copy::Recursive 0 ... Yes (0.44)
-Checking if you have File::Next 0 ... Yes (1.16)
-Checking if you have Bio::FeatureIO 0 ... Yes (1.6.905)
-Checking if you have Heap::Simple::XS 0 ... Yes (0.10)
-Checking if you have Fcntl 0 ... Yes (1.13)
-Checking if you have DBD::SQLite 0 ... Yes (1.62)
-Checking if you have List::MoreUtils 0.28 ... Yes (0.416)
-Checking if you have File::Spec 0 ... Yes (3.74)
-Checking if you have FindBin 0 ... Yes (1.51)
-Checking if you have Test::Warn 0 ... Yes (0.36)
-Checking if you have JSON 2 ... Yes (4.02)
-Checking if you have Bio::OntologyIO 0 ... Yes (undef)
-Checking if you have Devel::Size 0 ... Yes (0.82)
-Checking if you have DBI 0 ... Yes (1.642)
-Checking if you have List::Util 0 ... Yes (1.50)
-Checking if you have File::Spec::Functions 0 ... Yes (3.74)
-Checking if you have Capture::Tiny 0 ... Yes (0.48)
-Checking if you have Carp 0 ... Yes (1.50)
-Checking if you have Bio::SeqFeature::Lite 0 ... Yes (undef)
-Checking if you have File::Path 2 ... Yes (2.15)
-Checking if you have Getopt::Long 0 ... Yes (2.5)
-Checking if you have vars 0 ... Yes (1.04)
-Checking if you have Bio::GFF3::LowLevel::Parser 1.8 ... Yes (2.0)
-Checking if you have DB_File 0 ... Yes (1.840)
-Checking if you have JSON::XS 0 ... Yes (4.02)
+Checking if you have PerlIO::gzip 0 ... Yes (0.19)
 Checking if you have strict 0 ... Yes (1.11)
-Checking if you have base 0 ... Yes (2.27)
+Checking if you have File::Spec::Functions 0 ... Yes (3.74)
+Checking if you have Bio::Annotation::SimpleValue 0 ... Yes (undef)
+Checking if you have File::Copy::Recursive 0 ... Yes (0.44)
 Checking if you have File::Temp 0 ... Yes (0.2304)
-Checking if you have Bio::GFF3::LowLevel 1.8 ... Yes (2.0)
+Checking if you have Bio::FeatureIO 0 ... Yes (1.6.905)
 Checking if you have File::Basename 0 ... Yes (2.85)
-Checking if you have local::lib 0 ... Yes (2.000024)
+Checking if you have Data::Dumper 0 ... Yes (2.170)
+Checking if you have File::Next 0 ... Yes (1.16)
+Checking if you have DBI 0 ... Yes (1.642)
 Checking if you have Test::More 0 ... Yes (1.302133)
+Checking if you have local::lib 0 ... Yes (2.000024)
 Checking if you have Storable 0 ... Yes (3.08)
 Checking if you have constant 0 ... Yes (1.33)
+Checking if you have Fcntl 0 ... Yes (1.13)
+Checking if you have Exporter 0 ... Yes (5.73)
+Checking if you have Devel::Size 0 ... Yes (0.82)
+Checking if you have Digest::Crc32 0 ... Yes (0.01)
+Checking if you have Cwd 0 ... Yes (3.74)
+Checking if you have DBD::SQLite 0 ... Yes (1.62)
+Checking if you have List::Util 0 ... Yes (1.50)
+Checking if you have Bio::SeqFeature::Annotated 0 ... Yes (1.6.905)
+Checking if you have Bio::OntologyIO 0 ... Yes (undef)
+Checking if you have Bio::Root::Version 1.006000 ... Yes (1.007002)
+Checking if you have Carp 0 ... Yes (1.50)
+Checking if you have Hash::Merge 0 ... Yes (0.300)
+Checking if you have FindBin 0 ... Yes (1.51)
+Checking if you have vars 0 ... Yes (1.04)
+Checking if you have DB_File 0 ... Yes (1.840)
+Checking if you have Pod::Usage 0 ... Yes (1.69)
+Checking if you have POSIX 0 ... Yes (1.84)
+Checking if you have Heap::Simple 0 ... Yes (0.13)
+Checking if you have File::Spec 0 ... Yes (3.74)
+Checking if you have Heap::Simple::XS 0 ... Yes (0.10)
+Checking if you have File::Path 2 ... Yes (2.15)
+Checking if you have Test::Warn 0 ... Yes (0.36)
+Checking if you have JSON 2 ... Yes (4.02)
+Checking if you have Bio::SeqFeature::Lite 0 ... Yes (undef)
+Checking if you have base 0 ... Yes (2.27)
+Checking if you have Bio::GFF3::LowLevel 1.8 ... Yes (2.0)
+Checking if you have JSON::XS 0 ... Yes (4.02)
+Checking if you have URI::Escape 0 ... Yes (3.31)
+Checking if you have List::MoreUtils 0.28 ... Yes (0.416)
+Checking if you have Scalar::Util 0 ... Yes (1.50)
+Checking if you have IO::Uncompress::Gunzip 0 ... Yes (2.074)
+Checking if you have Bio::Index::Fasta 0 ... Yes (undef)
+Checking if you have Getopt::Long 0 ... Yes (2.5)
+Checking if you have Capture::Tiny 0 ... Yes (0.48)
+Checking if you have warnings 0 ... Yes (1.42)
+Checking if you have Bio::GFF3::LowLevel::Parser 1.8 ... Yes (2.0)
+Checking if you have IO::File 0 ... Yes (1.39)
 OK
 <== Installed dependencies for .. Finishing.
 
