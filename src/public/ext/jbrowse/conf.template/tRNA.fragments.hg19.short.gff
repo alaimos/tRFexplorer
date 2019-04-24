@@ -320,11 +320,15 @@ chr1	hg19_tsRNA	transcript	161413146	161413168	.	+	.	ID=tRFdb-3028b-942;geneID=t
 chr1	hg19_tsRNA	exon	161413146	161413168	1000.00	+	.	Parent=tRFdb-3028b-942
 chr1	hg19_tsRNA	transcript	161413151	161413168	.	+	.	ID=tRFdb-3028a-938;geneID=tRFdb-3028a
 chr1	hg19_tsRNA	exon	161413151	161413168	1000.00	+	.	Parent=tRFdb-3028a-938
-chr1	hg19_tsRNA	transcript	161413161	161450447	.	+	.	ID=ts-2;geneID=ts-2
+chr1	hg19_tsRNA	transcript	161413161	161413185	.	+	.	ID=ts-2;geneID=ts-2
 chr1	hg19_tsRNA	exon	161413161	161413185	1000.00	+	.	Parent=ts-2
+chr1	hg19_tsRNA	transcript	161420534	161420558	.	+	.	ID=ts-2;geneID=ts-2
 chr1	hg19_tsRNA	exon	161420534	161420558	1000.00	+	.	Parent=ts-2
+chr1	hg19_tsRNA	transcript	161427965	161427989	.	+	.	ID=ts-2;geneID=ts-2
 chr1	hg19_tsRNA	exon	161427965	161427989	1000.00	+	.	Parent=ts-2
+chr1	hg19_tsRNA	transcript	161435325	161435349	.	+	.	ID=ts-2;geneID=ts-2
 chr1	hg19_tsRNA	exon	161435325	161435349	1000.00	+	.	Parent=ts-2
+chr1	hg19_tsRNA	transcript	161450423	161450447	.	+	.	ID=ts-2;geneID=ts-2
 chr1	hg19_tsRNA	exon	161450423	161450447	1000.00	+	.	Parent=ts-2
 chr1	hg19_tsRNA	transcript	161417014	161417032	.	-	.	ID=tRFdb-3029a-954;geneID=tRFdb-3029a
 chr1	hg19_tsRNA	exon	161417014	161417032	1000.00	-	.	Parent=tRFdb-3029a-954
