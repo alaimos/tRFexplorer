@@ -1,11 +1,14 @@
 import React from 'react';
 import {pick} from "lodash";
-import {Input} from 'reactstrap';
-import {Field as FormikField} from "formik";
+import {Input, FormFeedback} from 'reactstrap';
+import {Field as FormikField, ErrorMessage as FormikErrorMessage} from "formik";
 
 
 export function Field({children, onComponentRender = null, ...props}) {
     const renderComponent = ({field, form, ...innerProps}) => {
+        const n = field["name"];
+        innerProps["id"] = n;
+        innerProps["invalid"] = form.errors[n] && form.touched[n];
         if (onComponentRender !== null && typeof onComponentRender === "function") {
             const r = onComponentRender({field, form, innerProps, children});
             field = r.field || field;
@@ -74,4 +77,9 @@ export function ChainedSelect({options, addEmpty = false, emptyText = "", chainT
         }
     };
     return <Field {...props} onComponentRender={onComponentRender}/>
+}
+
+export function ErrorMessage(props) {
+    const renderComponent = msg => (<FormFeedback tooltip>{msg}</FormFeedback>);
+    return <FormikErrorMessage {...props} render={renderComponent}/>
 }

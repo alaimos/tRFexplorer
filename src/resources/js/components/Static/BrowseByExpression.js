@@ -20,8 +20,8 @@ export default class BrowseByExpression extends Component {
         });
     };
 
-    handleFormSubmit = () => {
-
+    handleFormSubmit = (values) => {
+        console.log(values);
     };
 
     render() {
