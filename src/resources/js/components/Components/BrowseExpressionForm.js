@@ -5,7 +5,7 @@ import {Alert, Card, CardText, CardBody, CardFooter, CardHeader, Container, Row,
 import {Form as ReactStrapForm, FormGroup, Label, Input, InputGroup} from 'reactstrap';
 import {Formik, Form, ErrorMessage} from "formik";
 import {Link} from "react-router-dom";
-import {Field, Select} from "./ExtendedFormComponents";
+import {ChainedSelect, Field, Select} from "./ExtendedFormComponents";
 
 const LoadingComponent = () => <div><Spinner style={{width: '3rem', height: '3rem'}}/></div>;
 
@@ -69,7 +69,12 @@ export default class BrowseExpressionForm extends Component {
                                     </Alert>
                                 ) : (
                                     <Formik>
-                                        <Select name="type" options={data.types}/>
+                                        <Form>
+                                            <Select name="type" addEmpty emptyText="All" options={data.types}/>
+                                            <Select name="aminoacids" addEmpty emptyText="All" multiple options={data.aminoacids}/>
+                                            <ChainedSelect name="anticodons" addEmpty emptyText="All" chainTo="aminoacids" emptyChained multiple
+                                                           options={data.anticodonsByAminoacid}/>
+                                        </Form>
                                     </Formik>
                                 )
                             ) : (

@@ -29,6 +29,7 @@
   "dependencies": {
     "formik": "^1.5.2",
     "i": "^0.3.6",
+    "immutable": "^4.0.0-rc.12",
     "npm": "^6.9.0",
     "react-responsive-embed": "^2.1.0",
     "react-router-dom": "^5.0.0",

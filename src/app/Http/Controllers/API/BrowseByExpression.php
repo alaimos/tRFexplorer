@@ -15,12 +15,13 @@ class BrowseByExpression extends Controller
     {
         $error   = false;
         $message = '';
-        $data = null;
+        $data    = null;
         try {
             $data = [
-                'types' => CachedJSONReader::read('data/tRF.types.json'),
-                'anticodons' => CachedJSONReader::read('data/tRF.anticodon.json'),
-                'aminoacids' => CachedJSONReader::read('data/tRF.aminoacid.json'),
+                'types'                 => CachedJSONReader::read('data/tRF.types.json'),
+                'anticodons'            => CachedJSONReader::read('data/tRF.anticodon.json'),
+                'aminoacids'            => CachedJSONReader::read('data/tRF.aminoacid.json'),
+                'anticodonsByAminoacid' => CachedJSONReader::read('data/anticodons.byAminoacid.json'),
             ];
         } catch (Exception $e) {
             $error   = true;
@@ -30,10 +31,10 @@ class BrowseByExpression extends Controller
             $message = $e->getMessage();
         }
         return response()->json([
-            'error' => $error,
-            'message' => $message,
-            'data' => $data,
-        ]);
+                                    'error'   => $error,
+                                    'message' => $message,
+                                    'data'    => $data,
+                                ]);
     }
 
 }

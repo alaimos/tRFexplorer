@@ -13,13 +13,15 @@ class tRFListParser
     const TYPES_FILE = 'tRF.types.json';
     const ANTICODONS_FILE = 'tRF.anticodon.json';
     const AMINOACIDS_FILE = 'tRF.aminoacid.json';
+    const ANTICODONS_BY_AMINOACID_FILE = 'anticodons.byAminoacid.json';
 
-    private $tRFByType      = [];
-    private $tRFByAnticodon = [];
-    private $tRFByAminoacid = [];
-    private $types          = [];
-    private $anticodons     = [];
-    private $aminoacids     = [];
+    private $tRFByType              = [];
+    private $tRFByAnticodon         = [];
+    private $tRFByAminoacid         = [];
+    private $types                  = [];
+    private $anticodons             = [];
+    private $aminoacids             = [];
+    private $anticodonsByAminoacids = [];
 
     private $inputFile;
     private $outputDirectory;
@@ -56,6 +58,7 @@ class tRFListParser
         self::writeJsonFile($this->outputDirectory . '/' . self::TYPES_FILE, $this->types);
         self::writeJsonFile($this->outputDirectory . '/' . self::ANTICODONS_FILE, $this->anticodons);
         self::writeJsonFile($this->outputDirectory . '/' . self::AMINOACIDS_FILE, $this->aminoacids);
+        self::writeJsonFile($this->outputDirectory . '/' . self::ANTICODONS_BY_AMINOACID_FILE, $this->anticodonsByAminoacids);
     }
 
     private function readList(): void
@@ -77,13 +80,17 @@ class tRFListParser
                     $this->tRFByAnticodon[$anticodon] = [];
                     $this->anticodons[$anticodon]     = $anticodon;
                 }
+                if (!isset($this->anticodonsByAminoacids[$aminoacid])) {
+                    $this->anticodonsByAminoacids[$aminoacid] = [];
+                }
                 if (!isset($this->tRFByAminoacid[$aminoacid])) {
                     $this->tRFByAminoacid[$aminoacid] = [];
                     $this->aminoacids[$aminoacid]     = $aminoacid;
                 }
-                $this->tRFByType[$type][$tRF]           = $tRF;
-                $this->tRFByAnticodon[$anticodon][$tRF] = $tRF;
-                $this->tRFByAminoacid[$aminoacid][$tRF] = $tRF;
+                $this->tRFByType[$type][$tRF]                         = $tRF;
+                $this->tRFByAnticodon[$anticodon][$tRF]               = $tRF;
+                $this->tRFByAminoacid[$aminoacid][$tRF]               = $tRF;
+                $this->anticodonsByAminoacids[$aminoacid][$anticodon] = $anticodon;
             }
             fclose($handle);
         } else {
