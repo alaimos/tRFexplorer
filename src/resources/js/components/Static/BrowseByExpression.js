@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {Breadcrumb, BreadcrumbItem} from 'reactstrap';
 import {Container} from 'reactstrap';
 import BrowseExpressionForm from "../Components/BrowseExpressionForm";
+import SearchByExpression from "../Components/SearchByExpression";
 
 export default class BrowseByExpression extends Component {
     constructor(props, context) {
@@ -21,13 +22,17 @@ export default class BrowseByExpression extends Component {
     };
 
     handleFormSubmit = (values) => {
-        console.log(values);
+        this.setState({
+            formData: values,
+            isSubmitted: true,
+        });
     };
 
     render() {
         const isSubmitted = this.state.isSubmitted;
+        const formData = this.state.formData;
         return <Container>
-            <h1 className="my-4">Browse by location{isSubmitted ? " - Search Results" : ""}</h1>
+            <h1 className="my-4">Browse by expression{isSubmitted ? " - Search Results" : ""}</h1>
             <Breadcrumb tag="div" listTag="ol">
                 <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
                 <BreadcrumbItem><Link to="/browse">Browse</Link></BreadcrumbItem>
@@ -41,7 +46,7 @@ export default class BrowseByExpression extends Component {
                 )}
             </Breadcrumb>
             {isSubmitted ? (
-                "TODO"
+                <SearchByExpression searchParameters={formData} />
             ) : (
                 <BrowseExpressionForm submitHandler={this.handleFormSubmit}/>
             )}

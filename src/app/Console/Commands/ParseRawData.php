@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Data\Parser\tRFAvgExpressionParser;
+use App\Data\Parser\tRFDataParser;
 use App\Data\Parser\tRFListParser;
 use Cache;
 use Illuminate\Console\Command;
@@ -41,7 +43,13 @@ class ParseRawData extends Command
     {
         try {
             $this->info("Preparing tRF list files");
-            (new tRFListParser(resource_path('data/tRF.list.tsv'), storage_path('app/data')))->run();
+            (new tRFListParser(resource_path('data/tRF.list.tsv')))->run();
+            $this->info("OK!");
+            $this->info("Preparing tRF average expressions files");
+            (new tRFAvgExpressionParser(resource_path('data/tRF.avg_expressions.tsv')))->run();
+            $this->info("OK!");
+            $this->info("Preparing tRF descriptions");
+            (new tRFDataParser(resource_path('data/tRNA.fragments.hg19.tsv')))->run();
             $this->info("OK!");
             $this->info("Flushing cache");
             Cache::flush();

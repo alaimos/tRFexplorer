@@ -5,7 +5,7 @@ import {FormGroup, Label} from 'reactstrap';
 import {Formik, Form} from "formik";
 import {ChainedSelect, Field, Select, ErrorMessage} from "./ExtendedFormComponents";
 
-const LoadingComponent = () => <div><Spinner style={{width: '3rem', height: '3rem'}}/></div>;
+const LoadingComponent = () => <div className="text-center"><Spinner style={{width: '3rem', height: '3rem'}}/></div>;
 
 export default class BrowseExpressionForm extends Component {
     constructor(props, context) {
@@ -34,7 +34,7 @@ export default class BrowseExpressionForm extends Component {
 
     async getData() {
         try {
-            const response = await axios.get('/api/browseByExpression/form_data');
+            const response = await axios.get('/api/browseByExpression');
             if (response.status !== 200) {
                 this.setError(response.statusText);
             } else {
@@ -108,14 +108,14 @@ export default class BrowseExpressionForm extends Component {
                                                         <Col sm={6}>
                                                             <FormGroup>
                                                                 <Label for="dataset">Filter by dataset</Label>
-                                                                <Select size="9" name="dataset" addEmpty emptyText="All" multiple options={data.aminoacids}/>
+                                                                <Select size="9" name="dataset" addEmpty emptyText="All" multiple options={data.datasets}/>
                                                             </FormGroup>
                                                         </Col>
                                                         <Col sm={6}>
                                                             <FormGroup>
                                                                 <Label for="tissueType">Filter by tissue type</Label>
                                                                 <ChainedSelect size="9" name="tissueType" addEmpty emptyText="All" chainTo="dataset" emptyChained multiple
-                                                                               options={data.anticodonsByAminoacid}/>
+                                                                               options={data.tissueTypesByDataset}/>
                                                             </FormGroup>
                                                         </Col>
                                                     </Row>

@@ -14,7 +14,9 @@ use Illuminate\Http\Request;
 */
 
 Route::namespace('API')->group(function () {
-    Route::get('/browseByExpression/form_data', 'BrowseByExpression@formData');
+    Route::get('/browseByExpression', 'BrowseByExpression@formData');
+    Route::get('/browseByExpression/types', 'BrowseByExpression@types');
+    Route::post('/browseByExpression', 'BrowseByExpression@search');
 });
 
 /*Route::middleware('auth:api')->get('/user', function (Request $request) {

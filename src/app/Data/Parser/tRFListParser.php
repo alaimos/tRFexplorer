@@ -4,17 +4,13 @@
 namespace App\Data\Parser;
 
 
-class tRFListParser
+use App\Data\Common;
+use RuntimeException;
+
+class tRFListParser extends AbstractParser
 {
 
-    const TRF_BY_TYPE_FILE = 'tRF.byType.json';
-    const TRF_BY_ANTICODON_FILE = 'tRF.byAnticodon.json';
-    const TRF_BY_AMINOACID_FILE = 'tRF.byAminoacid.json';
-    const TYPES_FILE = 'tRF.types.json';
-    const ANTICODONS_FILE = 'tRF.anticodon.json';
-    const AMINOACIDS_FILE = 'tRF.aminoacid.json';
-    const ANTICODONS_BY_AMINOACID_FILE = 'anticodons.byAminoacid.json';
-
+    private $tRFsList               = [];
     private $tRFByType              = [];
     private $tRFByAnticodon         = [];
     private $tRFByAminoacid         = [];
@@ -23,42 +19,20 @@ class tRFListParser
     private $aminoacids             = [];
     private $anticodonsByAminoacids = [];
 
-    private $inputFile;
-    private $outputDirectory;
-
-    /**
-     * tRFListParser constructor.
-     * @param string $inputFile
-     * @param string $outputDirectory
-     */
-    public function __construct(string $inputFile, string $outputDirectory)
-    {
-        if (!file_exists($inputFile)) {
-            throw new \RuntimeException("Input file does not exist");
-        }
-        if (!file_exists($outputDirectory)) {
-            @mkdir($outputDirectory, 0777, true);
-            if (!file_exists($outputDirectory)) {
-                throw new \RuntimeException("Output directory does not exist");
-            }
-        }
-        $this->inputFile       = $inputFile;
-        $this->outputDirectory = $outputDirectory;
-    }
-
     /**
      * Run this parser
      */
     public function run(): void
     {
         $this->readList();
-        self::writeJsonFile($this->outputDirectory . '/' . self::TRF_BY_TYPE_FILE, $this->tRFByType);
-        self::writeJsonFile($this->outputDirectory . '/' . self::TRF_BY_ANTICODON_FILE, $this->tRFByAnticodon);
-        self::writeJsonFile($this->outputDirectory . '/' . self::TRF_BY_AMINOACID_FILE, $this->tRFByAminoacid);
-        self::writeJsonFile($this->outputDirectory . '/' . self::TYPES_FILE, $this->types);
-        self::writeJsonFile($this->outputDirectory . '/' . self::ANTICODONS_FILE, $this->anticodons);
-        self::writeJsonFile($this->outputDirectory . '/' . self::AMINOACIDS_FILE, $this->aminoacids);
-        self::writeJsonFile($this->outputDirectory . '/' . self::ANTICODONS_BY_AMINOACID_FILE, $this->anticodonsByAminoacids);
+        self::writeJsonFile(Common::TRF_LIST, array_values($this->tRFsList));
+        self::writeJsonFile(Common::TRF_BY_TYPE_FILE, $this->tRFByType);
+        self::writeJsonFile(Common::TRF_BY_ANTICODON_FILE, $this->tRFByAnticodon);
+        self::writeJsonFile(Common::TRF_BY_AMINOACID_FILE, $this->tRFByAminoacid);
+        self::writeJsonFile(Common::TYPES_FILE, $this->types);
+        self::writeJsonFile(Common::ANTICODONS_FILE, $this->anticodons);
+        self::writeJsonFile(Common::AMINOACIDS_FILE, $this->aminoacids);
+        self::writeJsonFile(Common::ANTICODONS_BY_AMINOACID_FILE, $this->anticodonsByAminoacids);
     }
 
     private function readList(): void
@@ -87,6 +61,7 @@ class tRFListParser
                     $this->tRFByAminoacid[$aminoacid] = [];
                     $this->aminoacids[$aminoacid]     = $aminoacid;
                 }
+                $this->tRFsList[$tRF]                                 = $tRF;
                 $this->tRFByType[$type][$tRF]                         = $tRF;
                 $this->tRFByAnticodon[$anticodon][$tRF]               = $tRF;
                 $this->tRFByAminoacid[$aminoacid][$tRF]               = $tRF;
@@ -94,19 +69,8 @@ class tRFListParser
             }
             fclose($handle);
         } else {
-            throw new \RuntimeException("Unable to open tRF list file");
+            throw new RuntimeException("Unable to open tRF list file");
         }
     }
-
-    private static function writeJsonFile(string $filename, array $data): void
-    {
-        if (($handle = fopen($filename, 'w')) !== false) {
-            fwrite($handle, json_encode($data));
-            fclose($handle);
-        } else {
-            throw new \RuntimeException("Unable to write " . $filename);
-        }
-    }
-
 
 }
