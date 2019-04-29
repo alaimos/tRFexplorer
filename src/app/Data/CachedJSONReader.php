@@ -5,6 +5,7 @@ namespace App\Data;
 
 
 use Cache;
+use Storage;
 
 class CachedJSONReader
 {
@@ -24,7 +25,7 @@ class CachedJSONReader
         if (!$force && Cache::has($id)) {
             return Cache::get($id);
         } else {
-            $data = json_decode(\Storage::disk($disk)->get($filename), true);
+            $data = json_decode(Storage::disk($disk)->get($filename), true);
             Cache::put($id, $data, 6000);
             return $data;
         }

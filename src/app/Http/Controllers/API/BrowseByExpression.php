@@ -87,7 +87,9 @@ class BrowseByExpression extends Controller
                     foreach ($tissueData as $tissue => $fragments) {
                         if ($allTissues || in_array($tissue, $tissues)) {
                             foreach ($fragments as $fragment => $RPM) {
-                                if ($RPM >= $value) $selected[] = $fragment;
+                                if ($RPM >= $value) {
+                                    $selected[] = $fragment;
+                                }
                             }
                         }
                     }
@@ -191,5 +193,4 @@ class BrowseByExpression extends Controller
                                     'data'    => $data,
                                 ]);
     }
-
 }

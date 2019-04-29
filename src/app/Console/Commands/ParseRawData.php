@@ -6,6 +6,7 @@ use App\Data\Parser\tRFAvgExpressionParser;
 use App\Data\Parser\tRFDataParser;
 use App\Data\Parser\tRFListParser;
 use Cache;
+use Exception;
 use Illuminate\Console\Command;
 
 class ParseRawData extends Command
@@ -54,7 +55,7 @@ class ParseRawData extends Command
             $this->info("Flushing cache");
             Cache::flush();
             $this->info("OK!");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->error($e);
         }
         return 0;
