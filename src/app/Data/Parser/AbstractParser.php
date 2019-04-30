@@ -41,7 +41,7 @@ abstract class AbstractParser
      * Write array to json file in the storage folder
      *
      * @param string $filename
-     * @param array $data
+     * @param array  $data
      */
     protected static function writeJsonFile(string $filename, array $data): void
     {

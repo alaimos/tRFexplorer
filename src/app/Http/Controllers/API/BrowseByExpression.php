@@ -43,6 +43,7 @@ class BrowseByExpression extends Controller
             $error = true;
             $message = 'Error ' . get_class($e) . ': ' . $e->getMessage();
         }
+
         return response()->json(
             [
                 'error'   => $error,
@@ -55,9 +56,9 @@ class BrowseByExpression extends Controller
     /**
      * Filter tRF list using user selection
      *
-     * @param array $list
+     * @param array  $list
      * @param string $mapFile
-     * @param array $selection
+     * @param array  $selection
      *
      * @return array
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
@@ -66,9 +67,20 @@ class BrowseByExpression extends Controller
     private function filterList(array $list, string $mapFile, array $selection): array
     {
         $all = CachedJSONReader::read($mapFile);
-        $result = array_intersect($list, array_unique(Arr::flatten(array_map(function ($x) use (&$all) {
-            return array_values($all[$x]) ?? [];
-        }, $selection))));
+        $result = array_intersect(
+            $list,
+            array_unique(
+                Arr::flatten(
+                    array_map(
+                        function ($x) use (&$all) {
+                            return array_values($all[$x]) ?? [];
+                        },
+                        $selection
+                    )
+                )
+            )
+        );
+
         return $result;
     }
 
@@ -84,8 +96,12 @@ class BrowseByExpression extends Controller
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
      */
-    private function filterListByDatasetTissueAndValue(array $list, array $datasets, array $tissues, float $value): array
-    {
+    private function filterListByDatasetTissueAndValue(
+        array $list,
+        array $datasets,
+        array $tissues,
+        float $value
+    ): array {
         $key = 'browse-by-expression-' . md5(implode(',', $datasets) . '-' . implode('-', $tissues) . '-' . $value);
         if (Cache::has($key)) {
             $selected = Cache::get($key);
@@ -110,6 +126,7 @@ class BrowseByExpression extends Controller
             $selected = array_unique($selected);
             Cache::put($key, $selected, 6000);
         }
+
         return array_intersect($list, $selected);
     }
 
@@ -143,6 +160,7 @@ class BrowseByExpression extends Controller
             }
         }
         Cache::put($key, $table, 6000);
+
         return $table;
     }
 
@@ -184,11 +202,14 @@ class BrowseByExpression extends Controller
             $error = true;
             $message = 'Error ' . get_class($e) . ': ' . $e->getMessage();
         }
-        return response()->json([
-                                    'error'   => $error,
-                                    'message' => $message,
-                                    'data'    => $data,
-                                ]);
+
+        return response()->json(
+            [
+                'error'   => $error,
+                'message' => $message,
+                'data'    => $data,
+            ]
+        );
     }
 
     /**
@@ -210,10 +231,13 @@ class BrowseByExpression extends Controller
             $error = true;
             $message = 'Error ' . get_class($e) . ': ' . $e->getMessage();
         }
-        return response()->json([
-                                    'error'   => $error,
-                                    'message' => $message,
-                                    'data'    => $data,
-                                ]);
+
+        return response()->json(
+            [
+                'error'   => $error,
+                'message' => $message,
+                'data'    => $data,
+            ]
+        );
     }
 }

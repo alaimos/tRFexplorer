@@ -17,9 +17,10 @@ class CachedJSONReader
     /**
      * Read a json file
      *
-     * @param string $filename
+     * @param string      $filename
      * @param string|null $disk
-     * @param bool $force
+     * @param bool        $force
+     *
      * @return array
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
@@ -31,6 +32,7 @@ class CachedJSONReader
         } else {
             $data = json_decode(Storage::disk($disk)->get($filename), true);
             Cache::put($id, $data, 6000);
+
             return $data;
         }
     }

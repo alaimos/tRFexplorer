@@ -36,7 +36,9 @@ class tRFAvgExpressionParser extends AbstractParser
             $data = fgetcsv($handle, 1000, "\t"); // SKIP FIRST LINE
             while (($data = fgetcsv($handle, 1000, "\t")) !== false) {
                 $num = count($data);
-                if ($num != 4) continue;
+                if ($num != 4) {
+                    continue;
+                }
                 $dataset = trim($data[0]);
                 $type = trim($data[1]);
                 $tRF = trim($data[2]);

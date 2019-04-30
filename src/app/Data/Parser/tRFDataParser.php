@@ -61,6 +61,7 @@ class tRFDataParser extends AbstractParser
     {
         $matches = null;
         preg_match_all('/(\w+)\s+"([A-Za-z0-9\-\_]+)"/', $data, $matches, PREG_SET_ORDER);
+
         return array_column($matches, 2, 1);
     }
 
@@ -69,7 +70,9 @@ class tRFDataParser extends AbstractParser
         if (($handle = fopen($this->inputFile, 'r')) !== false) {
             while (($data = fgetcsv($handle, 1000, "\t")) !== false) {
                 $num = count($data);
-                if ($num != 9) continue;
+                if ($num != 9) {
+                    continue;
+                }
                 $description = self::getDescriptionArray($data[8]);
                 if (!isset($this->tRFData[$description['gene_id']])) {
                     $this->tRFData[$description['gene_id']] = [

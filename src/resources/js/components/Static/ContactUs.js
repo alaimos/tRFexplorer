@@ -1,9 +1,9 @@
-import React, { Component }    from "react";
-import { Container, Row, Col } from "reactstrap";
+import React, { Component }    from 'react';
+import { Container, Row, Col } from 'reactstrap';
 
 export default class ContactUs extends Component {
 
-    render() {
+    render () {
         return <Container>
             <h1 className="mt-4 mb-3">Contact</h1>
             <Row>
@@ -22,7 +22,8 @@ export default class ContactUs extends Component {
                         If you are using this software please cite:
                     </p>
                     <blockquote className="blockquote alert alert-dark">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Integer posuere erat a ante.
                     </blockquote>
                 </Col>
             </Row>
@@ -33,7 +34,8 @@ export default class ContactUs extends Component {
                         <span className="text-info">
                             <strong>Alessandro La Ferlita</strong>
                         </span><br/>Dept. of Physics and Astronomy and
-                        Dept. of Clinical and Experimental Medicine<br/>University of Catania
+                        Dept. of Clinical and Experimental Medicine<br/>University
+                        of Catania
                     </address>
                     <address>
                         <span className="text-info">
@@ -49,7 +51,8 @@ export default class ContactUs extends Component {
                             <strong>Carlo Maria Croce</strong>
                         </span>
                         <br/>
-                        Dept. of Molecular Virology, Immunology and Medical Genetics
+                        Dept. of Molecular Virology, Immunology and Medical
+                        Genetics
                         <br/>
                         The Ohio State University
                     </address>

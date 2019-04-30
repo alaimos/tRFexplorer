@@ -58,6 +58,7 @@ class ParseRawData extends Command
         } catch (Exception $e) {
             $this->error($e);
         }
+
         return 0;
     }
 }

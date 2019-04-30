@@ -1,10 +1,9 @@
-import React, { Component }                                                              from "react";
-//import {} from 'react-router-dom';
-import { Card, CardText, CardBody, CardFooter, CardHeader, Container, Row, Col, Button } from "reactstrap";
+import React, { Component }                              from 'react';
+import { Card, CardText, CardBody, Container, Row, Col } from 'reactstrap';
 
 export default class Error404 extends Component {
 
-    render() {
+    render () {
         return <Container>
             <h1 className="my-4">404 - Not Found</h1>
             <Row>
