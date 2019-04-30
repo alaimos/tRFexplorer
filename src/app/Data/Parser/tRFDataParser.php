@@ -12,7 +12,7 @@ class tRFDataParser extends AbstractParser
 {
 
     private $tRNAData = [];
-    private $tRFData  = [];
+    private $tRFData = [];
 
     /**
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException

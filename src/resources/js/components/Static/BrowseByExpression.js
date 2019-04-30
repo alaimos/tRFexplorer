@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
-import {Breadcrumb, BreadcrumbItem} from 'reactstrap';
-import {Container} from 'reactstrap';
-import BrowseExpressionForm from "../Components/BrowseExpressionForm";
-import SearchByExpression from "../Components/SearchByExpression";
+import React, { Component }           from "react";
+import { Link }                       from "react-router-dom";
+import { Breadcrumb, BreadcrumbItem } from "reactstrap";
+import { Container }                  from "reactstrap";
+import BrowseExpressionForm           from "../Components/BrowseExpressionForm";
+import SearchByExpression             from "../Components/SearchByExpression";
 
 export default class BrowseByExpression extends Component {
     constructor(props, context) {
@@ -46,7 +46,7 @@ export default class BrowseByExpression extends Component {
                 )}
             </Breadcrumb>
             {isSubmitted ? (
-                <SearchByExpression searchParameters={formData} />
+                <SearchByExpression searchParameters={formData}/>
             ) : (
                 <BrowseExpressionForm submitHandler={this.handleFormSubmit}/>
             )}

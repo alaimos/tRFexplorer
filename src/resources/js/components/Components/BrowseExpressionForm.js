@@ -1,13 +1,19 @@
-import React, {Component}                                 from "react";
-import axios                                              from "axios";
-import {Alert, Card, CardBody, Row, Col, Button, Spinner} from "reactstrap";
-import {FormGroup, Label}                                 from "reactstrap";
-import {Formik, Form}                                     from "formik";
-import {ChainedSelect, Field, Select, ErrorMessage}       from "./ExtendedFormComponents";
+import PropTypes                                            from "prop-types";
+import React, { Component }                                 from "react";
+import axios                                                from "axios";
+import { Alert, Card, CardBody, Row, Col, Button, Spinner } from "reactstrap";
+import { FormGroup, Label }                                 from "reactstrap";
+import { Formik, Form }                                     from "formik";
+import { ChainedSelect, Field, Select, ErrorMessage }       from "./ExtendedFormComponents";
 
 const LoadingComponent = () => (<div className="text-center"><Spinner style={{width: "3rem", height: "3rem"}}/></div>);
 
 export default class BrowseExpressionForm extends Component {
+
+    static propTypes = {
+        submitHandler: PropTypes.func.isRequired,
+    };
+
     constructor(props, context) {
         super(props, context);
         this.state = {

@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {Breadcrumb, BreadcrumbItem} from 'reactstrap';
-import {Card, CardText, CardBody, CardFooter, CardHeader, Container, Row, Col, Button} from 'reactstrap';
-import {Link} from "react-router-dom";
+import React, { Component }                                                  from "react";
+import { Breadcrumb, BreadcrumbItem }                                        from "reactstrap";
+import { Card, CardText, CardBody, CardHeader, Container, Row, Col, Button } from "reactstrap";
+import { Link }                                                              from "react-router-dom";
 
 export default class Browse extends Component {
 

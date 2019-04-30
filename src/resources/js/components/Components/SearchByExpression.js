@@ -1,14 +1,26 @@
-import React, {Component} from 'react';
-import axios from 'axios';
-import {Alert, Card, CardBody, Row, Col, Button, Spinner} from 'reactstrap';
-import BootstrapTable from 'react-bootstrap-table-next';
-import filterFactory, {textFilter, selectFilter} from 'react-bootstrap-table2-filter';
-import paginationFactory from 'react-bootstrap-table2-paginator';
-import {Link} from "react-router-dom";
+import PropTypes                                            from "prop-types";
+import React, { Component }                                 from "react";
+import axios                                                from "axios";
+import { Alert, Card, CardBody, Row, Col, Button, Spinner } from "reactstrap";
+import BootstrapTable                                       from "react-bootstrap-table-next";
+import filterFactory, { textFilter, selectFilter }          from "react-bootstrap-table2-filter";
+import paginationFactory                                    from "react-bootstrap-table2-paginator";
+import { Link }                                             from "react-router-dom";
 
-const LoadingComponent = () => <div className="text-center"><Spinner style={{width: '3rem', height: '3rem'}}/></div>;
+const LoadingComponent = () => <div className="text-center"><Spinner style={{width: "3rem", height: "3rem"}}/></div>;
 
 export default class SearchByExpression extends Component {
+    static propTypes = {
+        searchParameters: PropTypes.shape({
+            tRFType: PropTypes.string.isRequired,
+            aminoacids: PropTypes.arrayOf(PropTypes.string).isRequired,
+            anticodons: PropTypes.arrayOf(PropTypes.string).isRequired,
+            dataset: PropTypes.arrayOf(PropTypes.string).isRequired,
+            tissueType: PropTypes.arrayOf(PropTypes.string).isRequired,
+            minRPM: PropTypes.number.isRequired,
+        }),
+    };
+
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -23,7 +35,7 @@ export default class SearchByExpression extends Component {
         this.setState({
             isLoaded: true,
             error: message,
-        })
+        });
     }
 
     static cleanParameterArray(searchParameter, name) {
@@ -59,10 +71,10 @@ export default class SearchByExpression extends Component {
     async getSearchResult() {
         try {
             const searchParameters = SearchByExpression.parseSearchParameters(this.props.searchParameters);
-            const response = await axios.post('/api/browseByExpression', searchParameters);
+            const response = await axios.post("/api/browseByExpression", searchParameters);
             const data = this.responseHandler(response);
             if (data) {
-                const response1 = await axios.get('/api/browseByExpression/types');
+                const response1 = await axios.get("/api/browseByExpression/types");
                 const types = this.responseHandler(response1);
                 if (types) {
                     this.setState({
@@ -87,47 +99,49 @@ export default class SearchByExpression extends Component {
         const isError = this.state.error !== null;
         const errorMessage = this.state.error;
         const columns = [{
-            dataField: 'name',
-            text: 'Fragment',
+            dataField: "name",
+            text: "Fragment",
             filter: textFilter(),
             sort: true,
         }, {
-            dataField: 'type',
-            text: 'Fragment Type',
+            dataField: "type",
+            text: "Fragment Type",
             filter: selectFilter({
-                options: this.state.types
+                options: this.state.types,
             }),
             sort: true,
         }, {
-            dataField: 'aminoacids',
-            text: 'Aminoacids',
+            dataField: "aminoacids",
+            text: "Aminoacids",
             sort: true,
             filter: textFilter(),
             formatter: (cell) => {
                 if (!Array.isArray(cell)) {
-                    cell = [cell]
+                    cell = [cell];
                 }
                 return cell.join(", ");
-            }
+            },
         }, {
-            dataField: 'anticodons',
-            text: 'Anticodons',
+            dataField: "anticodons",
+            text: "Anticodons",
             sort: true,
             filter: textFilter(),
             formatter: (cell) => {
                 if (!Array.isArray(cell)) {
-                    cell = [cell]
+                    cell = [cell];
                 }
                 return cell.join(", ");
-            }
+            },
         }, {
-            dataField: 'action',
-            text: 'Action',
+            dataField: "action",
+            text: "Action",
             sort: false,
             isDummyField: true,
-            formatter: (cell, row) => {
-                return <Link to={"/fragments/" + row.id} className="btn btn-sm btn-outline-info"><i className="fas fa-info-circle" /> Details</Link>;
-            }
+            formatter: (cell, row) => (
+                <Link to={"/fragments/" + row.id} className="btn btn-sm btn-outline-info">
+                    <i className="fas fa-info-circle"/> Details
+                </Link>
+            ),
         }];
         return (
             <Row>

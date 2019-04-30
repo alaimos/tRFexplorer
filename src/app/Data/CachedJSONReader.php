@@ -7,6 +7,10 @@ namespace App\Data;
 use Cache;
 use Storage;
 
+/**
+ * Class CachedJSONReader
+ * @package App\Data
+ */
 class CachedJSONReader
 {
 

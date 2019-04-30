@@ -4,6 +4,10 @@
 namespace App\Data;
 
 
+/**
+ * Common definitions
+ * @package App\Data
+ */
 class Common
 {
 

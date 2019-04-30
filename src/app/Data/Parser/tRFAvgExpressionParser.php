@@ -9,12 +9,12 @@ use RuntimeException;
 class tRFAvgExpressionParser extends AbstractParser
 {
 
-    private $tRFByDataset          = [];
-    private $tRFByTissueType       = [];
+    private $tRFByDataset = [];
+    private $tRFByTissueType = [];
     private $tRFByDatasetAndTissue = [];
-    private $tissueTypes           = [];
-    private $tissueTypesByDataset  = [];
-    private $datasets              = [];
+    private $tissueTypes = [];
+    private $tissueTypesByDataset = [];
+    private $datasets = [];
 
     /**
      * Run this parser
@@ -38,17 +38,17 @@ class tRFAvgExpressionParser extends AbstractParser
                 $num = count($data);
                 if ($num != 4) continue;
                 $dataset = trim($data[0]);
-                $type    = trim($data[1]);
-                $tRF     = trim($data[2]);
-                $avg     = doubleval(trim($data[3]));
+                $type = trim($data[1]);
+                $tRF = trim($data[2]);
+                $avg = doubleval(trim($data[3]));
                 if (!isset($this->tRFByTissueType[$type])) {
                     $this->tRFByTissueType[$type] = [];
-                    $this->tissueTypes[$type]     = $type;
+                    $this->tissueTypes[$type] = $type;
                 }
                 if (!isset($this->tRFByDataset[$dataset])) {
-                    $this->tRFByDataset[$dataset]          = [];
+                    $this->tRFByDataset[$dataset] = [];
                     $this->tRFByDatasetAndTissue[$dataset] = [];
-                    $this->datasets[$dataset]              = $dataset;
+                    $this->datasets[$dataset] = $dataset;
                 }
                 if (!isset($this->tRFByDatasetAndTissue[$dataset][$type])) {
                     $this->tRFByDatasetAndTissue[$dataset][$type] = [];
@@ -56,10 +56,10 @@ class tRFAvgExpressionParser extends AbstractParser
                 if (!isset($this->tissueTypesByDataset[$dataset])) {
                     $this->tissueTypesByDataset[$dataset] = [];
                 }
-                $this->tRFByDataset[$dataset][$tRF]                 = min($avg, $this->tRFByDataset[$dataset][$tRF] ?? INF);
-                $this->tRFByTissueType[$type][$tRF]                 = min($avg, $this->tRFByTissueType[$type][$tRF] ?? INF);
+                $this->tRFByDataset[$dataset][$tRF] = min($avg, $this->tRFByDataset[$dataset][$tRF] ?? INF);
+                $this->tRFByTissueType[$type][$tRF] = min($avg, $this->tRFByTissueType[$type][$tRF] ?? INF);
                 $this->tRFByDatasetAndTissue[$dataset][$type][$tRF] = $avg;
-                $this->tissueTypesByDataset[$dataset][$type]        = $type;
+                $this->tissueTypesByDataset[$dataset][$type] = $type;
             }
             fclose($handle);
         } else {

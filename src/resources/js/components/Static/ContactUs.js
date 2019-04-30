@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Card, CardText, CardBody, CardFooter, CardHeader, Container, Row, Col, Button} from 'reactstrap';
+import React, { Component }    from "react";
+import { Container, Row, Col } from "reactstrap";
 
 export default class ContactUs extends Component {
 

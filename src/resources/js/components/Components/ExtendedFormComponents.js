@@ -1,7 +1,7 @@
-import React from 'react';
-import {pick} from "lodash";
-import {Input, FormFeedback} from 'reactstrap';
-import {Field as FormikField, ErrorMessage as FormikErrorMessage} from "formik";
+import React                                                        from "react";
+import { pick }                                                     from "lodash";
+import { Input, FormFeedback }                                      from "reactstrap";
+import { Field as FormikField, ErrorMessage as FormikErrorMessage } from "formik";
 
 
 export function Field({children, onComponentRender = null, ...props}) {
@@ -17,7 +17,7 @@ export function Field({children, onComponentRender = null, ...props}) {
         }
         return <Input {...field} {...innerProps}>{children}</Input>;
     };
-    return <FormikField {...props} component={renderComponent}/>
+    return <FormikField {...props} component={renderComponent}/>;
 }
 
 const OPTION_MAPPER = ([k, v]) => <option key={k} value={k}>{v}</option>;
@@ -39,7 +39,7 @@ export function Select({options, addEmpty = false, emptyText = "", ...props}) {
             return {field: newFields};
         };
     }
-    return <Field {...props}>{entries}</Field>
+    return <Field {...props}>{entries}</Field>;
 }
 
 const ensureArray = (value) => {
@@ -76,10 +76,10 @@ export function ChainedSelect({options, addEmpty = false, emptyText = "", chainT
             return {children: entries};
         }
     };
-    return <Field {...props} onComponentRender={onComponentRender}/>
+    return <Field {...props} onComponentRender={onComponentRender}/>;
 }
 
 export function ErrorMessage(props) {
     const renderComponent = msg => (<FormFeedback tooltip>{msg}</FormFeedback>);
-    return <FormikErrorMessage {...props} render={renderComponent}/>
+    return <FormikErrorMessage {...props} render={renderComponent}/>;
 }

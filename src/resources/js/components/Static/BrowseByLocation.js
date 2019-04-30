@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
-import {Breadcrumb, BreadcrumbItem} from 'reactstrap';
-import {Container, Row, Col} from 'reactstrap';
-import styled from 'styled-components';
+import React, { Component }           from "react";
+import { Link }                       from "react-router-dom";
+import { Breadcrumb, BreadcrumbItem } from "reactstrap";
+import { Container, Row, Col }        from "reactstrap";
+import styled                         from "styled-components";
 
 const ContainerDiv = styled.div`
   position: relative;

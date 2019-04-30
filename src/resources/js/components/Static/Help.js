@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Card, CardText, CardBody, CardFooter, CardHeader, Container, Row, Col, Button} from 'reactstrap';
+import React, { Component } from "react";
+import { Container }        from "reactstrap";
 
 export default class Help extends Component {
 
