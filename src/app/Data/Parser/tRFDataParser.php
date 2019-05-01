@@ -4,7 +4,7 @@
 namespace App\Data\Parser;
 
 
-use App\Data\CachedJSONReader;
+use App\Data\CachedReader;
 use App\Data\Common;
 use RuntimeException;
 
@@ -19,7 +19,7 @@ class tRFDataParser extends AbstractParser
      */
     private function prepareTRNAData()
     {
-        $anticodons = CachedJSONReader::read(Common::TRF_BY_ANTICODON_FILE, 'local', true);
+        $anticodons = CachedReader::json(Common::TRF_BY_ANTICODON_FILE, 'local', true);
         foreach ($anticodons as $anticodon => $tRFs) {
             foreach ($tRFs as $tRF) {
                 if (!isset($this->tRNAData[$tRF])) {
@@ -32,13 +32,13 @@ class tRFDataParser extends AbstractParser
                 $this->tRNAData[$tRF]['anticodons'][$anticodon] = $anticodon;
             }
         }
-        $aminoacids = CachedJSONReader::read(Common::TRF_BY_AMINOACID_FILE, 'local', true);
+        $aminoacids = CachedReader::json(Common::TRF_BY_AMINOACID_FILE, 'local', true);
         foreach ($aminoacids as $aminoacid => $tRFs) {
             foreach ($tRFs as $tRF) {
                 $this->tRNAData[$tRF]['aminoacids'][$aminoacid] = $aminoacid;
             }
         }
-        $types = CachedJSONReader::read(Common::TRF_BY_TYPE_FILE, 'local', true);
+        $types = CachedReader::json(Common::TRF_BY_TYPE_FILE, 'local', true);
         foreach ($types as $type => $tRFs) {
             foreach ($tRFs as $tRF) {
                 $this->tRNAData[$tRF]['type'] = $type;
@@ -57,7 +57,12 @@ class tRFDataParser extends AbstractParser
         self::writeJsonFile(Common::TRF_DATA_FILE, $this->tRFData);
     }
 
-    private static function getDescriptionArray($data)
+    /**
+     * @param string $data
+     *
+     * @return array
+     */
+    private static function getDescriptionArray(string $data)
     {
         $matches = null;
         preg_match_all('/(\w+)\s+"([A-Za-z0-9\-\_]+)"/', $data, $matches, PREG_SET_ORDER);

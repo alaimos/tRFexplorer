@@ -2,8 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Data\Common;
 use App\Data\Parser\tRFAvgExpressionParser;
+use App\Data\Parser\tRFClinicalDataParser;
 use App\Data\Parser\tRFDataParser;
+use App\Data\Parser\tRFExpressionDataParser;
 use App\Data\Parser\tRFListParser;
 use Cache;
 use Exception;
@@ -51,6 +54,32 @@ class ParseRawData extends Command
             $this->info("OK!");
             $this->info("Preparing tRF descriptions");
             (new tRFDataParser(resource_path('data/tRNA.fragments.hg19.tsv')))->run();
+            $this->info("OK!");
+            $this->info("Preparing NCI60 expression matrices");
+            (new tRFExpressionDataParser(
+                resource_path('data/NCI60_RPM_matrix.tsv'),
+                Common::NCI60_RPM_MATRIX
+            ))->run();
+            (new tRFExpressionDataParser(
+                resource_path('data/NCI60_TPM_matrix.tsv'),
+                Common::NCI60_TPM_MATRIX
+            ))->run();
+            $this->info("OK!");
+            $this->info("Preparing TCGA expression matrices");
+            (new tRFClinicalDataParser(
+                resource_path('data/TCGA_clinical.tsv'),
+                Common::TCGA_CLINICAL
+            ))->run();
+            (new tRFExpressionDataParser(
+                resource_path('data/TCGA_RPM_matrix.tsv'),
+                Common::TCGA_RPM_MATRIX,
+                Common::TCGA_CLINICAL
+            ))->run();
+            (new tRFExpressionDataParser(
+                resource_path('data/TCGA_TPM_matrix.tsv'),
+                Common::TCGA_TPM_MATRIX,
+                Common::TCGA_CLINICAL
+            ))->run();
             $this->info("OK!");
             $this->info("Flushing cache");
             Cache::flush();

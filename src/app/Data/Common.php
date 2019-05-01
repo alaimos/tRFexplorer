@@ -26,4 +26,9 @@ class Common
     const TISSUE_TYPES_FILE              = 'data/tissueTypes.json';
     const DATASETS_FILE                  = 'data/datasets.json';
     const TRF_DATA_FILE                  = 'data/tRF.data.json';
+    const NCI60_RPM_MATRIX               = 'data/NCI60/rpm/%s.json';
+    const NCI60_TPM_MATRIX               = 'data/NCI60/tpm/%s.json';
+    const TCGA_CLINICAL                  = 'data/TCGA.clinical.json';
+    const TCGA_RPM_MATRIX                = 'data/TCGA/rpm/%s.json';
+    const TCGA_TPM_MATRIX                = 'data/TCGA/tpm/%s.json';
 }

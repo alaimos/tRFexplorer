@@ -13,11 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::namespace('API')->group(function () {
-    Route::get('/browseByExpression', 'BrowseByExpression@formData');
-    Route::get('/browseByExpression/types', 'BrowseByExpression@types');
-    Route::post('/browseByExpression', 'BrowseByExpression@search');
-});
+Route::namespace('API')->group(
+    function () {
+        Route::get('/browseByExpression', 'BrowseByExpression@formData');
+        Route::get('/browseByExpression/types', 'BrowseByExpression@types');
+        Route::post('/browseByExpression', 'BrowseByExpression@search');
+        Route::get('/fragments/{fragment}', 'FragmentController@show');
+        Route::get('/data/clinical', 'DataController@clinical');
+    }
+);
 
 /*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

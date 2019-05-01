@@ -1,13 +1,7 @@
-import React    from 'react';
-import { pick } from 'lodash';
-import {
-    Input,
-    FormFeedback,
-}               from 'reactstrap';
-import {
-    Field as FormikField,
-    ErrorMessage as FormikErrorMessage,
-}               from 'formik';
+import React                                                        from 'react';
+import { pick }                                                     from 'lodash';
+import { Input, FormFeedback }                                      from 'reactstrap';
+import { Field as FormikField, ErrorMessage as FormikErrorMessage } from 'formik';
 
 export function Field ({ children, onComponentRender = null, ...props }) {
     const renderComponent = ({ field, form, ...innerProps }) => {
@@ -26,8 +20,7 @@ export function Field ({ children, onComponentRender = null, ...props }) {
 }
 
 const OPTION_MAPPER = ([k, v]) => <option key={k} value={k}>{v}</option>;
-const EMPTY_OPTION = (emptyText) => <option key="__EMPTY__"
-                                            value="">{emptyText}</option>;
+const EMPTY_OPTION = (emptyText) => <option key="__EMPTY__" value="">{emptyText}</option>;
 
 export function Select ({ options, addEmpty = false, emptyText = '', ...props }) {
     props['type'] = 'select';

@@ -8,7 +8,7 @@ use Exception;
 use App\Data\Common;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use App\Data\CachedJSONReader;
+use App\Data\CachedReader;
 use App\Http\Controllers\Controller;
 
 /**
@@ -30,11 +30,11 @@ class BrowseByExpression extends Controller
         $data = null;
         try {
             $data = [
-                'types'                 => CachedJSONReader::read(Common::TYPES_FILE),
-                'aminoacids'            => CachedJSONReader::read(Common::AMINOACIDS_FILE),
-                'anticodonsByAminoacid' => CachedJSONReader::read(Common::ANTICODONS_BY_AMINOACID_FILE),
-                'datasets'              => CachedJSONReader::read(Common::DATASETS_FILE),
-                'tissueTypesByDataset'  => CachedJSONReader::read(Common::TISSUE_TYPES_BY_DATASET_FILE),
+                'types'                 => CachedReader::json(Common::TYPES_FILE),
+                'aminoacids'            => CachedReader::json(Common::AMINOACIDS_FILE),
+                'anticodonsByAminoacid' => CachedReader::json(Common::ANTICODONS_BY_AMINOACID_FILE),
+                'datasets'              => CachedReader::json(Common::DATASETS_FILE),
+                'tissueTypesByDataset'  => CachedReader::json(Common::TISSUE_TYPES_BY_DATASET_FILE),
             ];
         } catch (Exception $e) {
             $error = true;
@@ -66,7 +66,7 @@ class BrowseByExpression extends Controller
      */
     private function filterList(array $list, string $mapFile, array $selection): array
     {
-        $all = CachedJSONReader::read($mapFile);
+        $all = CachedReader::json($mapFile);
         $result = array_intersect(
             $list,
             array_unique(
@@ -106,7 +106,7 @@ class BrowseByExpression extends Controller
         if (Cache::has($key)) {
             $selected = Cache::get($key);
         } else {
-            $all = CachedJSONReader::read(Common::TRF_BY_DATASET_AND_TISSUE_FILE);
+            $all = CachedReader::json(Common::TRF_BY_DATASET_AND_TISSUE_FILE);
             $allDatasets = empty($datasets);
             $allTissues = empty($tissues);
             $selected = [];
@@ -147,7 +147,7 @@ class BrowseByExpression extends Controller
             return Cache::get($key);
         }
         $table = [];
-        $data = CachedJSONReader::read(Common::TRF_DATA_FILE);
+        $data = CachedReader::json(Common::TRF_DATA_FILE);
         foreach ($tRFList as $tRF) {
             if (isset($data[$tRF])) {
                 $table[] = [
@@ -177,7 +177,7 @@ class BrowseByExpression extends Controller
         $message = '';
         $data = null;
         try {
-            $tRFList = CachedJSONReader::read(Common::TRF_LIST);
+            $tRFList = CachedReader::json(Common::TRF_LIST);
             $tRFType = trim($request->get('tRFType', ''));
             $minRPM = floatval(trim($request->get('minRPM', '1')));
             $aminoacids = array_filter(array_map('trim', (array)$request->get('aminoacids', [])));
@@ -223,7 +223,7 @@ class BrowseByExpression extends Controller
         $message = '';
         $data = null;
         try {
-            $data = CachedJSONReader::read(Common::TYPES_FILE);
+            $data = CachedReader::json(Common::TYPES_FILE);
         } catch (Exception $e) {
             $error = true;
             $message = 'Exception ' . get_class($e) . ': ' . $e->getMessage();

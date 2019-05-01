@@ -1,19 +1,14 @@
-import PropTypes                                            from 'prop-types';
-import React, { Component }                                 from 'react';
-import axios                                                from 'axios';
-import { Alert, Card, CardBody, Row, Col, Button, Spinner } from 'reactstrap';
+import PropTypes                                   from 'prop-types';
+import React, { Component }                        from 'react';
+import axios                                       from 'axios';
+import { Card, CardBody, Row, Col }                from 'reactstrap';
 import BootstrapTable
-                                                            from 'react-bootstrap-table-next';
-import filterFactory, {
-    textFilter,
-    selectFilter,
-}                                                           from 'react-bootstrap-table2-filter';
+                                                   from 'react-bootstrap-table-next';
+import filterFactory, { textFilter, selectFilter } from 'react-bootstrap-table2-filter';
 import paginationFactory
-                                                            from 'react-bootstrap-table2-paginator';
-import { Link }                                             from 'react-router-dom';
-
-const LoadingComponent = () => <div className="text-center"><Spinner
-    style={{ width: '3rem', height: '3rem' }}/></div>;
+                                                   from 'react-bootstrap-table2-paginator';
+import { Link }                                    from 'react-router-dom';
+import { ErrorComponent, LoadingComponent }        from './CommonComponent';
 
 export default class SearchByExpression extends Component {
     static propTypes = {
@@ -52,14 +47,10 @@ export default class SearchByExpression extends Component {
     static parseSearchParameters (searchParameters) {
         const parameters = { ...searchParameters };
         parameters.tRFType = parameters.tRFType || '';
-        parameters.aminoacids = this.cleanParameterArray(searchParameters,
-            'aminoacids');
-        parameters.anticodons = this.cleanParameterArray(searchParameters,
-            'anticodons');
-        parameters.dataset = this.cleanParameterArray(searchParameters,
-            'dataset');
-        parameters.tissueType = this.cleanParameterArray(searchParameters,
-            'tissueType');
+        parameters.aminoacids = this.cleanParameterArray(searchParameters, 'aminoacids');
+        parameters.anticodons = this.cleanParameterArray(searchParameters, 'anticodons');
+        parameters.dataset = this.cleanParameterArray(searchParameters, 'dataset');
+        parameters.tissueType = this.cleanParameterArray(searchParameters, 'tissueType');
         parameters.minRPM = parameters.minRPM || 0;
         return parameters;
     }
@@ -80,14 +71,11 @@ export default class SearchByExpression extends Component {
 
     async getSearchResult () {
         try {
-            const searchParameters = SearchByExpression.parseSearchParameters(
-                this.props.searchParameters);
-            const response = await axios.post('/api/browseByExpression',
-                searchParameters);
+            const searchParameters = SearchByExpression.parseSearchParameters(this.props.searchParameters);
+            const response = await axios.post('/api/browseByExpression', searchParameters);
             const data = this.responseHandler(response);
             if (data) {
-                const response1 = await axios.get(
-                    '/api/browseByExpression/types');
+                const response1 = await axios.get('/api/browseByExpression/types');
                 const types = this.responseHandler(response1);
                 if (types) {
                     this.setState({
@@ -110,7 +98,6 @@ export default class SearchByExpression extends Component {
         const data = this.state.data;
         const isLoaded = this.state.isLoaded;
         const isError = this.state.error !== null;
-        const errorMessage = this.state.error;
         const columns = [
             {
                 dataField: 'name',
@@ -152,8 +139,7 @@ export default class SearchByExpression extends Component {
                 sort: false,
                 isDummyField: true,
                 formatter: (cell, row) => (
-                    <Link to={'/fragments/' + row.id}
-                          className="btn btn-sm btn-outline-info">
+                    <Link to={'/fragments/' + row.id} className="btn btn-sm btn-outline-info">
                         <i className="fas fa-info-circle"/> Details
                     </Link>
                 ),
@@ -165,18 +151,10 @@ export default class SearchByExpression extends Component {
                         <CardBody>
                             {isLoaded ? (
                                 isError ? (
-                                    <Alert color="danger">
-                                        <h4 className="alert-heading">Error!</h4>
-                                        <p>{errorMessage}</p>
-                                    </Alert>
+                                    <ErrorComponent errorMessage={this.state.error}/>
                                 ) : (
-                                    <BootstrapTable
-                                        data={data}
-                                        columns={columns}
-                                        pagination={paginationFactory()}
-                                        filter={filterFactory()}
-                                        keyField="id"
-                                    />
+                                    <BootstrapTable data={data} columns={columns} pagination={paginationFactory()}
+                                                    filter={filterFactory()} keyField="id"/>
                                 )
                             ) : (
                                 <LoadingComponent/>

@@ -2,14 +2,15 @@ import React, { Component }             from 'react';
 import ReactDOM                         from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header                           from './Layout/Header';
-import Home                             from './Static/Home';
-import Error404                         from './Static/Error404';
+import Home                             from './Pages/Home';
+import Error404                         from './Pages/Error404';
 import Footer                           from './Layout/Footer';
-import ContactUs                        from './Static/ContactUs';
-import Help                             from './Static/Help';
-import Browse                           from './Static/Browse';
-import BrowseByLocation                 from './Static/BrowseByLocation';
-import BrowseByExpression               from './Static/BrowseByExpression';
+import ContactUs                        from './Pages/ContactUs';
+import Help                             from './Pages/Help';
+import Browse                           from './Pages/Browse';
+import BrowseByLocation                 from './Pages/BrowseByLocation';
+import BrowseByExpression               from './Pages/BrowseByExpression';
+import Fragment                         from './Pages/Fragment';
 
 class App extends Component {
     constructor (props) {
@@ -28,11 +29,10 @@ class App extends Component {
                 <main role="main" className="flex-shrink-0">
                     <Switch>
                         <Route exact path="/" component={Home}/>
-                        <Route path="/fragments/:id" component={Home}/>
-                        <Route path="/browse/byLocation"
-                               component={BrowseByLocation}/>
-                        <Route path="/browse/byExpression"
-                               component={BrowseByExpression}/>
+                        <Route path="/fragments/:id" component={Fragment}/>
+                        <Route path="/fragments" component={Browse}/>
+                        <Route path="/browse/byLocation" component={BrowseByLocation}/>
+                        <Route path="/browse/byExpression" component={BrowseByExpression}/>
                         <Route path="/browse" component={Browse}/>
                         <Route path="/help" component={Help}/>
                         <Route path="/contactus" component={ContactUs}/>

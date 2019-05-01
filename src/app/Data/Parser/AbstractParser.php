@@ -48,5 +48,37 @@ abstract class AbstractParser
         Storage::disk('local')->put($filename, json_encode($data));
     }
 
+    /**
+     * Write array to PHP data file in storage folder
+     *
+     * @param string $filename
+     * @param array  $data
+     */
+    protected static function writePhpFile(string $filename, array $data): void
+    {
+        $content = "return " . var_export($data, true) . ";";
+        Storage::disk('local')->put($filename, $content);
+    }
+
+    /**
+     * @param string        $data
+     * @param mixed         $repl
+     * @param null|callable $conv
+     *
+     * @return mixed|string
+     */
+    protected static function handleNA(string $data, $repl = NAN, $conv = null)
+    {
+        if ($data == "NA" || $data == "na") {
+            return $repl;
+        } else {
+            if ($conv !== null && is_callable($conv)) {
+                return call_user_func($conv, $data);
+            } else {
+                return $data;
+            }
+        }
+    }
+
 
 }

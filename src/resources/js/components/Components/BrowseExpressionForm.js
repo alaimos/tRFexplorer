@@ -1,16 +1,11 @@
-import PropTypes                                            from 'prop-types';
-import React, { Component }                                 from 'react';
-import axios                                                from 'axios';
-import { Alert, Card, CardBody, Row, Col, Button, Spinner } from 'reactstrap';
-import { FormGroup, Label }                                 from 'reactstrap';
-import { Formik, Form }                                     from 'formik';
-import { ChainedSelect, Field, Select, ErrorMessage }       from './ExtendedFormComponents';
-
-const LoadingComponent = () => (
-    <div className="text-center">
-        <Spinner style={{ width: '3rem', height: '3rem' }}/>
-    </div>
-);
+import PropTypes                                      from 'prop-types';
+import React, { Component }                           from 'react';
+import axios                                          from 'axios';
+import { Card, CardBody, Row, Col, Button }           from 'reactstrap';
+import { FormGroup, Label }                           from 'reactstrap';
+import { Formik, Form }                               from 'formik';
+import { ChainedSelect, Field, Select, ErrorMessage } from './ExtendedFormComponents';
+import { ErrorComponent, LoadingComponent }           from './CommonComponent';
 
 export default class BrowseExpressionForm extends Component {
 
@@ -65,7 +60,6 @@ export default class BrowseExpressionForm extends Component {
         const data = this.state.data;
         const isLoaded = this.state.isLoaded;
         const isError = this.state.error !== null;
-        const errorMessage = this.state.error;
         const initialFormState = this.initialFormState;
         return (
             <Row>
@@ -74,62 +68,36 @@ export default class BrowseExpressionForm extends Component {
                         <CardBody>
                             {isLoaded ? (
                                 isError ? (
-                                    <Alert color="danger">
-                                        <h4 className="alert-heading">
-                                            Error!
-                                        </h4>
-                                        <p>{errorMessage}</p>
-                                    </Alert>
+                                    <ErrorComponent errorMessage={this.state.error}/>
                                 ) : (
-                                    <Formik initialValues={initialFormState}
-                                            onSubmit={this.props.submitHandler}>
+                                    <Formik initialValues={initialFormState} onSubmit={this.props.submitHandler}>
                                         <Form>
                                             <Row>
                                                 <Col md={6}>
                                                     <Row>
                                                         <Col md={12}>
                                                             <FormGroup>
-                                                                <Label
-                                                                    for="tRFType">Filter
-                                                                    by fragment
-                                                                    type</Label>
-                                                                <Select
-                                                                    name="tRFType"
-                                                                    addEmpty
-                                                                    emptyText="All"
-                                                                    options={data.types}/>
+                                                                <Label for="tRFType">Filter by fragment type</Label>
+                                                                <Select name="tRFType" addEmpty emptyText="All"
+                                                                        options={data.types}/>
                                                             </FormGroup>
                                                         </Col>
                                                     </Row>
                                                     <Row>
                                                         <Col sm={6}>
                                                             <FormGroup>
-                                                                <Label
-                                                                    for="aminoacids">Filter
-                                                                    by
-                                                                    aminoacid</Label>
-                                                                <Select
-                                                                    name="aminoacids"
-                                                                    addEmpty
-                                                                    emptyText="All"
-                                                                    multiple
-                                                                    options={data.aminoacids}/>
+                                                                <Label for="aminoacids">Filter by aminoacid</Label>
+                                                                <Select name="aminoacids" addEmpty emptyText="All"
+                                                                        multiple options={data.aminoacids}/>
                                                             </FormGroup>
                                                         </Col>
                                                         <Col sm={6}>
                                                             <FormGroup>
-                                                                <Label
-                                                                    for="anticodons">Filter
-                                                                    by
-                                                                    anticodon</Label>
-                                                                <ChainedSelect
-                                                                    name="anticodons"
-                                                                    addEmpty
-                                                                    emptyText="All"
-                                                                    chainTo="aminoacids"
-                                                                    emptyChained
-                                                                    multiple
-                                                                    options={data.anticodonsByAminoacid}/>
+                                                                <Label for="anticodons">Filter by anticodon</Label>
+                                                                <ChainedSelect name="anticodons" addEmpty
+                                                                               emptyText="All" chainTo="aminoacids"
+                                                                               emptyChained multiple
+                                                                               options={data.anticodonsByAminoacid}/>
                                                             </FormGroup>
                                                         </Col>
                                                     </Row>
@@ -138,33 +106,18 @@ export default class BrowseExpressionForm extends Component {
                                                     <Row>
                                                         <Col sm={6}>
                                                             <FormGroup>
-                                                                <Label
-                                                                    for="dataset">Filter
-                                                                    by
-                                                                    dataset</Label>
-                                                                <Select size="9"
-                                                                        name="dataset"
-                                                                        addEmpty
-                                                                        emptyText="All"
-                                                                        multiple
-                                                                        options={data.datasets}/>
+                                                                <Label for="dataset">Filter by dataset</Label>
+                                                                <Select size="9" name="dataset" addEmpty emptyText="All"
+                                                                        multiple options={data.datasets}/>
                                                             </FormGroup>
                                                         </Col>
                                                         <Col sm={6}>
                                                             <FormGroup>
-                                                                <Label
-                                                                    for="tissueType">Filter
-                                                                    by tissue
-                                                                    type</Label>
-                                                                <ChainedSelect
-                                                                    size="9"
-                                                                    name="tissueType"
-                                                                    addEmpty
-                                                                    emptyText="All"
-                                                                    chainTo="dataset"
-                                                                    emptyChained
-                                                                    multiple
-                                                                    options={data.tissueTypesByDataset}/>
+                                                                <Label for="tissueType">Filter by tissue type</Label>
+                                                                <ChainedSelect size="9" name="tissueType" addEmpty
+                                                                               emptyText="All" chainTo="dataset"
+                                                                               emptyChained multiple
+                                                                               options={data.tissueTypesByDataset}/>
                                                             </FormGroup>
                                                         </Col>
                                                     </Row>
@@ -176,10 +129,8 @@ export default class BrowseExpressionForm extends Component {
                                                         <Label for="minRPM">
                                                             Minimum RPM value
                                                         </Label>
-                                                        <Field name="minRPM"
-                                                               type="number"/>
-                                                        <ErrorMessage
-                                                            name="minRPM"/>
+                                                        <Field name="minRPM" type="number"/>
+                                                        <ErrorMessage name="minRPM"/>
                                                     </FormGroup>
                                                 </Col>
                                             </Row>
