@@ -11,13 +11,36 @@ import MultiBoxplot                                           from './MultiBoxpl
 
 configureAnchors({ offset: -60 });
 
-const makeBarTrace = (data, name, visible) => ({
-    x: Object.keys(data),
-    y: Object.values(data),
-    name,
-    visible,
-    type: 'bar',
-});
+const makeBarTraces = (data, clinical) => {
+    const all_samples = clinical['samples'];
+    const all_tissues = clinical['tissue'];
+    const ys = {};
+    const xs = {};
+    const tissues = [];
+    for (let i = 0; i < data.length; i++) {
+        if (all_samples[i] !== null && all_tissues[i] !== null && data[i] !== null) {
+            if (ys[all_tissues[i]] === undefined) {
+                ys[all_tissues[i]] = [];
+                xs[all_tissues[i]] = [];
+                tissues.push(all_tissues[i]);
+            }
+            ys[all_tissues[i]].push(data[i]);
+            xs[all_tissues[i]].push(all_samples[i]);
+        }
+    }
+    tissues.sort();
+    return tissues.map(k => {
+        const x = xs[k];
+        const y = ys[k];
+        return {
+            x,
+            y,
+            name: k,
+            visible: true,
+            type: 'bar',
+        };
+    });
+};
 
 export default class TRFComponent extends React.Component {
 
@@ -107,9 +130,7 @@ export default class TRFComponent extends React.Component {
     }
 
     nci60Graph () {
-        const data = [
-            makeBarTrace(this.state.data.NCI60.RPM, 'RPM', true),
-        ];
+        const data = makeBarTraces(this.state.data.NCI60.RPM, this.state.clinical.NCI60);
         const layout = {
             autosize: true,
         };
@@ -139,7 +160,7 @@ export default class TRFComponent extends React.Component {
                     <ScrollableAnchor id="tcga">
                         <h3>Expression in TCGA</h3>
                     </ScrollableAnchor>
-                    <MultiBoxplot data={this.state.data.TCGA.RPM} clinical={this.state.clinical} />
+                    <MultiBoxplot data={this.state.data.TCGA.RPM} clinical={this.state.clinical.TCGA}/>
                 </Col>
             </Row>
         );

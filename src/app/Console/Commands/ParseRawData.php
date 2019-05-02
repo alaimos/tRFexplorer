@@ -56,13 +56,19 @@ class ParseRawData extends Command
             (new tRFDataParser(resource_path('data/tRNA.fragments.hg19.tsv')))->run();
             $this->info("OK!");
             $this->info("Preparing NCI60 expression matrices");
+            (new tRFClinicalDataParser(
+                resource_path('data/NCI60_clinical.tsv'),
+                Common::NCI60_CLINICAL
+            ))->run();
             (new tRFExpressionDataParser(
                 resource_path('data/NCI60_RPM_matrix.tsv'),
-                Common::NCI60_RPM_MATRIX
+                Common::NCI60_RPM_MATRIX,
+                Common::NCI60_CLINICAL
             ))->run();
             (new tRFExpressionDataParser(
                 resource_path('data/NCI60_TPM_matrix.tsv'),
-                Common::NCI60_TPM_MATRIX
+                Common::NCI60_TPM_MATRIX,
+                Common::NCI60_CLINICAL
             ))->run();
             $this->info("OK!");
             $this->info("Preparing TCGA expression matrices");

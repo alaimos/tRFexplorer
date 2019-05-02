@@ -30,7 +30,10 @@ class DataController extends Controller
         $message = '';
         $data = null;
         try {
-            $data = CachedReader::json(Common::TCGA_CLINICAL);
+            $data = [
+                'NCI60' => CachedReader::json(Common::NCI60_CLINICAL),
+                'TCGA'  => CachedReader::json(Common::TCGA_CLINICAL),
+            ];
         } catch (Exception $e) {
             $error = true;
             $message = 'Exception ' . get_class($e) . ': ' . $e->getMessage();
