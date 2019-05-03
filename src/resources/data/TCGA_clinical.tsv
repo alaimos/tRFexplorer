@@ -3328,10 +3328,10 @@ TCGA-BF-A3DJ-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM BRAF_Hot
 TCGA-BF-A3DL-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM BRAF_Hotspot_Mutants
 TCGA-BF-A3DM-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM BRAF_Hotspot_Mutants
 TCGA-BF-A3DN-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM BRAF_Hotspot_Mutants
-TCGA-BF-A5EP-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM -
+TCGA-BF-A5EP-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	NA
 TCGA-BF-A5EQ-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM BRAF_Hotspot_Mutants
-TCGA-BF-A5ER-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM -
-TCGA-BF-A5ES-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM -
+TCGA-BF-A5ER-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	NA
+TCGA-BF-A5ES-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	NA
 TCGA-BF-A9VF-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	NA
 TCGA-BF-AAOU-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	NA
 TCGA-BF-AAOX-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	NA
@@ -5104,7 +5104,7 @@ TCGA-D3-A51K-06A	SKCM male	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM Tripl
 TCGA-D3-A51N-06A	SKCM female	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM BRAF_Hotspot_Mutants
 TCGA-D3-A51R-06A	SKCM male	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM RAS_Hotspot_Mutants
 TCGA-D3-A51T-06A	SKCM female	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM RAS_Hotspot_Mutants
-TCGA-D3-A5GL-06A	SKCM male	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM -
+TCGA-D3-A5GL-06A	SKCM male	SKCM white	SKCM alive	SKCM metastatic	SKCM	NA
 TCGA-D3-A5GN-06A	SKCM female	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM BRAF_Hotspot_Mutants
 TCGA-D3-A5GS-06A	SKCM male	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM BRAF_Hotspot_Mutants
 TCGA-D3-A5GT-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	NA
@@ -6357,7 +6357,7 @@ TCGA-EB-A3XB-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM BRAF_Hotsp
 TCGA-EB-A3XC-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM BRAF_Hotspot_Mutants
 TCGA-EB-A3XD-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM BRAF_Hotspot_Mutants
 TCGA-EB-A3XE-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM BRAF_Hotspot_Mutants
-TCGA-EB-A3XF-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM -
+TCGA-EB-A3XF-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	NA
 TCGA-EB-A3Y6-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM BRAF_Hotspot_Mutants
 TCGA-EB-A3Y7-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM NF1_Any_Mutants
 TCGA-EB-A41A-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM NF1_Any_Mutants
@@ -6376,13 +6376,13 @@ TCGA-EB-A4IS-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM BRAF_Hotsp
 TCGA-EB-A4OY-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM Triple_WT
 TCGA-EB-A4OZ-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM BRAF_Hotspot_Mutants
 TCGA-EB-A4P0-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM BRAF_Hotspot_Mutants
-TCGA-EB-A4XL-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM -
-TCGA-EB-A51B-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM -
-TCGA-EB-A550-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM -
+TCGA-EB-A4XL-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	NA
+TCGA-EB-A51B-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	NA
+TCGA-EB-A550-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	NA
 TCGA-EB-A551-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM RAS_Hotspot_Mutants
 TCGA-EB-A57M-01A	SKCM male	SKCM asian	SKCM alive	SKCM tumor	SKCM	NA
-TCGA-EB-A5FP-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM -
-TCGA-EB-A5KH-06A	SKCM male	SKCM asian	SKCM alive	SKCM metastatic	SKCM	SKCM -
+TCGA-EB-A5FP-01A	SKCM female	SKCM white	SKCM alive	SKCM tumor	SKCM	NA
+TCGA-EB-A5KH-06A	SKCM male	SKCM asian	SKCM alive	SKCM metastatic	SKCM	NA
 TCGA-EB-A5SG-06A	SKCM female	SKCM white	SKCM alive	SKCM metastatic	SKCM	NA
 TCGA-EB-A5SH-06A	SKCM female	SKCM white	SKCM alive	SKCM metastatic	SKCM	NA
 TCGA-EB-A5UL-06A	SKCM male	SKCM white	SKCM alive	SKCM metastatic	SKCM	NA
@@ -6444,7 +6444,7 @@ TCGA-EE-A29P-06A	SKCM female	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM BRA
 TCGA-EE-A29Q-06A	SKCM female	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM RAS_Hotspot_Mutants
 TCGA-EE-A29R-06A	SKCM female	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM RAS_Hotspot_Mutants
 TCGA-EE-A29S-06A	SKCM male	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM RAS_Hotspot_Mutants
-TCGA-EE-A29T-06A	SKCM female	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM -
+TCGA-EE-A29T-06A	SKCM female	SKCM white	SKCM alive	SKCM metastatic	SKCM	NA
 TCGA-EE-A29V-06A	SKCM male	SKCM white	SKCM dead	SKCM metastatic	SKCM	SKCM RAS_Hotspot_Mutants
 TCGA-EE-A29W-06A	SKCM male	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM BRAF_Hotspot_Mutants
 TCGA-EE-A29X-06A	SKCM female	SKCM white	SKCM dead	SKCM metastatic	SKCM	SKCM RAS_Hotspot_Mutants
@@ -6936,15 +6936,15 @@ TCGA-ER-A19O-06A	SKCM male	SKCM white	SKCM dead	SKCM metastatic	SKCM	SKCM BRAF_H
 TCGA-ER-A19P-06A	SKCM female	SKCM white	SKCM dead	SKCM metastatic	SKCM	SKCM BRAF_Hotspot_Mutants
 TCGA-ER-A19Q-06A	SKCM female	SKCM white	SKCM dead	SKCM metastatic	SKCM	SKCM BRAF_Hotspot_Mutants
 TCGA-ER-A19S-06A	SKCM female	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM BRAF_Hotspot_Mutants
-TCGA-ER-A19T-01A	SKCM male	SKCM white	SKCM dead	SKCM tumor	SKCM	SKCM -
+TCGA-ER-A19T-01A	SKCM male	SKCM white	SKCM dead	SKCM tumor	SKCM	NA
 TCGA-ER-A19W-06A	SKCM female	SKCM white	SKCM dead	SKCM metastatic	SKCM	SKCM RAS_Hotspot_Mutants
 TCGA-ER-A1A1-06A	SKCM male	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM Triple_WT
 TCGA-ER-A2NB-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM RAS_Hotspot_Mutants
-TCGA-ER-A2NC-06A	SKCM male	SKCM white	SKCM dead	SKCM metastatic	SKCM	SKCM -
+TCGA-ER-A2NC-06A	SKCM male	SKCM white	SKCM dead	SKCM metastatic	SKCM	NA
 TCGA-ER-A2ND-06A	SKCM female	SKCM white	SKCM dead	SKCM metastatic	SKCM	SKCM BRAF_Hotspot_Mutants
 TCGA-ER-A2NE-06A	SKCM male	SKCM white	SKCM dead	SKCM metastatic	SKCM	SKCM RAS_Hotspot_Mutants
-TCGA-ER-A2NF-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM -
-TCGA-ER-A2NF-06A	SKCM male	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM -
+TCGA-ER-A2NF-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	NA
+TCGA-ER-A2NF-06A	SKCM male	SKCM white	SKCM alive	SKCM metastatic	SKCM	NA
 TCGA-ER-A2NG-06A	SKCM female	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM BRAF_Hotspot_Mutants
 TCGA-ER-A2NH-06A	SKCM male	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM RAS_Hotspot_Mutants
 TCGA-ER-A3ES-06A	SKCM male	SKCM white	SKCM dead	SKCM metastatic	SKCM	SKCM Triple_WT
@@ -7449,7 +7449,7 @@ TCGA-FV-A496-01A	LIHC female	LIHC white	LIHC alive	LIHC tumor	LIHC	NA
 TCGA-FV-A4ZP-01A	LIHC male	LIHC white	LIHC alive	LIHC tumor	LIHC	NA
 TCGA-FV-A4ZQ-01A	LIHC male	LIHC white	LIHC alive	LIHC tumor	LIHC	NA
 TCGA-FW-A3I3-06A	SKCM female	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM NF1_Any_Mutants
-TCGA-FW-A3R5-06A	SKCM male	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM -
+TCGA-FW-A3R5-06A	SKCM male	SKCM white	SKCM alive	SKCM metastatic	SKCM	NA
 TCGA-FW-A3TU-06A	SKCM female	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM NF1_Any_Mutants
 TCGA-FW-A3TV-06A	SKCM female	SKCM white	SKCM alive	SKCM metastatic	SKCM	SKCM BRAF_Hotspot_Mutants
 TCGA-FW-A5DX-01A	SKCM male	SKCM white	SKCM alive	SKCM tumor	SKCM	SKCM BRAF_Hotspot_Mutants
@@ -7940,7 +7940,7 @@ TCGA-HQ-A5ND-01A	BLCA male	NA	BLCA dead	BLCA tumor	BLCA	BLCA Basal_squamous
 TCGA-HQ-A5NE-01A	BLCA male	NA	BLCA alive	BLCA tumor	BLCA	BLCA Basal_squamous
 TCGA-HR-A2OG-06A	SKCM female	NA	SKCM alive	SKCM metastatic	SKCM	NA
 TCGA-HR-A2OH-06A	SKCM female	NA	SKCM dead	SKCM metastatic	SKCM	NA
-TCGA-HR-A5NC-01A	SKCM female	NA	SKCM alive	SKCM tumor	SKCM	SKCM -
+TCGA-HR-A5NC-01A	SKCM female	NA	SKCM alive	SKCM tumor	SKCM	NA
 TCGA-HS-A5N7-01A	SARC female	NA	SARC alive	SARC tumor	SARC	SARC STLMS
 TCGA-HS-A5N8-01A	SARC female	NA	SARC alive	SARC tumor	SARC	SARC ULMS
 TCGA-HS-A5NA-01A	SARC female	NA	SARC alive	SARC tumor	SARC	NA
