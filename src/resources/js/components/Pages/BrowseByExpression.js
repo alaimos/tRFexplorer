@@ -40,8 +40,9 @@ export default class BrowseByExpression extends Component {
                     {isSubmitted ? (
                         <React.Fragment>
                             <BreadcrumbItem>
-                                <Link to="/browse/byExpression" onClick={this.handleSubmittedOnClick}>By
-                                    Expression</Link>
+                                <Link to="/browse/byExpression" onClick={this.handleSubmittedOnClick}>
+                                    By Expression
+                                </Link>
                             </BreadcrumbItem>
                             <BreadcrumbItem active>Search Results</BreadcrumbItem>
                         </React.Fragment>

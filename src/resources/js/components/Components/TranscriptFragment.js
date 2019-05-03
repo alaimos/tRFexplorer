@@ -2,10 +2,11 @@ import PropTypes                     from 'prop-types';
 import React                         from 'react';
 import { Row, Col }                  from 'reactstrap';
 import ScrollableAnchor, { goToTop } from 'react-scrollable-anchor';
+import { BackToTop }                 from './CommonComponent';
 
 const getBrowserLink = (transcript) => (
     '/ext/jbrowse/index.html?tracklist=0&nav=0&overview=0&loc=' + transcript.chr + '%3A' + transcript.start + '..' +
-    transcript.end + ''
+    transcript.end + '&tracks=DNA%2CtRNAFragments%2CtRNAGenes'
 );
 
 export default function TranscriptFragment (props) {
@@ -42,11 +43,7 @@ export default function TranscriptFragment (props) {
                     </div>
                 </Col>
             </Row>
-            <Row>
-                <Col xs={12} className="text-right mt-4">
-                    <a href="#" onClick={() => goToTop()}>Go to top</a>
-                </Col>
-            </Row>
+            <BackToTop/>
         </React.Fragment>
     );
 }

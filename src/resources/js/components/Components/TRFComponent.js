@@ -1,13 +1,13 @@
-import PropTypes                                              from 'prop-types';
-import React                                                  from 'react';
-import axios                                                  from 'axios';
-import { Card, CardBody, Row, Col, ListGroup, ListGroupItem } from 'reactstrap';
-import { Link }                                               from 'react-router-dom';
-import { ErrorComponent, LoadingComponent }                   from './CommonComponent';
-import ScrollableAnchor, { configureAnchors, goToTop }        from 'react-scrollable-anchor';
-import TranscriptFragment                                     from './TranscriptFragment';
-import Plot                                                   from 'react-plotly.js';
-import MultiBoxplot                                           from './MultiBoxplot';
+import PropTypes                                                     from 'prop-types';
+import React                                                         from 'react';
+import axios                                                         from 'axios';
+import { Card, CardBody, Row, Col, ListGroup, ListGroupItem, Alert } from 'reactstrap';
+import { Link }                                                      from 'react-router-dom';
+import { BackToTop, ErrorComponent, LoadingComponent }               from './CommonComponent';
+import ScrollableAnchor, { configureAnchors, goToTop }               from 'react-scrollable-anchor';
+import TranscriptFragment                                            from './TranscriptFragment';
+import Plot                                                          from 'react-plotly.js';
+import MultiBoxplot                                                  from './MultiBoxplot';
 
 configureAnchors({ offset: -60 });
 
@@ -130,39 +130,59 @@ export default class TRFComponent extends React.Component {
     }
 
     nci60Graph () {
+        const len = this.state.data.NCI60.RPM.length;
         const data = makeBarTraces(this.state.data.NCI60.RPM, this.state.clinical.NCI60);
         const layout = {
             autosize: true,
         };
         return (
-            <Row>
-                <Col xs={12}>
-                    <ScrollableAnchor id="nci-60">
-                        <h3>Expression in NCI-60</h3>
-                    </ScrollableAnchor>
-                    <Row>
-                        <Col xs={12} className="text-center">
-                            <Plot data={data} layout={layout} useResizeHandler style={{
-                                width: '100%',
-                                height: '100%',
-                            }}/>
-                        </Col>
-                    </Row>
-                </Col>
-            </Row>
+            <React.Fragment>
+                <Row>
+                    <Col xs={12}>
+                        <ScrollableAnchor id="nci-60">
+                            <h3>Expression in NCI-60</h3>
+                        </ScrollableAnchor>
+                        {len > 0 ? (
+                            <Row>
+                                <Col xs={12} className="text-center">
+                                    <Plot data={data} layout={layout} useResizeHandler style={{
+                                        width: '100%',
+                                        height: '100%',
+                                    }}/>
+                                </Col>
+                            </Row>
+                        ) : (
+                            <Alert color="warning">
+                                <p>This tRF is not expressed in any cell line.</p>
+                            </Alert>
+                        )}
+                    </Col>
+                </Row>
+                <BackToTop/>
+            </React.Fragment>
         );
     }
 
     tcgaGraph () {
+        const len = this.state.data.TCGA.RPM.length;
         return (
-            <Row>
-                <Col xs={12}>
-                    <ScrollableAnchor id="tcga">
-                        <h3>Expression in TCGA</h3>
-                    </ScrollableAnchor>
-                    <MultiBoxplot data={this.state.data.TCGA.RPM} clinical={this.state.clinical.TCGA}/>
-                </Col>
-            </Row>
+            <React.Fragment>
+                <Row>
+                    <Col xs={12}>
+                        <ScrollableAnchor id="tcga">
+                            <h3>Expression in TCGA</h3>
+                        </ScrollableAnchor>
+                        {len > 0 ? (
+                            <MultiBoxplot data={this.state.data.TCGA.RPM} clinical={this.state.clinical.TCGA}/>
+                        ) : (
+                            <Alert color="warning">
+                                <p>This tRF is not expressed in any TCGA sample.</p>
+                            </Alert>
+                        )}
+                    </Col>
+                </Row>
+                <BackToTop/>
+            </React.Fragment>
         );
     }
 
@@ -179,7 +199,6 @@ export default class TRFComponent extends React.Component {
     }
 
     render () {
-        console.log(this.state);
         const data = this.state.data;
         const isLoaded = this.state.isLoaded;
         const isError = this.state.error !== null;

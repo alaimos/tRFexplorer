@@ -27,15 +27,14 @@ export default class BrowseByLocation extends Component {
             <h1 className="my-4">Browse by location</h1>
             <Breadcrumb tag="div" listTag="ol">
                 <BreadcrumbItem><Link to="/">Home</Link></BreadcrumbItem>
-                <BreadcrumbItem><Link
-                    to="/browse">Browse</Link></BreadcrumbItem>
+                <BreadcrumbItem><Link to="/browse">Browse</Link></BreadcrumbItem>
                 <BreadcrumbItem active>By Location</BreadcrumbItem>
             </Breadcrumb>
             <Row>
                 <Col xs="12" className="mb-4">
                     <ContainerDiv>
                         <StyledIframe
-                            src="/ext/jbrowse/index.html?tracklist=0&nav=1&overview=1"
+                            src="/ext/jbrowse/index.html?tracklist=0&nav=1&overview=1&tracks=DNA%2CtRNAFragments%2CtRNAGenes"
                             frameBorder={0} allowFullScreen/>
                     </ContainerDiv>
                 </Col>

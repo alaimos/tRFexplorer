@@ -1,6 +1,7 @@
-import PropTypes          from 'prop-types';
-import React              from 'react';
-import { Alert, Spinner } from 'reactstrap';
+import PropTypes                    from 'prop-types';
+import React                        from 'react';
+import { Alert, Col, Row, Spinner } from 'reactstrap';
+import { goToTop }                  from 'react-scrollable-anchor';
 
 export const LoadingComponent = (props) => {
     const message = (props.message) ? (
@@ -28,4 +29,14 @@ export const ErrorComponent = (props) => (
 
 ErrorComponent.propTypes = {
     errorMessage: PropTypes.string.isRequired,
+};
+
+export const BackToTop = (props) => {
+    return (
+        <Row>
+            <Col xs={12} className="text-right mt-4">
+                <a href="#" onClick={() => goToTop()}>Go to top</a>
+            </Col>
+        </Row>
+    );
 };
