@@ -49,6 +49,30 @@ abstract class AbstractParser
     }
 
     /**
+     * Write array to tsv file in the storage folder
+     *
+     * @param string     $filename
+     * @param array      $data
+     * @param array|null $header
+     */
+    protected static function writeTSV(string $filename, array $data, ?array $header = null): void
+    {
+        $data = implode(
+            PHP_EOL,
+            array_map(
+                function ($x) {
+                    return implode("\t", $x);
+                },
+                $data
+            )
+        );
+        if ($header !== null) {
+            $data = implode("\t", $header) . PHP_EOL . $data;
+        }
+        Storage::disk('local')->put($filename, $data);
+    }
+
+    /**
      * Write array to PHP data file in storage folder
      *
      * @param string $filename

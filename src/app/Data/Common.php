@@ -32,4 +32,7 @@ class Common
     const TCGA_CLINICAL                  = 'data/TCGA.clinical.json';
     const TCGA_RPM_MATRIX                = 'data/TCGA/rpm/%s.json';
     const TCGA_TPM_MATRIX                = 'data/TCGA/tpm/%s.json';
+    const TCGA_CLINICAL_DE_BY_DATASET    = 'data/TCGA.clinical.de.byDataset.json';
+    const TCGA_CLINICAL_DE_FOLDER        = 'data/de/clinical';
+    const TCGA_EXPRESSION_DE_FOLDER      = 'data/de/expression';
 }
