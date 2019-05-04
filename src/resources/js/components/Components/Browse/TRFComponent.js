@@ -6,8 +6,19 @@ import { Link }                                                      from 'react
 import { BackToTop, ErrorComponent, LoadingComponent }               from '../Common/CommonComponent';
 import ScrollableAnchor, { configureAnchors, goToTop }               from 'react-scrollable-anchor';
 import TranscriptFragment                                            from './TranscriptFragment';
-import Plot                                                          from '../../../../../node_modules/react-plotly.js/react-plotly';
-import MultiBoxplot                                                  from '../Common/MultiBoxplot';
+
+const waitingComponent = Component => {
+    return props => (
+        <React.Suspense
+            fallback={<LoadingComponent className="my-4" message="Please wait..."/>}>
+            <Component {...props} />
+        </React.Suspense>
+    );
+};
+
+const Plot = waitingComponent(React.lazy(() => import('../../../../../node_modules/react-plotly.js/react-plotly')));
+const MultiBoxplot = waitingComponent(React.lazy(() => import('../Common/MultiBoxplot')));
+
 
 configureAnchors({ offset: -60 });
 

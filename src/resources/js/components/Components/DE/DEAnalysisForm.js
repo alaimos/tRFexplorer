@@ -3,7 +3,7 @@ import React, { Component }                           from 'react';
 import axios                                          from 'axios/index';
 import { Card, CardBody, Row, Col, Button }           from 'reactstrap';
 import { FormGroup, Label }                           from 'reactstrap';
-import { Formik, Form, connect, getIn }               from 'formik/dist/index';
+import { Formik, Form, connect, getIn, FieldArray }   from 'formik/dist/index';
 import { ChainedSelect, Field, Select, ErrorMessage } from '../Common/ExtendedFormComponents';
 import { ErrorComponent, LoadingComponent }           from '../Common/CommonComponent';
 import Alert                                          from 'reactstrap/es/Alert';
@@ -31,10 +31,74 @@ const makeContrasts = (dataset, variables, valuesByDatasetAndVariable) => {
 
 const ContrastsAwareComponents = connect(({ formik, valuesByDatasetAndVariable, children, ...props }) => {
     const dataset = getIn(formik.values, 'dataset') || '';
-    const variables = getIn(formik.values, 'variables') || [];
+    const variables = [...(getIn(formik.values, 'variables') || [])];
     const contrasts = makeContrasts(dataset, variables, valuesByDatasetAndVariable);
     return children(contrasts, props);
 });
+
+const withContrasts = (WrappedComponent, contrasts) => {
+    class WithContrast extends React.Component {
+        constructor (props, context) {
+            super(props, context);
+        }
+
+        render () {
+            return <WrappedComponent {...this.props} contrasts={contrasts}/>;
+        }
+    }
+
+    const displayName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
+    WithContrast.displayName = `WithSubscription(${displayName})`;
+    return WithContrast;
+};
+
+const SingleContrast = ({ index, contrast, contrasts, onRemoveClickHandler }) => {
+    return (
+        <Row className="m-1">
+            <Col sm={5}>
+                <Select name={`contrasts.${index}.case`} value={contrast.case} addEmpty options={contrasts}/>
+            </Col>
+            <Col sm={1} className="text-center"> vs </Col>
+            <Col sm={5}>
+                <Select name={`contrasts.${index}.control`} value={contrast.control} addEmpty options={contrasts}/>
+            </Col>
+            <Col sm={1} className="text-center">
+                <Button color="outline-danger" size="xs" onClick={onRemoveClickHandler}>
+                    <i className="fas fa-times"/>
+                </Button>
+            </Col>
+        </Row>
+    );
+};
+
+const Contrasts = ({ form, handlePush, handleRemove, contrasts }) => {
+    const values = getIn(form.values, 'contrasts');
+    return (
+        <FormGroup check row>
+            <Col sm={12}>
+                <Label>Define contrasts:</Label>
+                <Row className="m-1 text-center">
+                    <Col sm={5}>
+                        <Label>Case</Label>
+                    </Col>
+                    <Col sm={1}/>
+                    <Col sm={5}>
+                        <Label>Control</Label>
+                    </Col>
+                    <Col sm={1}>
+                        <Button color="outline-success" size="xs" onClick={handlePush({ case: '', control: '' })}>
+                            <i className="fas fa-plus"/>
+                        </Button>
+                    </Col>
+                </Row>
+                {values.map((contrast, index) => (
+                    <SingleContrast key={index} index={index} contrast={contrast} contrasts={contrasts}
+                                    onRemoveClickHandler={handleRemove(index)}/>
+                ))}
+            </Col>
+        </FormGroup>
+    );
+};
 
 export default class DEAnalysisForm extends Component {
 
@@ -48,7 +112,6 @@ export default class DEAnalysisForm extends Component {
             error: null,
             isLoaded: false,
             data: [],
-            contrasts: null,
         };
         this.initialFormState = {
             dataset: '',
@@ -85,7 +148,6 @@ export default class DEAnalysisForm extends Component {
 
     render () {
         const data = this.state.data;
-        const contrasts = this.state.contrasts;
         const isLoaded = this.state.isLoaded;
         const isError = this.state.error !== null;
         const initialFormState = this.initialFormState;
@@ -117,30 +179,35 @@ export default class DEAnalysisForm extends Component {
                                                     </FormGroup>
                                                 </Col>
                                             </Row>
-                                            <Row>
-                                                <Col sm={12}>
-                                                    <ContrastsAwareComponents
-                                                        valuesByDatasetAndVariable={this.state.data.valuesByDatasetAndVariable}>{
-                                                        (contrasts) => (
-                                                            contrasts === null ? (
-                                                                <Alert color="info">
-                                                                    Select variables before proceeding with contrasts.
-                                                                </Alert>
-                                                            ) : (
-                                                                null
-                                                            )
-                                                        )
-                                                    }</ContrastsAwareComponents>
-                                                </Col>
-                                            </Row>
-                                            <FormGroup check row>
-                                                <Col sm={12}
-                                                     className="text-center">
-                                                    <Button type="submit" disabled={contrasts === null}>
-                                                        Submit
-                                                    </Button>
-                                                </Col>
-                                            </FormGroup>
+                                            <ContrastsAwareComponents
+                                                valuesByDatasetAndVariable={this.state.data.valuesByDatasetAndVariable}>{
+                                                (contrasts) => (
+                                                    <React.Fragment>
+                                                        <Row>
+                                                            <Col sm={12}>
+                                                                {contrasts === null ? (
+                                                                    <Alert color="info">
+                                                                        Select variables before proceeding with
+                                                                        contrasts.
+                                                                    </Alert>
+                                                                ) : (
+                                                                    <FieldArray name="contrasts"
+                                                                                component={withContrasts(Contrasts,
+                                                                                    contrasts)}/>
+                                                                )}
+                                                            </Col>
+                                                        </Row>
+                                                        <FormGroup check row>
+                                                            <Col sm={12}
+                                                                 className="text-center">
+                                                                <Button type="submit" disabled={contrasts === null}>
+                                                                    Submit
+                                                                </Button>
+                                                            </Col>
+                                                        </FormGroup>
+                                                    </React.Fragment>
+                                                )
+                                            }</ContrastsAwareComponents>
                                         </Form>
                                     </Formik>
                                 )
