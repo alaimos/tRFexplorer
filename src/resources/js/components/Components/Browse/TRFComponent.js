@@ -1,13 +1,13 @@
 import PropTypes                                                     from 'prop-types';
 import React                                                         from 'react';
-import axios                                                         from 'axios';
+import axios                                                         from 'axios/index';
 import { Card, CardBody, Row, Col, ListGroup, ListGroupItem, Alert } from 'reactstrap';
 import { Link }                                                      from 'react-router-dom';
-import { BackToTop, ErrorComponent, LoadingComponent }               from './CommonComponent';
+import { BackToTop, ErrorComponent, LoadingComponent }               from '../Common/CommonComponent';
 import ScrollableAnchor, { configureAnchors, goToTop }               from 'react-scrollable-anchor';
 import TranscriptFragment                                            from './TranscriptFragment';
-import Plot                                                          from 'react-plotly.js';
-import MultiBoxplot                                                  from './MultiBoxplot';
+import Plot                                                          from '../../../../../node_modules/react-plotly.js/react-plotly';
+import MultiBoxplot                                                  from '../Common/MultiBoxplot';
 
 configureAnchors({ offset: -60 });
 

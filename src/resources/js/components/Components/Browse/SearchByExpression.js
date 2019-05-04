@@ -1,6 +1,6 @@
 import PropTypes                                   from 'prop-types';
 import React, { Component }                        from 'react';
-import axios                                       from 'axios';
+import axios                                       from 'axios/index';
 import { Card, CardBody, Row, Col }                from 'reactstrap';
 import BootstrapTable
                                                    from 'react-bootstrap-table-next';
@@ -8,7 +8,7 @@ import filterFactory, { textFilter, selectFilter } from 'react-bootstrap-table2-
 import paginationFactory
                                                    from 'react-bootstrap-table2-paginator';
 import { Link }                                    from 'react-router-dom';
-import { ErrorComponent, LoadingComponent }        from './CommonComponent';
+import { ErrorComponent, LoadingComponent }        from '../Common/CommonComponent';
 
 export default class SearchByExpression extends Component {
     static propTypes = {

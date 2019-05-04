@@ -1,11 +1,11 @@
 import PropTypes                                      from 'prop-types';
 import React, { Component }                           from 'react';
-import axios                                          from 'axios';
+import axios                                          from 'axios/index';
 import { Card, CardBody, Row, Col, Button }           from 'reactstrap';
 import { FormGroup, Label }                           from 'reactstrap';
-import { Formik, Form }                               from 'formik';
-import { ChainedSelect, Field, Select, ErrorMessage } from './ExtendedFormComponents';
-import { ErrorComponent, LoadingComponent }           from './CommonComponent';
+import { Formik, Form }                               from 'formik/dist/index';
+import { ChainedSelect, Field, Select, ErrorMessage } from '../Common/ExtendedFormComponents';
+import { ErrorComponent, LoadingComponent }           from '../Common/CommonComponent';
 
 export default class BrowseExpressionForm extends Component {
 

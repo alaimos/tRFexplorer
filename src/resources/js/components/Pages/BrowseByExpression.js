@@ -2,8 +2,8 @@ import React, { Component }           from 'react';
 import { Link }                       from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Container }                  from 'reactstrap';
-import BrowseExpressionForm           from '../Components/BrowseExpressionForm';
-import SearchByExpression             from '../Components/SearchByExpression';
+import BrowseExpressionForm           from '../Components/Browse/BrowseExpressionForm';
+import SearchByExpression             from '../Components/Browse/SearchByExpression';
 
 export default class BrowseByExpression extends Component {
     constructor (props, context) {

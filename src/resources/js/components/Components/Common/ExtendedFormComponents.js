@@ -1,7 +1,7 @@
 import React                                                        from 'react';
 import { pick }                                                     from 'lodash';
 import { Input, FormFeedback }                                      from 'reactstrap';
-import { Field as FormikField, ErrorMessage as FormikErrorMessage } from 'formik';
+import { Field as FormikField, ErrorMessage as FormikErrorMessage } from 'formik/dist/index';
 
 export function Field ({ children, onComponentRender = null, ...props }) {
     const renderComponent = ({ field, form, ...innerProps }) => {

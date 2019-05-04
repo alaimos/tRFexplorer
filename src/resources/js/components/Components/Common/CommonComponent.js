@@ -4,13 +4,14 @@ import { Alert, Col, Row, Spinner } from 'reactstrap';
 import { goToTop }                  from 'react-scrollable-anchor';
 
 export const LoadingComponent = (props) => {
+    const className = ((props.className + ' ') || '') + 'text-center';
     const message = (props.message) ? (
         <React.Fragment>
             <br/>
             <h3>{props.message}</h3>
         </React.Fragment>
     ) : null;
-    return <div className="text-center">
+    return <div className={className}>
         <Spinner style={{ width: '3rem', height: '3rem' }}/>
         {message}
     </div>;
@@ -18,6 +19,7 @@ export const LoadingComponent = (props) => {
 
 LoadingComponent.propTypes = {
     message: PropTypes.string,
+    className: PropTypes.string,
 };
 
 export const ErrorComponent = (props) => (

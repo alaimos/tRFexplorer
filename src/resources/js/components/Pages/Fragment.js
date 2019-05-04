@@ -3,7 +3,7 @@ import React, { Component }                                                  fro
 import { Breadcrumb, BreadcrumbItem }                                        from 'reactstrap';
 import { Card, CardText, CardBody, CardHeader, Container, Row, Col, Button } from 'reactstrap';
 import { Link }                                                              from 'react-router-dom';
-import TRFComponent                                                          from '../Components/TRFComponent';
+import TRFComponent                                                          from '../Components/Browse/TRFComponent';
 
 export default class Fragment extends Component {
 

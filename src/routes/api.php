@@ -20,6 +20,7 @@ Route::namespace('API')->group(
         Route::post('/browseByExpression', 'BrowseByExpression@search');
         Route::get('/fragments/{fragment}', 'FragmentController@show');
         Route::get('/data/clinical', 'DataController@clinical');
+        Route::get('/data/clinical/de', 'DataController@deClinical');
     }
 );
 

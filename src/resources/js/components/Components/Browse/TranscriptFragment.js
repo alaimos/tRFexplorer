@@ -2,7 +2,7 @@ import PropTypes                     from 'prop-types';
 import React                         from 'react';
 import { Row, Col }                  from 'reactstrap';
 import ScrollableAnchor, { goToTop } from 'react-scrollable-anchor';
-import { BackToTop }                 from './CommonComponent';
+import { BackToTop }                 from '../Common/CommonComponent';
 
 const getBrowserLink = (transcript) => (
     '/ext/jbrowse/index.html?tracklist=0&nav=0&overview=0&loc=' + transcript.chr + '%3A' + transcript.start + '..' +

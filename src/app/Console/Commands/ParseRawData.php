@@ -7,7 +7,7 @@ use App\Data\Parser\AbstractParser;
 use App\Data\Parser\tRFAvgExpressionParser;
 use App\Data\Parser\tRFClinicalDataParser;
 use App\Data\Parser\tRFDataParser;
-use App\Data\Parser\tRFDEDataParser;
+use App\Data\Parser\tRFDEClinicalDataParser;
 use App\Data\Parser\tRFDEExpressionDataParser;
 use App\Data\Parser\tRFExpressionDataParser;
 use App\Data\Parser\tRFListParser;
@@ -76,7 +76,7 @@ class ParseRawData extends Command
                 tRFExpressionDataParser::class,
                 [resource_path('data/TCGA_TPM_matrix.tsv'), Common::TCGA_TPM_MATRIX, Common::TCGA_CLINICAL],
             ],
-            [tRFDEDataParser::class, [resource_path('data/TCGA_clinical_de.tsv')]],
+            [tRFDEClinicalDataParser::class, [resource_path('data/TCGA_clinical_de.tsv')]],
             [
                 tRFDEExpressionDataParser::class,
                 [resource_path('data/TCGA_raw_counts_matrix.tsv'), resource_path('data/TCGA_clinical_de.tsv')],
