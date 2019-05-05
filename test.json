@@ -1,0 +1,25 @@
+{
+  "variables": [
+    "Classification"
+  ],
+  "maxP": 0.01,
+  "minLFC": 1.5,
+  "contrasts": [
+    {
+      "case": [
+        "LumA"
+      ],
+      "control": [
+        "normal"
+      ]
+    },
+    {
+      "case": [
+        "LumB"
+      ],
+      "control": [
+        "normal"
+      ]
+    }
+  ]
+}

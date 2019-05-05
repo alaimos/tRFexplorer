@@ -4,7 +4,10 @@ import { Breadcrumb, BreadcrumbItem }                                        fro
 import { Card, CardText, CardBody, CardHeader, Container, Row, Col, Button } from 'reactstrap';
 import { Link }                                                              from 'react-router-dom';
 import DEAnalysisForm                                                        from '../Components/DE/DEAnalysisForm';
-import { LoadingComponent }                                                  from '../Components/Common/CommonComponent';
+import {
+    ErrorComponent,
+    LoadingComponent,
+}                                                                            from '../Components/Common/CommonComponent';
 
 export default class DEAnalysisIndex extends Component {
 
@@ -12,20 +15,25 @@ export default class DEAnalysisIndex extends Component {
         super(props);
         this.state = {
             formData: null,
+            isSubmitting: false,
             isSubmitted: false,
+            error: null,
         };
     }
 
     handleFormSubmit = (values) => {
         this.setState({
             formData: values,
-            isSubmitted: true,
+            isSubmitting: true,
+            isSubmitted: false,
         });
-        console.log(values);
+
     };
 
     render () {
         const isSubmitted = this.state.isSubmitted;
+        const isSubmitting = this.state.isSubmitting;
+        const isError = this.state.error !== null;
         return (
             <Container>
                 <h1 className="my-4">Differential Expression Analysis</h1>
@@ -35,8 +43,16 @@ export default class DEAnalysisIndex extends Component {
                 </Breadcrumb>
                 <Row>
                     <Col xs="12" className="mb-4">
-                        {isSubmitted ? (
-                            <LoadingComponent message="Submitting..."/>
+                        {isSubmitting ? (
+                            isSubmitted ? (
+                                isError ? (
+                                    <ErrorComponent errorMessage={this.state.error}/>
+                                ) : (
+                                    <h1>TODO</h1>
+                                )
+                            ) : (
+                                <LoadingComponent message="Submitting..."/>
+                            )
                         ) : (
                             <DEAnalysisForm submitHandler={this.handleFormSubmit}/>
                         )}

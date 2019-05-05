@@ -35,4 +35,6 @@ class Common
     const TCGA_CLINICAL_DE_BY_DATASET    = 'data/TCGA.clinical.de.byDataset.json';
     const TCGA_CLINICAL_DE_FOLDER        = 'data/de/clinical';
     const TCGA_EXPRESSION_DE_FOLDER      = 'data/de/expression';
+    const OUTPUT_BASE                    = 'public/output/%s/';
+    const OUTPUT_URL_BASE                = 'storage/output/%s/coef-%d.html';
 }

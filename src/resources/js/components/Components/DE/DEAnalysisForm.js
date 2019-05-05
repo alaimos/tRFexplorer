@@ -1,12 +1,12 @@
-import PropTypes                                                     from 'prop-types';
-import React, { Component }                                          from 'react';
-import axios                                                         from 'axios/index';
-import { Alert, Button, Card, CardBody, Col, FormGroup, Label, Row } from 'reactstrap';
-import { connect, FieldArray, Form, Formik, getIn }                  from 'formik/dist/index';
-import { ArrayErrorMessage, ChainedSelect, ErrorMessage, Select }    from '../Common/ExtendedFormComponents';
-import { ErrorComponent, LoadingComponent }                          from '../Common/CommonComponent';
-import * as Yup                                                      from 'yup';
-import { ArrayEquals }                                               from '../Common/utils';
+import PropTypes                                                         from 'prop-types';
+import React, { Component }                                              from 'react';
+import axios                                                             from 'axios/index';
+import { Alert, Button, Card, CardBody, Col, FormGroup, Label, Row }     from 'reactstrap';
+import { connect, FieldArray, Form, Formik, getIn }                      from 'formik/dist/index';
+import { ArrayErrorMessage, ChainedSelect, ErrorMessage, Field, Select } from '../Common/ExtendedFormComponents';
+import { ErrorComponent, LoadingComponent }                              from '../Common/CommonComponent';
+import * as Yup                                                          from 'yup';
+import { ArrayEquals }                                                   from '../Common/utils';
 
 const makeContrasts = (dataset, variables, valuesByDatasetAndVariable) => {
     if (variables.length > 0 && dataset) {
@@ -35,33 +35,30 @@ const ContrastsAwareComponents = connect(class extends React.Component {
         super(props, context);
     }
 
+    getDatasetAndVariables (formik) {
+        const dataset = getIn(formik.values, 'dataset') || '';
+        let variables = getIn(formik.values, 'variables') || '';
+        variables = (variables) ? [variables] : [];
+        return { dataset, variables };
+    }
+
     shouldComponentUpdate (nextProps, nextState, nextContext) {
         const { formik: oldFormik } = this.props;
-        const oldDataset = getIn(oldFormik.values, 'dataset') || '';
-        const oldVariables = getIn(oldFormik.values, 'variables') || [];
+        const { dataset: oldDataset, variables: oldVariables } = this.getDatasetAndVariables(oldFormik);
         const { formik: nextFormik } = nextProps;
-        const nextDataset = getIn(nextFormik.values, 'dataset') || '';
-        const nextVariables = getIn(nextFormik.values, 'variables') || [];
+        const { dataset: nextDataset, variables: nextVariables } = this.getDatasetAndVariables(nextFormik);
         return (nextDataset !== oldDataset || nextVariables.length !== oldVariables.length ||
                 !ArrayEquals(nextVariables, oldVariables));
     }
 
     render () {
         const { formik, valuesByDatasetAndVariable, children, ...props } = this.props;
-        const dataset = getIn(formik.values, 'dataset') || '';
-        const variables = [...(getIn(formik.values, 'variables') || [])];
+        const { dataset, variables } = this.getDatasetAndVariables(formik);
         const contrasts = makeContrasts(dataset, variables, valuesByDatasetAndVariable);
         return children(contrasts, props);
     }
 
 });
-
-/*const ContrastsAwareComponents = connect(({ formik, valuesByDatasetAndVariable, children, ...props }) => {
-    const dataset = getIn(formik.values, 'dataset') || '';
-    const variables = [...(getIn(formik.values, 'variables') || [])];
-    const contrasts = makeContrasts(dataset, variables, valuesByDatasetAndVariable);
-    return children(contrasts, props);
-});*/
 
 const withContrasts = (WrappedComponent, contrasts) => {
     class WithContrast extends React.Component {
@@ -145,8 +142,10 @@ export default class DEAnalysisForm extends Component {
         };
         this.initialFormState = {
             dataset: '',
-            variables: [],
+            variables: '',
             contrasts: [],
+            maxP: 0.01,
+            minLFC: 1.5,
         };
     }
 
@@ -179,7 +178,9 @@ export default class DEAnalysisForm extends Component {
     validationSchema () {
         return Yup.object().shape({
             dataset: Yup.mixed().oneOf(Object.values(this.state.data.datasets)).required(),
-            variables: Yup.array().of(Yup.string()).min(1, 'You must select at least one variable').required(),
+            variables: Yup.string().required(), //Yup.array().of(Yup.string()).min(1, 'You must select at least one variable').required(),
+            maxP: Yup.number(),
+            minLFC: Yup.number(),
             contrasts: Yup.array().of(Yup.object().shape({
                 case: Yup.array().of(Yup.string()).min(1, 'You must select at least one case'),
                 control: Yup.array().of(Yup.string()).min(1, 'You must select at least one control'),
@@ -214,12 +215,32 @@ export default class DEAnalysisForm extends Component {
                                                 </Col>
                                                 <Col md={6}>
                                                     <FormGroup>
-                                                        <Label for="variables">Select one or more variables:</Label>
+                                                        <Label for="variables">Select a variable:</Label>
                                                         <ChainedSelect name="variables"
                                                                        chainTo="dataset"
-                                                                       emptyChained={false} multiple
+                                                                       emptyChained={false}
                                                                        options={data.variablesByDataset}/>
                                                         <ErrorMessage name="variables"/>
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col md={6}>
+                                                    <FormGroup>
+                                                        <Label for="maxP">
+                                                            Maximum p-value
+                                                        </Label>
+                                                        <Field name="maxP" type="number" step="any"/>
+                                                        <ErrorMessage name="maxP"/>
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col md={6}>
+                                                    <FormGroup>
+                                                        <Label for="minLFC">
+                                                            Minimum Log-Fold-Change
+                                                        </Label>
+                                                        <Field name="minLFC" type="number" step="any"/>
+                                                        <ErrorMessage name="minLFC"/>
                                                     </FormGroup>
                                                 </Col>
                                             </Row>

@@ -21,6 +21,7 @@ Route::namespace('API')->group(
         Route::get('/fragments/{fragment}', 'FragmentController@show');
         Route::get('/data/clinical', 'DataController@clinical');
         Route::get('/data/clinical/de', 'DataController@deClinical');
+        Route::post('/de/analysis', 'DEController@runAnalysis');
     }
 );
 
