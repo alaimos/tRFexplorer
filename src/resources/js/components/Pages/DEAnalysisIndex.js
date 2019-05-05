@@ -21,6 +21,7 @@ export default class DEAnalysisIndex extends Component {
             formData: values,
             isSubmitted: true,
         });
+        console.log(values);
     };
 
     render () {

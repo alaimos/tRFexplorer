@@ -1,15 +1,15 @@
-import PropTypes                                      from 'prop-types';
-import React, { Component }                           from 'react';
-import axios                                          from 'axios/index';
-import { Card, CardBody, Row, Col, Button }           from 'reactstrap';
-import { FormGroup, Label }                           from 'reactstrap';
-import { Formik, Form, connect, getIn, FieldArray }   from 'formik/dist/index';
-import { ChainedSelect, Field, Select, ErrorMessage } from '../Common/ExtendedFormComponents';
-import { ErrorComponent, LoadingComponent }           from '../Common/CommonComponent';
-import Alert                                          from 'reactstrap/es/Alert';
+import PropTypes                                                     from 'prop-types';
+import React, { Component }                                          from 'react';
+import axios                                                         from 'axios/index';
+import { Alert, Button, Card, CardBody, Col, FormGroup, Label, Row } from 'reactstrap';
+import { connect, FieldArray, Form, Formik, getIn }                  from 'formik/dist/index';
+import { ArrayErrorMessage, ChainedSelect, ErrorMessage, Select }    from '../Common/ExtendedFormComponents';
+import { ErrorComponent, LoadingComponent }                          from '../Common/CommonComponent';
+import * as Yup                                                      from 'yup';
+import { ArrayEquals }                                               from '../Common/utils';
 
 const makeContrasts = (dataset, variables, valuesByDatasetAndVariable) => {
-    if (variables.length > 0) {
+    if (variables.length > 0 && dataset) {
         let variable = variables.shift();
         let contrasts = { ...valuesByDatasetAndVariable[dataset][variable] };
         let values = null;
@@ -29,12 +29,39 @@ const makeContrasts = (dataset, variables, valuesByDatasetAndVariable) => {
     return null;
 };
 
-const ContrastsAwareComponents = connect(({ formik, valuesByDatasetAndVariable, children, ...props }) => {
+const ContrastsAwareComponents = connect(class extends React.Component {
+
+    constructor (props, context) {
+        super(props, context);
+    }
+
+    shouldComponentUpdate (nextProps, nextState, nextContext) {
+        const { formik: oldFormik } = this.props;
+        const oldDataset = getIn(oldFormik.values, 'dataset') || '';
+        const oldVariables = getIn(oldFormik.values, 'variables') || [];
+        const { formik: nextFormik } = nextProps;
+        const nextDataset = getIn(nextFormik.values, 'dataset') || '';
+        const nextVariables = getIn(nextFormik.values, 'variables') || [];
+        return (nextDataset !== oldDataset || nextVariables.length !== oldVariables.length ||
+                !ArrayEquals(nextVariables, oldVariables));
+    }
+
+    render () {
+        const { formik, valuesByDatasetAndVariable, children, ...props } = this.props;
+        const dataset = getIn(formik.values, 'dataset') || '';
+        const variables = [...(getIn(formik.values, 'variables') || [])];
+        const contrasts = makeContrasts(dataset, variables, valuesByDatasetAndVariable);
+        return children(contrasts, props);
+    }
+
+});
+
+/*const ContrastsAwareComponents = connect(({ formik, valuesByDatasetAndVariable, children, ...props }) => {
     const dataset = getIn(formik.values, 'dataset') || '';
     const variables = [...(getIn(formik.values, 'variables') || [])];
     const contrasts = makeContrasts(dataset, variables, valuesByDatasetAndVariable);
     return children(contrasts, props);
-});
+});*/
 
 const withContrasts = (WrappedComponent, contrasts) => {
     class WithContrast extends React.Component {
@@ -56,13 +83,15 @@ const SingleContrast = ({ index, contrast, contrasts, onRemoveClickHandler }) =>
     return (
         <Row className="m-1">
             <Col sm={5}>
-                <Select name={`contrasts.${index}.case`} value={contrast.case} addEmpty options={contrasts}/>
+                <Select name={`contrasts.${index}.case`} value={contrast.case} multiple options={contrasts}/>
+                <ArrayErrorMessage name={`contrasts[${index}].case`}/>
             </Col>
-            <Col sm={1} className="text-center"> vs </Col>
+            <Col sm={1} className="justify-content-center d-flex align-items-center"> vs </Col>
             <Col sm={5}>
-                <Select name={`contrasts.${index}.control`} value={contrast.control} addEmpty options={contrasts}/>
+                <Select name={`contrasts.${index}.control`} value={contrast.control} multiple options={contrasts}/>
+                <ArrayErrorMessage name={`contrasts[${index}].control`}/>
             </Col>
-            <Col sm={1} className="text-center">
+            <Col sm={1} className="justify-content-center d-flex align-items-center">
                 <Button color="outline-danger" size="xs" onClick={onRemoveClickHandler}>
                     <i className="fas fa-times"/>
                 </Button>
@@ -86,7 +115,7 @@ const Contrasts = ({ form, handlePush, handleRemove, contrasts }) => {
                         <Label>Control</Label>
                     </Col>
                     <Col sm={1}>
-                        <Button color="outline-success" size="xs" onClick={handlePush({ case: '', control: '' })}>
+                        <Button color="outline-success" size="xs" onClick={handlePush({ case: [], control: [] })}>
                             <i className="fas fa-plus"/>
                         </Button>
                     </Col>
@@ -95,6 +124,7 @@ const Contrasts = ({ form, handlePush, handleRemove, contrasts }) => {
                     <SingleContrast key={index} index={index} contrast={contrast} contrasts={contrasts}
                                     onRemoveClickHandler={handleRemove(index)}/>
                 ))}
+                {values.length === 0 ? (<Alert color="warning">You must add at least one contrast</Alert>) : null}
             </Col>
         </FormGroup>
     );
@@ -146,6 +176,17 @@ export default class DEAnalysisForm extends Component {
         this.getData().catch(e => this.setError(e.message));
     }
 
+    validationSchema () {
+        return Yup.object().shape({
+            dataset: Yup.mixed().oneOf(Object.values(this.state.data.datasets)).required(),
+            variables: Yup.array().of(Yup.string()).min(1, 'You must select at least one variable').required(),
+            contrasts: Yup.array().of(Yup.object().shape({
+                case: Yup.array().of(Yup.string()).min(1, 'You must select at least one case'),
+                control: Yup.array().of(Yup.string()).min(1, 'You must select at least one control'),
+            })).min(1, 'You must provide at least one contrast').required(),
+        });
+    }
+
     render () {
         const data = this.state.data;
         const isLoaded = this.state.isLoaded;
@@ -160,13 +201,15 @@ export default class DEAnalysisForm extends Component {
                                 isError ? (
                                     <ErrorComponent errorMessage={this.state.error}/>
                                 ) : (
-                                    <Formik initialValues={initialFormState} onSubmit={this.props.submitHandler}>
+                                    <Formik initialValues={initialFormState} onSubmit={this.props.submitHandler}
+                                            validationSchema={this.validationSchema()}>
                                         <Form>
                                             <Row>
                                                 <Col md={6}>
                                                     <FormGroup>
                                                         <Label for="dataset">Select a dataset:</Label>
                                                         <Select name="dataset" addEmpty options={data.datasets}/>
+                                                        <ErrorMessage name="dataset"/>
                                                     </FormGroup>
                                                 </Col>
                                                 <Col md={6}>
@@ -176,11 +219,12 @@ export default class DEAnalysisForm extends Component {
                                                                        chainTo="dataset"
                                                                        emptyChained={false} multiple
                                                                        options={data.variablesByDataset}/>
+                                                        <ErrorMessage name="variables"/>
                                                     </FormGroup>
                                                 </Col>
                                             </Row>
                                             <ContrastsAwareComponents
-                                                valuesByDatasetAndVariable={this.state.data.valuesByDatasetAndVariable}>{
+                                                valuesByDatasetAndVariable={data.valuesByDatasetAndVariable}>{
                                                 (contrasts) => (
                                                     <React.Fragment>
                                                         <Row>
@@ -191,9 +235,11 @@ export default class DEAnalysisForm extends Component {
                                                                         contrasts.
                                                                     </Alert>
                                                                 ) : (
-                                                                    <FieldArray name="contrasts"
-                                                                                component={withContrasts(Contrasts,
-                                                                                    contrasts)}/>
+                                                                    <React.Fragment>
+                                                                        <FieldArray name="contrasts"
+                                                                                    component={withContrasts(Contrasts,
+                                                                                        contrasts)}/>
+                                                                    </React.Fragment>
                                                                 )}
                                                             </Col>
                                                         </Row>

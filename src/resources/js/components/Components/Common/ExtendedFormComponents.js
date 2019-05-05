@@ -1,13 +1,15 @@
-import React                                                        from 'react';
-import { pick }                                                     from 'lodash';
-import { Input, FormFeedback }                                      from 'reactstrap';
-import { Field as FormikField, ErrorMessage as FormikErrorMessage } from 'formik/dist/index';
+import React                                                               from 'react';
+import { pick }                                                            from 'lodash';
+import { Input, FormFeedback }                                             from 'reactstrap';
+import { Field as FormikField, ErrorMessage as FormikErrorMessage, getIn } from 'formik/dist/index';
 
 export function Field ({ children, onComponentRender = null, ...props }) {
     const renderComponent = ({ field, form, ...innerProps }) => {
         const n = field['name'];
         innerProps['id'] = n;
-        innerProps['invalid'] = form.errors[n] && form.touched[n];
+        const errors = getIn(form.errors, n);
+        const touched = getIn(form.touched, n);
+        innerProps['invalid'] = errors && ((Array.isArray(touched) && touched.length === 0) || touched);
         if (onComponentRender !== null && typeof onComponentRender === 'function') {
             const r = onComponentRender({ field, form, innerProps, children });
             field = r.field || field;
@@ -52,7 +54,7 @@ export function ChainedSelect ({ options, addEmpty = false, emptyText = '', chai
     props['type'] = 'select';
     const isMultiple = props['multiple'] || false;
     const onComponentRender = ({ field, form }) => {
-        let chainedValues = ensureArray(form.values[chainTo] || '');
+        let chainedValues = ensureArray(getIn(form.values, chainTo) || '');
         const useAll = emptyChained && chainedValues.includes('');
         chainedValues = chainedValues.filter(v => (v !== ''));
         const toParse = (useAll) ? options : pick(options, chainedValues);
@@ -83,6 +85,19 @@ export function ChainedSelect ({ options, addEmpty = false, emptyText = '', chai
 }
 
 export function ErrorMessage (props) {
-    const renderComponent = msg => (<FormFeedback tooltip>{msg}</FormFeedback>);
+    const renderComponent = msg => (<FormFeedback>{msg}</FormFeedback>);
     return <FormikErrorMessage {...props} render={renderComponent}/>;
+}
+
+export function ArrayErrorMessage ({ name }) {
+    return (
+        <FormikField
+            name={name}
+            render={({ form }) => {
+                const error = getIn(form.errors, name);
+                const touch = getIn(form.touched, name);
+                return touch && error ? <FormFeedback>{error}</FormFeedback> : null;
+            }}
+        />
+    );
 }
