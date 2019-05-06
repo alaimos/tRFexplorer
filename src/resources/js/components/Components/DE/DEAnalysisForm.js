@@ -1,6 +1,6 @@
 import PropTypes                                                         from 'prop-types';
 import React, { Component }                                              from 'react';
-import axios                                                             from 'axios/index';
+import axios                                                             from 'axios';
 import { Alert, Button, Card, CardBody, Col, FormGroup, Label, Row }     from 'reactstrap';
 import { connect, FieldArray, Form, Formik, getIn }                      from 'formik/dist/index';
 import { ArrayErrorMessage, ChainedSelect, ErrorMessage, Field, Select } from '../Common/ExtendedFormComponents';
@@ -144,8 +144,8 @@ export default class DEAnalysisForm extends Component {
             dataset: '',
             variables: '',
             contrasts: [],
-            maxP: 0.01,
-            minLFC: 1.5,
+            maxP: 0.05,
+            minLFC: 1,
         };
     }
 

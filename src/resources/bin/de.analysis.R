@@ -6,7 +6,7 @@ if (length(not.installed) > 0) {
   suppressMessages(suppressWarnings(try({
     if (!requireNamespace("BiocManager", quietly = TRUE))
       install.packages("BiocManager")
-    BiocManager::install(not.installed)
+    BiocManager::install(not.installed, quiet = TRUE)
   }, silent=TRUE)))
 }
 rm(not.installed, packages)

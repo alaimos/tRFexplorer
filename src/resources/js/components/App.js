@@ -14,6 +14,7 @@ const BrowseByLocation = React.lazy(() => import('./Pages/BrowseByLocation'));
 const BrowseByExpression = React.lazy(() => import('./Pages/BrowseByExpression'));
 const Fragment = React.lazy(() => import('./Pages/Fragment'));
 const DEAnalysisIndex = React.lazy(() => import('./Pages/DEAnalysisIndex'));
+const DEAnalysisResult = React.lazy(() => import('./Pages/DEAnalysisResult'));
 
 const waitingComponent = Component => {
     return props => (
@@ -37,6 +38,7 @@ class App extends Component {
                 <main role="main" className="flex-shrink-0">
                     <Switch>
                         <Route exact path="/" component={Home}/>
+                        <Route path="/de-analysis/:id" component={waitingComponent(DEAnalysisResult)}/>
                         <Route path="/de-analysis" component={waitingComponent(DEAnalysisIndex)} />
                         <Route path="/fragments/:id" component={waitingComponent(Fragment)}/>
                         <Route path="/fragments" component={waitingComponent(Browse)}/>

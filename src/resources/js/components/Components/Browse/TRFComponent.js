@@ -1,6 +1,6 @@
 import PropTypes                                                     from 'prop-types';
 import React                                                         from 'react';
-import axios                                                         from 'axios/index';
+import axios                                                         from 'axios';
 import { Card, CardBody, Row, Col, ListGroup, ListGroupItem, Alert } from 'reactstrap';
 import { Link }                                                      from 'react-router-dom';
 import { BackToTop, ErrorComponent, LoadingComponent }               from '../Common/CommonComponent';

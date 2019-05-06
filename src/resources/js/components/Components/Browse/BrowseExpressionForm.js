@@ -1,6 +1,6 @@
 import PropTypes                                      from 'prop-types';
 import React, { Component }                           from 'react';
-import axios                                          from 'axios/index';
+import axios                                          from 'axios';
 import { Card, CardBody, Row, Col, Button }           from 'reactstrap';
 import { FormGroup, Label }                           from 'reactstrap';
 import { Formik, Form }                               from 'formik/dist/index';

@@ -22,6 +22,9 @@ Route::namespace('API')->group(
         Route::get('/data/clinical', 'DataController@clinical');
         Route::get('/data/clinical/de', 'DataController@deClinical');
         Route::post('/de/analysis', 'DEController@runAnalysis');
+        Route::get('/de/{id}', 'DEController@show');
+        Route::get('/de/{id}/download/summary', 'DEController@downloadSummary');
+        Route::get('/de/{id}/download/{contrast}', 'DEController@download');
     }
 );
 

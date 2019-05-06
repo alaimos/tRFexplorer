@@ -1,33 +1,59 @@
-import PropTypes                                                             from 'prop-types';
-import React, { Component }                                                  from 'react';
-import { Breadcrumb, BreadcrumbItem }                                        from 'reactstrap';
-import { Card, CardText, CardBody, CardHeader, Container, Row, Col, Button } from 'reactstrap';
-import { Link }                                                              from 'react-router-dom';
-import DEAnalysisForm                                                        from '../Components/DE/DEAnalysisForm';
-import {
-    ErrorComponent,
-    LoadingComponent,
-}                                                                            from '../Components/Common/CommonComponent';
+import React, { Component }                 from 'react';
+import { Breadcrumb, BreadcrumbItem }       from 'reactstrap';
+import { Container, Row, Col }              from 'reactstrap';
+import { Link, Redirect }                   from 'react-router-dom';
+import DEAnalysisForm                       from '../Components/DE/DEAnalysisForm';
+import { ErrorComponent, LoadingComponent } from '../Components/Common/CommonComponent';
+import axios                                from 'axios';
 
 export default class DEAnalysisIndex extends Component {
 
     constructor (props) {
         super(props);
         this.state = {
-            formData: null,
+            analysisId: null,
             isSubmitting: false,
             isSubmitted: false,
             error: null,
         };
     }
 
+    setError (message) {
+        this.setState({
+            isSubmitting: true,
+            isSubmitted: true,
+            error: message,
+        });
+    }
+
+    async processDE (values) {
+        try {
+            const response = await axios.post('/api/de/analysis', values);
+            if (response.status !== 200) {
+                this.setError(response.statusText);
+            } else {
+                const data = response.data;
+                if (data.error) {
+                    this.setError(data.message);
+                } else {
+                    this.setState({
+                        isSubmitting: true,
+                        isSubmitted: true,
+                        analysisId: data.data,
+                    });
+                }
+            }
+        } catch (e) {
+            this.setError(e.message);
+        }
+    }
+
     handleFormSubmit = (values) => {
         this.setState({
-            formData: values,
             isSubmitting: true,
             isSubmitted: false,
         });
-
+        this.processDE(values).catch(e => this.setError(e.message));
     };
 
     render () {
@@ -48,7 +74,7 @@ export default class DEAnalysisIndex extends Component {
                                 isError ? (
                                     <ErrorComponent errorMessage={this.state.error}/>
                                 ) : (
-                                    <h1>TODO</h1>
+                                    <Redirect to={`/de-analysis/${this.state.analysisId}`}/>
                                 )
                             ) : (
                                 <LoadingComponent message="Submitting..."/>

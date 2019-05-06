@@ -1,6 +1,6 @@
 import PropTypes                                   from 'prop-types';
 import React, { Component }                        from 'react';
-import axios                                       from 'axios/index';
+import axios                                       from 'axios';
 import { Card, CardBody, Row, Col }                from 'reactstrap';
 import BootstrapTable
                                                    from 'react-bootstrap-table-next';
