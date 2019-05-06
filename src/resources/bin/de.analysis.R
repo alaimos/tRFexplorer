@@ -65,7 +65,9 @@ tryCatch({
   maxP                 <- config.analysis$maxP
   minLFC               <- config.analysis$minLFC
   omit                 <- which(apply(sapply(variables, function (x) (is.na(input.clinical[[x]]))), 1, function (x) (any(x))))
-  input.clinical       <- input.clinical[-omit,]
+  if (length(omit) > 0) {
+    input.clinical <- input.clinical[-omit,]
+  }
   input.clinical$CLASS <- factor(as.vector(input.clinical$CLASS))
   contrasts            <- sapply(config.analysis$contrasts, function (x) {
     return (
