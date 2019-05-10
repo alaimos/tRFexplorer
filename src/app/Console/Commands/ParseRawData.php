@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Data\Common;
 use App\Data\Parser\AbstractParser;
+use App\Data\Parser\CorrelationTablesParser;
 use App\Data\Parser\tRFAvgExpressionParser;
 use App\Data\Parser\tRFClinicalDataParser;
 use App\Data\Parser\tRFDataParser;
@@ -80,6 +81,10 @@ class ParseRawData extends Command
             [
                 tRFDEExpressionDataParser::class,
                 [resource_path('data/TCGA_raw_counts_matrix.tsv'), resource_path('data/TCGA_clinical_de.tsv')],
+            ],
+            [
+                CorrelationTablesParser::class,
+                [resource_path('data/NCI60_datasets_map.tsv')],
             ],
         ];
     }

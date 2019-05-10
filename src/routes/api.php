@@ -25,6 +25,9 @@ Route::namespace('API')->group(
         Route::get('/de/{id}', 'DEController@show');
         Route::get('/de/{id}/download/summary', 'DEController@downloadSummary');
         Route::get('/de/{id}/download/{contrast}', 'DEController@download');
+        Route::get('/correlation', 'CorrelationController@index');
+        Route::get('/correlation/{correlation}/dataset/{dataset}', 'CorrelationController@showDataset');
+        Route::post('/correlation/{correlation}/dataset/{dataset}/graph', 'CorrelationController@showGraph');
     }
 );
 
