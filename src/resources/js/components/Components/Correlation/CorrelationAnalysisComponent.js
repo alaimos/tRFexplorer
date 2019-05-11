@@ -1,89 +1,25 @@
-import PropTypes                                   from 'prop-types';
 import React, { Component }                        from 'react';
 import axios                                       from 'axios';
-import { Card, CardBody, Row, Col, Button, Alert } from 'reactstrap';
-import BootstrapTable
-                                                   from 'react-bootstrap-table-next';
+import { Card, CardBody, Row, Col, Button }        from 'reactstrap';
+import BootstrapTable                              from 'react-bootstrap-table-next';
 import filterFactory, { textFilter, customFilter } from 'react-bootstrap-table2-filter';
-import paginationFactory
-                                                   from 'react-bootstrap-table2-paginator';
-import { Link }                                    from 'react-router-dom';
+import paginationFactory                           from 'react-bootstrap-table2-paginator';
 import { ErrorComponent, LoadingComponent }        from '../Common/CommonComponent';
-import 'rc-slider/assets/index.css';
-import 'rc-tooltip/assets/bootstrap.css';
-import Tooltip                                     from 'rc-tooltip';
-import Slider                                      from 'rc-slider';
 import GraphModalComponent                         from './GraphModalComponent';
-
-const createSliderWithTooltip = Slider.createSliderWithTooltip;
-const Handle = Slider.Handle;
-
-const handleTooltip = ({ value, dragging, index, ...restProps }) => {
-    return (
-        <Tooltip prefixCls="rc-slider-tooltip" overlay={value} visible={dragging} placement="top" key={index}>
-            <Handle value={value} {...restProps} />
-        </Tooltip>
-    );
-};
-
-class CorrelationFilter extends React.Component {
-    static propTypes = {
-        onFilter: PropTypes.func.isRequired,
-    };
-
-    constructor (props) {
-        super(props);
-        this.state = {
-            sliderValue: 0.5,
-        };
-    }
-
-    componentDidMount () {
-        const { getFilter } = this.props;
-        if (getFilter) {
-            getFilter((v) => {
-                this.setState({
-                    sliderValue: v,
-                });
-            });
-        }
-    }
-
-    componentDidUpdate (prevProps, prevState, snapshot) {
-        if (prevState.sliderValue !== this.state.sliderValue) {
-            this.props.onFilter(this.state.sliderValue);
-        }
-    }
-
-    filter = (v) => {
-        this.setState({
-            sliderValue: v,
-        });
-    };
-
-    render () {
-        return (
-            <Slider min={0.5} max={1.0} defaultValue={0.5} value={this.state.sliderValue} step={0.01}
-                    handle={handleTooltip} onChange={this.filter}/>
-        );
-    }
-}
+import CorrelationFilter                           from './CorrelationFilter';
 
 export default class CorrelationAnalysisComponent extends Component {
-
-    constructor (props, context) {
-        super(props, context);
-        this.state = {
-            error: null,
-            isLoaded: false,
-            data: null,
-            datasets: null,
-            selectedMeasure: '',
-            selectedDataset: '',
-            selectedCol: '',
-            selectedRow: '',
-        };
-    }
+    showModal = null;
+    state = {
+        error: null,
+        isLoaded: false,
+        data: null,
+        datasets: null,
+        selectedMeasure: '',
+        selectedDataset: '',
+        selectedCol: '',
+        selectedRow: '',
+    };
 
     static buildSelectOptions (data) {
         const tmp = Object.entries(data).map(([k, v]) => (
@@ -178,6 +114,9 @@ export default class CorrelationAnalysisComponent extends Component {
                 selectedCol: row.tRF,
                 selectedRow: row.rowId,
             });
+            if (this.showModal && typeof this.showModal === 'function') {
+                this.showModal();
+            }
         };
     }
 
@@ -192,7 +131,7 @@ export default class CorrelationAnalysisComponent extends Component {
         const showModal = (selectedCol !== '' && selectedRow !== '' &&
                            selectedMeasure !== '' && selectedDataset !== '');
         const data = this.state.data;
-        const hasData = data !== null;
+        const showData = selectedMeasure !== '' && selectedDataset !== '' && data !== null;
         const tableColumns = [
             {
                 dataField: 'tRF',
@@ -263,7 +202,7 @@ export default class CorrelationAnalysisComponent extends Component {
                                         </Row>
                                         <Row>
                                             <Col sm={12} className="mt-4">
-                                                {!hasData ? null : (
+                                                {!showData ? null : (
                                                     <BootstrapTable data={data} columns={tableColumns}
                                                                     pagination={paginationFactory()}
                                                                     filter={filterFactory()} keyField="key"/>
@@ -274,7 +213,8 @@ export default class CorrelationAnalysisComponent extends Component {
                                             <GraphModalComponent col={selectedCol}
                                                                  row={selectedRow}
                                                                  correlation={selectedMeasure}
-                                                                 dataset={selectedDataset}/>
+                                                                 dataset={selectedDataset}
+                                                                 getShowModal={(f) => this.showModal = f}/>
                                         ) : null}
                                     </React.Fragment>
                                 )

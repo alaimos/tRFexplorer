@@ -11,17 +11,15 @@ export default class GraphModalComponent extends Component {
         correlation: PropTypes.string.isRequired,
         dataset: PropTypes.string.isRequired,
         row: PropTypes.string.isRequired,
+        getShowModal: PropTypes.func,
     };
 
-    constructor (props, context) {
-        super(props, context);
-        this.state = {
-            error: null,
-            isLoaded: false,
-            data: null,
-            modal: true,
-        };
-    }
+    state = {
+        error: null,
+        isLoaded: false,
+        data: null,
+        modal: true,
+    };
 
     setError (message) {
         this.setState({
@@ -33,9 +31,6 @@ export default class GraphModalComponent extends Component {
     componentDidUpdate (prevProps, prevState, snapshot) {
         if (prevProps.row !== this.props.row || prevProps.col !== this.props.col ||
             prevProps.correlation !== this.props.correlation || prevProps.dataset !== this.props.dataset) {
-            this.setState({
-                modal: true,
-            });
             this.getData().catch((e) => (this.setError(e.message)));
         }
     }
@@ -80,6 +75,13 @@ export default class GraphModalComponent extends Component {
 
     componentDidMount () {
         this.getData().catch((e) => (this.setError(e.message)));
+        if (this.props.getShowModal) {
+            this.props.getShowModal((modal = true) => {
+                this.setState({
+                    modal,
+                });
+            });
+        }
     }
 
     render () {
