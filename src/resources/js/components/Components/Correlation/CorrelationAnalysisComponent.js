@@ -100,12 +100,22 @@ export default class CorrelationAnalysisComponent extends Component {
 
     handleMeasureSelect = (e) => {
         const { value: selectedMeasure } = e.target;
-        this.setState({ selectedMeasure });
+
+        this.setState({
+            selectedMeasure,
+            selectedDataset: '',
+            selectedCol: '',
+            selectedRow: '',
+        });
     };
 
     handleDatasetSelect = (e) => {
         const { value: selectedDataset } = e.target;
-        this.setState({ selectedDataset });
+        this.setState({
+            selectedDataset,
+            selectedCol: '',
+            selectedRow: '',
+        });
     };
 
     handleGraphClick (row) {
