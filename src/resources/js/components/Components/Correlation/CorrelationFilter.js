@@ -2,8 +2,6 @@ import React     from 'react';
 import PropTypes from 'prop-types';
 import Slider    from 'rc-slider';
 import Tooltip   from 'rc-tooltip';
-import 'rc-slider/assets/index.css';
-import 'rc-tooltip/assets/bootstrap.css';
 
 const Handle = Slider.Handle;
 
