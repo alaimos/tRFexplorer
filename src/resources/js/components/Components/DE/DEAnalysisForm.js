@@ -127,6 +127,12 @@ const Contrasts = ({ form, handlePush, handleRemove, contrasts }) => {
     );
 };
 
+const algorithms = {
+    'limma-voom': 'Limma - Voom',
+    'limma-trend': 'Limma - Trend',
+    'deseq2': 'DESeq2',
+};
+
 export default class DEAnalysisForm extends Component {
 
     static propTypes = {
@@ -144,6 +150,7 @@ export default class DEAnalysisForm extends Component {
             dataset: '',
             variables: '',
             contrasts: [],
+            algorithm: 'limma-voom',
             maxP: 0.05,
             minLFC: 1,
         };
@@ -179,6 +186,7 @@ export default class DEAnalysisForm extends Component {
         return Yup.object().shape({
             dataset: Yup.mixed().oneOf(Object.values(this.state.data.datasets)).required(),
             variables: Yup.string().required(), //Yup.array().of(Yup.string()).min(1, 'You must select at least one variable').required(),
+            algorithm: Yup.mixed().oneOf(Object.keys(algorithms)).required(),
             maxP: Yup.number(),
             minLFC: Yup.number(),
             contrasts: Yup.array().of(Yup.object().shape({
@@ -225,7 +233,16 @@ export default class DEAnalysisForm extends Component {
                                                 </Col>
                                             </Row>
                                             <Row>
-                                                <Col md={6}>
+                                                <Col md={4}>
+                                                    <FormGroup>
+                                                        <Label for="algorithm">
+                                                            Algorithm
+                                                        </Label>
+                                                        <Select name="algorithm" options={algorithms}/>
+                                                        <ErrorMessage name="algorithm"/>
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col md={4}>
                                                     <FormGroup>
                                                         <Label for="maxP">
                                                             Maximum p-value
@@ -234,7 +251,7 @@ export default class DEAnalysisForm extends Component {
                                                         <ErrorMessage name="maxP"/>
                                                     </FormGroup>
                                                 </Col>
-                                                <Col md={6}>
+                                                <Col md={4}>
                                                     <FormGroup>
                                                         <Label for="minLFC">
                                                             Minimum Log-Fold-Change
