@@ -33,3 +33,4 @@ src/public/ext/jbrowse/MYMETA.yml
 src/public/ext/jbrowse/Makefile
 src/public/ext/jbrowse/setup.log
 src/public/*.js
+src/resources/bin/.Rhistory

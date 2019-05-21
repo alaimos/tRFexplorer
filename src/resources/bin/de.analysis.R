@@ -103,6 +103,7 @@ tryCatch({
                path = opt$output.folder, folder = "plots", html = paste0("coef-", COEF),
                sample.cols = cols, transform = FALSE, launch = FALSE)
     })
+    saveRDS(opt, file = paste0(opt$output.folder, "/input.rds"))
     de.table <- topTable(fit.2, coef = COEF, number = Inf, p.value = maxP, lfc = minLFC)
     write.table(de.table, file = paste0(opt$output.folder,"/de.coef-", COEF,".tsv"), append = FALSE, sep = "\t", 
                 dec = ".", quote = FALSE, row.names = TRUE, col.names = TRUE)
