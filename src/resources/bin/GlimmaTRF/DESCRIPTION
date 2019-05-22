@@ -1,0 +1,39 @@
+Package: GlimmaTRF
+Type: Package
+Title: Interactive HTML graphics
+Version: 0.0.0
+Date: 2019-05-22
+Authors@R: 
+    c(
+        person(
+            "Shian", "Su",
+            role = c("aut", "cre"),
+            email = "su.s@wehi.edu.au"
+        ),
+        person(
+            "Matthew", "Ritchie",
+            role = c("aut")
+        ),
+        person(
+            "Charity", "Law",
+            role = c("aut")
+        ),
+        person(
+            "Stuart", "Lee",
+            role = c("ctb")
+        )
+    )        
+Description: This package is a custom version of Glimma for tRFexplorer
+biocViews: ImmunoOncology, DifferentialExpression, GeneExpression,
+        Microarray, ReportWriting, RNASeq, Sequencing, Visualization
+Depends: R (>= 3.4.0)
+Imports: edgeR, grDevices, jsonlite, methods, stats, S4Vectors, utils
+Suggests: BiocStyle, IRanges, GenomicRanges, SummarizedExperiment,
+        DESeq2, limma, testthat, knitr, rmarkdown, pryr
+License: GPL-3 | file LICENSE
+URL: https://github.com/Shians/Glimma
+BugReports: https://github.com/Shians/Glimma/issues
+RoxygenNote: 6.0.1
+NeedsCompilation: no
+LazyData: true
+VignetteBuilder: knitr

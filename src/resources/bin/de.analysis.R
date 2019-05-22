@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 packages      <- c("getopt", "edgeR", "limma",
-                   "ggplot2", "rjson", "Glimma")
+                   "ggplot2", "rjson")
 not.installed <- setdiff(packages, rownames(installed.packages()))
 if (length(not.installed) > 0) {
   suppressMessages(suppressWarnings(try({
@@ -15,8 +15,9 @@ library(edgeR, quietly = TRUE)
 library(limma, quietly = TRUE)
 library(ggplot2, quietly = TRUE)
 library(rjson, quietly = TRUE)
-library(Glimma, quietly = TRUE)
-# opt <- readRDS("../../storage/app/public/output/cb51cb50a372a44b745910a02099d830/input.rds")
+library(GlimmaTRF, quietly = TRUE)
+# opt <- readRDS("../../storage/app/public/output/9fbc72310da0e390a651b830a7e1b7e1/input.rds")
+# #cb51cb50a372a44b745910a02099d830/input.rds")
 # get options, using the spec as defined by the enclosed list.
 # we read the options from the default: commandArgs(TRUE).
 spec <- matrix(c(
@@ -65,6 +66,7 @@ tryCatch({
   input.clinical$CLASS <- factor(make.names(unname(apply(input.clinical[,variables, drop=FALSE] , 1 , paste , collapse = " "))))
   maxP                 <- config.analysis$maxP
   minLFC               <- config.analysis$minLFC
+  algorithm            <- config.analysis$algorithm
   omit                 <- which(apply(sapply(variables, function (x) (is.na(input.clinical[[x]]))), 1, function (x) (any(x))))
   if (length(omit) > 0) {
     input.clinical <- input.clinical[-omit,]
@@ -96,13 +98,16 @@ tryCatch({
   fit    <- lmFit(v.dge, design)
   fit.2  <- eBayes(contrasts.fit(fit, contrasts))
   dt     <- decideTests(fit.2, p.value=maxP,lfc = minLFC)
-  colors <- setNames(rainbow(length(levels(input.clinical$CLASS))), levels(input.clinical$CLASS))
-  cols   <- colors[input.clinical$CLASS]
   for (COEF in 1:ncol(contrasts)) {
     suppressWarnings({
-      glMDPlot(fit.2, status=dt, coef=COEF, counts=v.dge, groups=input.clinical$CLASS, 
-               path = opt$output.folder, folder = "plots", html = paste0("coef-", COEF),
-               sample.cols = cols, transform = FALSE, launch = FALSE)
+      chosen.samples <- input.clinical$CLASS %in% names(which(contrasts[,COEF] != 0))
+      chosen.classes <- factor(as.vector(input.clinical$CLASS[chosen.samples]))
+      colors         <- setNames(topo.colors(length(levels(chosen.classes))), levels(chosen.classes))
+      cols           <- colors[chosen.classes]
+      chosen.data    <- v.dge$E[,rownames(input.clinical)[chosen.samples]]
+      glVolcanoPlot(fit.2, status=dt, coef=COEF, counts=chosen.data, groups=chosen.classes, 
+                    path = opt$output.folder, folder = "plots", html = paste0("coef-", COEF), 
+                    sample.cols = cols, transform = FALSE, launch = FALSE)
     })
     saveRDS(opt, file = paste0(opt$output.folder, "/input.rds"))
     de.table <- topTable(fit.2, coef = COEF, number = Inf, p.value = maxP, lfc = minLFC)

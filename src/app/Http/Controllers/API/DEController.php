@@ -27,7 +27,7 @@ class DEController extends Controller
     private static $validAlgo = [
         'limma-voom',
         'limma-trend',
-        'deseq2',
+        //'deseq2',
     ];
 
     /**
@@ -145,10 +145,10 @@ class DEController extends Controller
             if (empty($contrasts)) {
                 throw new RuntimeException("No contrasts specified");
             }
-            if (!in_array($algorithm, self::$validAlgo)) {
-                throw new RuntimeException("Invalid algorithm ".$algorithm);
+            if (!in_array($algorithm, self::$validAlgo)) { //NOT SUPPORTED @TODO
+                throw new RuntimeException("Invalid algorithm " . $algorithm);
             }
-            $id = md5(json_encode([$data, $variables, $contrasts, $maxP, $minLFC]));
+            $id = md5(json_encode([$data, $variables, $contrasts, $maxP, $minLFC, $algorithm]));
             $folderBase = sprintf(Common::OUTPUT_BASE, $id);
             $analysisFolder = storage_path('app/' . $folderBase);
             $resultFile = $analysisFolder . '/results.json';

@@ -67,7 +67,7 @@ tryCatch({
                        add = "reg.line",
                        add.params = list(color = "blue", fill = "lightgray"),
                        xlab = opt$row.id, ylab = opt$col.id,
-                       conf.int = TRUE, cor.coef = TRUE, cor.method = opt$cor.method,
+                       conf.int = FALSE, cor.coef = TRUE, cor.method = opt$cor.method,
                        cor.coeff.args = list(output.type="text"))
   ggsave(opt$output.file, plot = sp, width = 20, height = 20, units = "cm", dpi = 600)
 }, error=function (e) {
