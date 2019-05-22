@@ -16,6 +16,7 @@ library(limma, quietly = TRUE)
 library(ggplot2, quietly = TRUE)
 library(rjson, quietly = TRUE)
 library(Glimma, quietly = TRUE)
+# opt <- readRDS("../../storage/app/public/output/cb51cb50a372a44b745910a02099d830/input.rds")
 # get options, using the spec as defined by the enclosed list.
 # we read the options from the default: commandArgs(TRUE).
 spec <- matrix(c(

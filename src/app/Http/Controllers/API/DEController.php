@@ -24,6 +24,12 @@ use Symfony\Component\Process\Process;
 class DEController extends Controller
 {
 
+    private static $validAlgo = [
+        'limma-voom',
+        'limma-trend',
+        'deseq2',
+    ];
+
     /**
      * @param string $id
      *
@@ -126,6 +132,7 @@ class DEController extends Controller
             $dataset = $request->get('dataset');
             $variables = (array)$request->get('variables', []);
             $contrasts = (array)$request->get('contrasts', []);
+            $algorithm = (string)$request->get('algorithm', self::$validAlgo[0]);
             $maxP = (double)$request->get('maxP', 0.01);
             $minLFC = (double)$request->get('minLFC', 1);
             $datasetExists = Storage::disk('local')->exists(Common::TCGA_CLINICAL_DE_FOLDER . '/' . $dataset . '.tsv');
@@ -137,6 +144,9 @@ class DEController extends Controller
             }
             if (empty($contrasts)) {
                 throw new RuntimeException("No contrasts specified");
+            }
+            if (!in_array($algorithm, self::$validAlgo)) {
+                throw new RuntimeException("Invalid algorithm ".$algorithm);
             }
             $id = md5(json_encode([$data, $variables, $contrasts, $maxP, $minLFC]));
             $folderBase = sprintf(Common::OUTPUT_BASE, $id);
@@ -160,6 +170,7 @@ class DEController extends Controller
                             "maxP"      => $maxP,
                             "minLFC"    => $minLFC,
                             "contrasts" => $contrasts,
+                            "algorithm" => $algorithm,
                         ]
                     )
                 );
@@ -178,7 +189,6 @@ class DEController extends Controller
                         $analysisFolder . '/',
                     ]
                 );
-                //throw new RuntimeException($process->getCommandLine());
                 $process->run();
                 $exitCode = $process->getExitCode();
                 switch ($exitCode) {

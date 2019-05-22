@@ -1,0 +1,50 @@
+Package: Glimma
+Type: Package
+Title: Interactive HTML graphics
+Version: 0.0.0
+Date: 2016-12-21
+Authors@R: 
+    c(
+        person(
+            "Shian", "Su",
+            role = c("aut", "cre"),
+            email = "su.s@wehi.edu.au"
+        ),
+        person(
+            "Matthew", "Ritchie",
+            role = c("aut")
+        ),
+        person(
+            "Charity", "Law",
+            role = c("aut")
+        ),
+        person(
+            "Stuart", "Lee",
+            role = c("ctb")
+        )
+    )        
+Description: This package generates interactive visualisations for analysis of RNA-sequencing data using output from limma, edgeR or DESeq2 packages in an HTML page. The interactions are built on top of the popular static representations of analysis results in order to provide additional information.
+biocViews: ImmunoOncology, DifferentialExpression, GeneExpression,
+        Microarray, ReportWriting, RNASeq, Sequencing, Visualization
+Depends: R (>= 3.4.0)
+Imports: edgeR, grDevices, jsonlite, methods, stats, S4Vectors, utils
+Suggests: BiocStyle, IRanges, GenomicRanges, SummarizedExperiment,
+        DESeq2, limma, testthat, knitr, rmarkdown, pryr
+License: GPL-3 | file LICENSE
+URL: https://github.com/Shians/Glimma
+BugReports: https://github.com/Shians/Glimma/issues
+RoxygenNote: 6.0.1
+NeedsCompilation: no
+LazyData: true
+VignetteBuilder: knitr
+git_url: https://git.bioconductor.org/packages/Glimma
+git_branch: RELEASE_3_9
+git_last_commit: d021742
+git_last_commit_date: 2019-05-02
+Date/Publication: 2019-05-02
+Packaged: 2019-05-03 01:59:55 UTC; biocbuild
+Author: Shian Su [aut, cre],
+  Matthew Ritchie [aut],
+  Charity Law [aut],
+  Stuart Lee [ctb]
+Maintainer: Shian Su <su.s@wehi.edu.au>
