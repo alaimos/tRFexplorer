@@ -18,6 +18,7 @@ export default class CorrelationFilter extends React.Component {
     static propTypes = {
         onFilter: PropTypes.func.isRequired,
         getFilter: PropTypes.func,
+        externalEvent: PropTypes.func,
     };
 
     state = {
@@ -38,6 +39,9 @@ export default class CorrelationFilter extends React.Component {
     componentDidUpdate (prevProps, prevState, snapshot) {
         if (prevState.sliderValue !== this.state.sliderValue) {
             this.props.onFilter(this.state.sliderValue);
+            if (this.props.externalEvent) {
+                this.props.externalEvent(this.state.sliderValue);
+            }
         }
     }
 

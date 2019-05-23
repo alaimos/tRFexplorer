@@ -425,6 +425,7 @@ glVolcanoPlot.MArrayLM <- function(
     checkCountsAndSamples(counts, samples, side.log)
 
     anno <- makeAnno(x, anno)
+
     # Assign side.main column from rowname of counts if required
     missing_side_main <- side.main %!in% union(names(x$table), names(anno))
     if (not.null(counts) && missing_side_main) {

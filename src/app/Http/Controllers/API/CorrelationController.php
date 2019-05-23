@@ -109,7 +109,7 @@ class CorrelationController extends Controller
                 mkdir(storage_path('app/public/graphs'), 0777, true);
             }
             $id = 'corr_graph_' . md5($correlation . $dataset . $row . $col);
-            $outputFile = storage_path('app/public/graphs/' . $id . '.png');
+            $outputFile = storage_path('app/public/graphs/' . $id . '.html');
             if (!file_exists($outputFile)) {
                 $process = new Process(
                     [
@@ -157,7 +157,7 @@ class CorrelationController extends Controller
                         break;
                 }
             }
-            $data = url('/storage/graphs/' . $id . '.png');
+            $data = url('/storage/graphs/' . $id . '.html');
         } catch (Exception $e) {
             $error = true;
             $message = 'Exception ' . get_class($e) . ': ' . $e->getMessage();

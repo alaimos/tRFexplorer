@@ -70,9 +70,9 @@ glimma <- function(..., layout=c(1, 1), path=getwd(), folder="glimma-plots",
     }
 
     # Create file
-    index_path <- system.file(package="Glimma", "index.html")
-    js_path <- system.file(package="Glimma", "js")
-    css_path <- system.file(package="Glimma", "css")
+    index_path <- system.file(package="GlimmaTRF", "index.html")
+    js_path <- system.file(package="GlimmaTRF", "js")
+    css_path <- system.file(package="GlimmaTRF", "css")
 
     # Renaming the data.js in html file
     temp <- gsub(

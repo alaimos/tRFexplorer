@@ -3,6 +3,24 @@ import React, { Component }                        from 'react';
 import axios                                       from 'axios';
 import { Row, Col, ModalBody, ModalHeader, Modal } from 'reactstrap';
 import { ErrorComponent, LoadingComponent }        from '../Common/CommonComponent';
+import styled                                      from 'styled-components';
+
+const ContainerDiv = styled.div`
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  padding-bottom: 55%;
+`;
+
+const StyledIframe = styled.iframe`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100% 100%"><text fill="%23FF0000" x="50%" y="50%" font-family="\\'Lucida Grande\\', sans-serif" font-size="24" text-anchor="middle">Loading...</text></svg>') 0px 0px no-repeat;
+`;
 
 export default class GraphModalComponent extends Component {
 
@@ -92,7 +110,7 @@ export default class GraphModalComponent extends Component {
         return (
             <Row>
                 <Col xs="12" className="mb-4">
-                    <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                    <Modal isOpen={this.state.modal} toggle={this.toggle} size="lg">
                         <ModalHeader toggle={this.toggle}>View correlation graph</ModalHeader>
                         <ModalBody>
                             {isLoaded ? (
@@ -100,7 +118,7 @@ export default class GraphModalComponent extends Component {
                                     <ErrorComponent errorMessage={errorMessage}/>
                                 ) : (
                                     <div className="embed-responsive embed-responsive-1by1">
-                                        <img className="embed-responsive-item" alt="" src={data}/>
+                                        <StyledIframe src={data} frameBorder={0}/>
                                     </div>
                                 )
                             ) : (

@@ -1,21 +1,26 @@
 #!/usr/bin/env Rscript
-packages      <- c("getopt", "edgeR", "limma",
-                   "ggplot2", "rjson")
-not.installed <- setdiff(packages, rownames(installed.packages()))
-if (length(not.installed) > 0) {
-  suppressMessages(suppressWarnings(try({
-    if (!requireNamespace("BiocManager", quietly = TRUE))
-      install.packages("BiocManager")
-    BiocManager::install(not.installed, quiet = TRUE)
-  }, silent=TRUE)))
-}
-rm(not.installed, packages)
-library(getopt, quietly = TRUE)
-library(edgeR, quietly = TRUE)
-library(limma, quietly = TRUE)
-library(ggplot2, quietly = TRUE)
-library(rjson, quietly = TRUE)
-library(GlimmaTRF, quietly = TRUE)
+script.dir <- dirname((function() {
+  cmdArgs <- commandArgs(trailingOnly = FALSE)
+  needle <- "--file="
+  match <- grep(needle, cmdArgs)
+  if (length(match) > 0) {
+    # Rscript
+    return(normalizePath(sub(needle, "", cmdArgs[match])))
+  } else {
+    # 'source'd via R console
+    return(normalizePath(sys.frames()[[1]]$ofile))
+  }
+})())
+##########################################################################################################
+# REQUIRED PACKAGES
+##########################################################################################################
+source.packages <- c("GlimmaTRF")
+source.location <- c(paste0(script.dir, "/GlimmaTRF_0.0.0.tar.gz"))
+packages        <- c("getopt", "edgeR", "limma", "ggplot2", "rjson")
+##########################################################################################################
+source(paste0(script.dir, "/setup.R"))
+##########################################################################################################
+
 # opt <- readRDS("../../storage/app/public/output/9fbc72310da0e390a651b830a7e1b7e1/input.rds")
 # #cb51cb50a372a44b745910a02099d830/input.rds")
 # get options, using the spec as defined by the enclosed list.

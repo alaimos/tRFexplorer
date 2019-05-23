@@ -5,34 +5,26 @@ import BootstrapTable                              from 'react-bootstrap-table-n
 import filterFactory, { textFilter, customFilter } from 'react-bootstrap-table2-filter';
 import paginationFactory                           from 'react-bootstrap-table2-paginator';
 import { ErrorComponent, LoadingComponent }        from '../Common/CommonComponent';
-//import GraphModalComponent                         from './GraphModalComponent';
+import GraphModalComponent                         from './GraphModalComponent';
 import CorrelationFilter                           from './CorrelationFilter';
-import styled                                      from 'styled-components';
-
-const StyledIframe = styled.iframe`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100% 100%"><text fill="%23FF0000" x="50%" y="50%" font-family="\\'Lucida Grande\\', sans-serif" font-size="24" text-anchor="middle">Loading...</text></svg>') 0px 0px no-repeat;
-`;
-
+import CytoscapeComponent                          from 'react-cytoscapejs';
+import md5                                         from 'md5';
+import weaver                                      from 'weaverjs';
 
 export default class CorrelationAnalysisComponent extends Component {
     showModal = null;
     state = {
         error: null,
         isLoaded: false,
-        isLoadedGraph: false,
         data: null,
         datasets: null,
-        graph: null,
         selectedMeasure: '',
         selectedDataset: '',
         selectedCol: '',
         selectedRow: '',
     };
+    cy = null;
+    filteringTimeout = null;
 
     static buildSelectOptions (data) {
         const tmp = Object.entries(data).map(([k, v]) => (
@@ -98,29 +90,6 @@ export default class CorrelationAnalysisComponent extends Component {
         }
     }
 
-    async getGraph () {
-        try {
-            this.setState({
-                isLoadedGraph: false,
-            });
-            const response = await axios.post(
-                `/api/correlation/${this.state.selectedMeasure}/dataset/${this.state.selectedDataset}/graph`,
-                {
-                    row: this.state.selectedRow,
-                    col: this.state.selectedCol,
-                });
-            const graph = this.responseHandler(response);
-            if (graph) {
-                this.setState({
-                    isLoadedGraph: true,
-                    graph,
-                });
-            }
-        } catch (e) {
-            this.setError(e.message);
-        }
-    }
-
     componentDidMount () {
         this.getDatasets().catch((e) => (this.setError(e.message)));
     }
@@ -132,13 +101,6 @@ export default class CorrelationAnalysisComponent extends Component {
                 this.getData().catch((e) => (this.setError(e.message)));
             }
         }
-        if (prevState.selectedRow !== this.state.selectedRow ||
-            prevState.selectedCol !== this.state.selectedCol) {
-            if (this.state.selectedDataset !== '' && this.state.selectedMeasure !== '' &&
-                this.state.selectedRow !== '' && this.state.selectedCol !== '') {
-                this.getGraph().catch((e) => (this.setError(e.message)));
-            }
-        }
     }
 
     handleMeasureSelect = (e) => {
@@ -147,8 +109,8 @@ export default class CorrelationAnalysisComponent extends Component {
         this.setState({
             selectedMeasure,
             selectedDataset: '',
-            selectedRow: '',
             selectedCol: '',
+            selectedRow: '',
         });
     };
 
@@ -156,22 +118,57 @@ export default class CorrelationAnalysisComponent extends Component {
         const { value: selectedDataset } = e.target;
         this.setState({
             selectedDataset,
-            selectedRow: '',
             selectedCol: '',
+            selectedRow: '',
         });
     };
 
     handleGraphClick (row) {
         return () => {
             this.setState({
-                selectedRow: row.rowId,
                 selectedCol: row.tRF,
+                selectedRow: row.rowId,
             });
-            /*if (this.showModal && typeof this.showModal === 'function') {
+            if (this.showModal && typeof this.showModal === 'function') {
                 this.showModal();
-            }*/
+            }
         };
     }
+
+    handleTableSelect = (row, isSelect, rowIndex, e) => {
+        if (this.cy) {
+            this.cy.$('.selected').removeClass('selected');
+            const sel = this.cy.$(`#${md5(row.rowId)}, #${md5(row.tRF)}`);
+            sel.addClass('selected');
+            this.cy.fit(sel, 10);
+        }
+    };
+
+    onFiltered = (value) => {
+        if (this.cy) {
+            if (this.filteringTimeout !== null) {
+                clearTimeout(this.filteringTimeout);
+            }
+            setTimeout(() => {
+                this.cy.batch(() => {
+                    const hideEdges = this.cy.filter((element) => {
+                        return element.isEdge() && element.data('width') < 6 * value;
+                    });
+                    const showEdges = this.cy.filter((element) => {
+                        return element.isEdge() && element.data('width') >= 6 * value;
+                    });
+                    hideEdges.addClass('hidden');
+                    showEdges.removeClass('hidden');
+                    this.cy.nodes().filter((element) => {
+                        return element.neighbourhood('edge.hidden').length !== element.neighbourhood('edge').length;
+                    }).removeClass('hidden');
+                    this.cy.nodes().filter((element) => {
+                        return element.neighbourhood('edge.hidden').length === element.neighbourhood('edge').length;
+                    }).addClass('hidden');
+                });
+            }, 500);
+        }
+    };
 
     render () {
         const isLoaded = this.state.isLoaded;
@@ -183,7 +180,8 @@ export default class CorrelationAnalysisComponent extends Component {
         const selectedRow = this.state.selectedRow;
         const showModal = (selectedCol !== '' && selectedRow !== '' &&
                            selectedMeasure !== '' && selectedDataset !== '');
-        const data = this.state.data;
+        const data = (this.state.data) ? this.state.data.table : null;
+        const graphElements = (this.state.data) ? this.state.data.graph : null;
         const showData = selectedMeasure !== '' && selectedDataset !== '' && data !== null;
         const tableColumns = [
             {
@@ -212,18 +210,53 @@ export default class CorrelationAnalysisComponent extends Component {
                 filter: customFilter({
                     onFilter: (val) => data.filter(d => Math.abs(d.correlation) >= val),
                 }),
-                filterRenderer: (onFilter) => <CorrelationFilter onFilter={onFilter}/>,
-            }, {
-                dataField: 'action',
-                text: 'Action',
-                sort: false,
-                isDummyField: true,
-                formatter: (cell, row) => (
-                    <Button size="sm" color="outline-info" onClick={this.handleGraphClick(row)}>
-                        <i className="fas fa-chart-line"/>
-                    </Button>
-                ),
+                filterRenderer: (onFilter) => <CorrelationFilter onFilter={onFilter} externalEvent={this.onFiltered}/>,
             }];
+        const graphStyle = [
+            {
+                selector: 'node[type = "row"]',
+                style: {
+                    shape: 'rectangle',
+                    label: 'data(name)',
+                },
+            },
+            {
+                selector: 'node[type = "col"]',
+                style: {
+                    shape: 'diamond',
+                    label: 'data(name)',
+                },
+            },
+            {
+                selector: 'node.selected',
+                style: {
+                    'color': '#000000',
+                    'background-color': '#3a7ecf',
+                },
+            },
+            {
+                selector: '.hidden',
+                style: {
+                    'display': 'none',
+                },
+            },
+            {
+                selector: 'edge[type = "correlation"]',
+                style: {
+                    'line-color': 'rgb(48, 255, 48)',
+                    'width': 'data(width)',
+                    'target-arrow-shape': 'triangle',
+                },
+            },
+            {
+                selector: 'edge[type = "anticorrelation"]',
+                style: {
+                    'line-color': 'rgb(255, 48, 48)',
+                    'width': 'data(width)',
+                    'target-arrow-shape': 'triangle',
+                },
+            },
+        ];
         return (
             <Row>
                 <Col xs="12" className="mb-4">
@@ -253,16 +286,22 @@ export default class CorrelationAnalysisComponent extends Component {
                                                 </select>
                                             </Col>
                                         </Row>
-                                        {showModal ? (
+                                        {showData ? (
                                             <Row className="mt-4">
-                                                <Col md={12}>
-                                                    {this.state.isLoadedGraph ? (
-                                                        <div className="embed-responsive embed-responsive-custom">
-                                                            <StyledIframe src={this.state.graph} frameBorder={0}/>
-                                                        </div>
-                                                    ) : (
-                                                        <LoadingComponent message="Building graph..."/>
-                                                    )}
+                                                <Col md={6}>
+                                                    <CytoscapeComponent elements={graphElements}
+                                                                        style={{
+                                                                            width: '100%', height: '300px',
+                                                                        }}
+                                                                        stylesheet={graphStyle}
+                                                                        layout={{
+                                                                            name: 'cose',
+                                                                            animate: false,
+                                                                            weaver,
+                                                                        }}
+                                                                        cy={cy => this.cy = cy}/>
+                                                </Col>
+                                                <Col md={6}>
                                                 </Col>
                                             </Row>
                                         ) : null}
@@ -271,17 +310,22 @@ export default class CorrelationAnalysisComponent extends Component {
                                                 {!showData ? null : (
                                                     <BootstrapTable data={data} columns={tableColumns}
                                                                     pagination={paginationFactory()}
+                                                                    selectRow={{
+                                                                        mode: 'radio',
+                                                                        clickToSelect: true,
+                                                                        onSelect: this.handleTableSelect,
+                                                                    }}
                                                                     filter={filterFactory()} keyField="key"/>
                                                 )}
                                             </Col>
                                         </Row>
-                                        {/*showModal ? (
+                                        {showModal ? (
                                             <GraphModalComponent col={selectedCol}
                                                                  row={selectedRow}
                                                                  correlation={selectedMeasure}
                                                                  dataset={selectedDataset}
                                                                  getShowModal={(f) => this.showModal = f}/>
-                                        ) : null*/}
+                                        ) : null}
                                     </React.Fragment>
                                 )
                             ) : (

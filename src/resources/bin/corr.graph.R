@@ -1,20 +1,26 @@
 #!/usr/bin/env Rscript
-packages      <- c("getopt", "ggplot2", "rjson", "ggpubr", "plotly", "htmlwidgets")
-not.installed <- setdiff(packages, rownames(installed.packages()))
-if (length(not.installed) > 0) {
-  suppressMessages(suppressWarnings(try({
-    if (!requireNamespace("BiocManager", quietly = TRUE))
-      install.packages("BiocManager")
-    BiocManager::install(not.installed, quiet = TRUE)
-  }, silent=TRUE)))
-}
-rm(not.installed, packages)
-library(getopt, quietly = TRUE)
-library(ggplot2, quietly = TRUE)
-library(rjson, quietly = TRUE)
-library(ggpubr, quietly = TRUE)
-library(plotly, quietly = TRUE)
-library(htmlwidgets, quietly = TRUE)
+script.dir <- dirname((function() {
+  cmdArgs <- commandArgs(trailingOnly = FALSE)
+  needle <- "--file="
+  match <- grep(needle, cmdArgs)
+  if (length(match) > 0) {
+    # Rscript
+    return(normalizePath(sub(needle, "", cmdArgs[match])))
+  } else {
+    # 'source'd via R console
+    return(normalizePath(sys.frames()[[1]]$ofile))
+  }
+})())
+##########################################################################################################
+# REQUIRED PACKAGES
+##########################################################################################################
+source.packages <- c()
+source.location <- c()
+packages        <- c("getopt", "ggplot2", "rjson", "ggpubr", "plotly", "htmlwidgets")
+##########################################################################################################
+source(paste0(script.dir, "/setup.R"))
+##########################################################################################################
+
 # get options, using the spec as defined by the enclosed list.
 # we read the options from the default: commandArgs(TRUE).
 spec <- matrix(c(

@@ -44,6 +44,52 @@ class CorrelationTablesParser extends AbstractParser
         }
     }
 
+    private static function buildNode(string $id, string $name, string $type): array
+    {
+        return [
+            'data' => [
+                'id'   => md5($id),
+                'name' => $name,
+                'type' => $type,
+            ],
+        ];
+    }
+
+    private static function buildEdge(string $id, string $source, string $target, string $type, float $value): array
+    {
+        return [
+            'data' => [
+                'id'     => $id,
+                'source' => md5($source),
+                'target' => md5($target),
+                'type'   => $type,
+                'width'  => 6 * abs($value),
+            ],
+        ];
+    }
+
+    private function buildGraphData(array &$tableData): array
+    {
+        $graphData = [
+            'nodes' => [],
+            'edges' => [],
+        ];
+        foreach ($tableData as $row) {
+            $graphData['nodes'][$row['rowId']] = self::buildNode($row['rowId'], $row['rowId'], 'row');
+            $graphData['nodes'][$row['tRF']] = self::buildNode($row['tRF'], $row['tRF'], 'col');
+            $type = ($row['correlation'] > 0) ? 'correlation' : 'anticorrelation';
+            $graphData['edges'][$row['key']] = self::buildEdge(
+                $row['key'],
+                $row['rowId'],
+                $row['tRF'],
+                $type,
+                $row['correlation']
+            );
+        }
+
+        return array_merge(array_values($graphData['nodes']), array_values($graphData['edges']));
+    }
+
     private function readDatasets(): void
     {
         foreach ($this->finalDatasets['measures'] as $measure => $measureName) {
@@ -74,7 +120,14 @@ class CorrelationTablesParser extends AbstractParser
                     throw new RuntimeException("Unable to open dataset file");
                 }
                 if (count($tableData) > 0) {
-                    self::writeJsonFile($outputFile, $tableData);
+                    self::writeJsonFile(
+                        $outputFile,
+                        $tableData
+                    /*[
+                        'table' => $tableData,
+                        'graph' => $this->buildGraphData($tableData),
+                    ]*/
+                    );
                 } else {
                     $toRemove[] = $id;
                 }

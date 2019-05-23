@@ -63,3 +63,7 @@ code {
 .portfolio-item {
   margin-bottom: 30px;
 }
+
+.embed-responsive-custom::before {
+    padding-top: 41%;
+}
