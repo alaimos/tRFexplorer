@@ -27,7 +27,7 @@ class CorrelationController extends Controller
         $message = '';
         $data = null;
         try {
-            $data = CachedReader::json(Common::CORRELATION_NCI60_DATASETS);
+            $data = CachedReader::json(Common::CORRELATION_DATASETS);
         } catch (Exception $e) {
             $error = true;
             $message = 'Exception ' . get_class($e) . ': ' . $e->getMessage();
@@ -57,7 +57,7 @@ class CorrelationController extends Controller
             if (empty($dataset)) {
                 throw new RuntimeException("Empty dataset identifier");
             }
-            $data = CachedReader::json(sprintf(Common::CORRELATION_NCI60_DATASET_BASE, $correlation, $dataset));
+            $data = CachedReader::json(sprintf(Common::CORRELATION_DATASET_BASE, $correlation, $dataset));
         } catch (Exception $e) {
             $error = true;
             $message = 'Exception ' . get_class($e) . ': ' . $e->getMessage();
@@ -87,11 +87,11 @@ class CorrelationController extends Controller
             if (empty($dataset)) {
                 throw new RuntimeException("Empty dataset identifier");
             }
-            $datasets = CachedReader::json(Common::CORRELATION_NCI60_DATASETS);
+            $datasets = CachedReader::json(Common::CORRELATION_DATASETS);
             if (!isset($datasets["datasetsByMeasure"][$correlation][$dataset])) {
                 throw new RuntimeException("Unknown dataset");
             }
-            $datasetFilename = resource_path('data/datasets/NCI60/' . $dataset . '.rds');
+            $datasetFilename = resource_path('data/datasets/' . $dataset . '.rds');
             if (!file_exists($datasetFilename)) {
                 throw new RuntimeException("Unable to find dataset filename");
             }

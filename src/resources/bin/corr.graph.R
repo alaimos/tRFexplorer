@@ -65,8 +65,14 @@ if (is.null(opt$cor.method)) {
 }
 
 tryCatch({
-  dataset <- readRDS(opt$dataset.file)
-  trf     <- readRDS(opt$trf.file)
+  tmp     <- readRDS(opt$dataset.file)
+  if (is.list(tmp) && !is.matrix(tmp)) {
+    dataset <- tmp$x
+    trf     <- list(RPM=tmp$y, clinical=tmp$clicinal)
+  } else {
+    dataset <- tmp
+    trf     <- readRDS(opt$trf.file)
+  }
   x       <- as.vector(dataset[opt$row.id,])
   y       <- as.vector(t(trf$RPM[opt$col.id,]))
   color   <- factor(trf$clinical[colnames(trf$RPM),]$tissue)

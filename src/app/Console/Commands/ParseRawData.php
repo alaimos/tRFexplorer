@@ -84,7 +84,7 @@ class ParseRawData extends Command
             ],
             [
                 CorrelationTablesParser::class,
-                [resource_path('data/NCI60_datasets_map.tsv')],
+                [resource_path('data/correlation_datasets_map.tsv')],
             ],
         ];
     }

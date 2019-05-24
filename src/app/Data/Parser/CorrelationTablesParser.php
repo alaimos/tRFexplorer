@@ -12,7 +12,7 @@ class CorrelationTablesParser extends AbstractParser
 
     private $allDatasets;
     private $finalDatasets = [
-        'measures'          => ['pearson' => 'Pearson'],
+        'measures'          => ['pearson' => 'Pearson', 'spearman' => 'Spearman'],
         'datasetsByMeasure' => [],
     ];
 
@@ -23,7 +23,7 @@ class CorrelationTablesParser extends AbstractParser
     {
         $this->readDatasetsList();
         $this->readDatasets();
-        self::writeJsonFile(Common::CORRELATION_NCI60_DATASETS, $this->finalDatasets);
+        self::writeJsonFile(Common::CORRELATION_DATASETS, $this->finalDatasets);
     }
 
     private function readDatasetsList(): void
@@ -95,8 +95,8 @@ class CorrelationTablesParser extends AbstractParser
         foreach ($this->finalDatasets['measures'] as $measure => $measureName) {
             $toRemove = [];
             foreach ($this->allDatasets as $id => $name) {
-                $inputFile = resource_path(sprintf(Common::CORRELATION_NCI60_INPUT_BASE, $measure, $id));
-                $outputFile = sprintf(Common::CORRELATION_NCI60_DATASET_BASE, $measure, $id);
+                $inputFile = resource_path(sprintf(Common::CORRELATION_INPUT_BASE, $measure, $id));
+                $outputFile = sprintf(Common::CORRELATION_DATASET_BASE, $measure, $id);
                 $tableData = [];
                 if (($handle = fopen($inputFile, 'r')) !== false) {
                     $data = fgetcsv($handle, 1000, "\t"); // SKIP FIRST LINE
