@@ -9,6 +9,14 @@ import { ErrorComponent, LoadingComponent }        from '../Common/CommonCompone
 import CorrelationFilter                           from './CorrelationFilter';
 import styled                                      from 'styled-components';
 
+const StyledLoadingContainer = styled.div`
+    width: 100%;
+    max-width: 600px;
+    height: 450px;
+    text-align: center;
+    vertical-align: middle;
+`;
+
 const StyledIframe = styled.iframe`
     width: 100%;
     max-width: 600px;
@@ -256,7 +264,9 @@ export default class CorrelationAnalysisComponent extends Component {
                                                     {this.state.isLoadedGraph ? (
                                                         <StyledIframe src={this.state.graph} frameBorder={0}/>
                                                     ) : (
-                                                        <LoadingComponent message="Building graph..."/>
+                                                        <StyledLoadingContainer>
+                                                            <LoadingComponent message="Building graph..."/>
+                                                        </StyledLoadingContainer>
                                                     )}
                                                 </Col>
                                             </Row>
