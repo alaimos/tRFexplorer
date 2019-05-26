@@ -72,7 +72,7 @@ class tRFDataParser extends AbstractParser
 
     private function readList(): void
     {
-        if (($handle = fopen($this->inputFile, 'r')) !== false) {
+        if (($handle = gzopen($this->inputFile, 'r')) !== false) {
             while (($data = fgetcsv($handle, 1000, "\t")) !== false) {
                 $num = count($data);
                 if ($num != 9) {
@@ -98,7 +98,7 @@ class tRFDataParser extends AbstractParser
                     'strand' => $data[6],
                 ];
             }
-            fclose($handle);
+            gzclose($handle);
         } else {
             throw new RuntimeException("Unable to open tRF list file");
         }

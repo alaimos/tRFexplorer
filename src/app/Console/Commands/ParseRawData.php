@@ -56,35 +56,35 @@ class ParseRawData extends Command
     private function init()
     {
         $this->parsers = [
-            [tRFListParser::class, [resource_path('data/tRF.list.tsv')]],
-            [tRFAvgExpressionParser::class, [resource_path('data/tRF.avg_expressions.tsv')]],
-            [tRFDataParser::class, [resource_path('data/tRNA.fragments.hg19.tsv')]],
-            [tRFClinicalDataParser::class, [resource_path('data/NCI60_clinical.tsv'), Common::NCI60_CLINICAL]],
+            [tRFListParser::class, [resource_path('data/tRF.list.tsv.gz')]],
+            [tRFAvgExpressionParser::class, [resource_path('data/tRF.avg_expressions.tsv.gz')]],
+            [tRFDataParser::class, [resource_path('data/tRNA.fragments.hg19.tsv.gz')]],
+            [tRFClinicalDataParser::class, [resource_path('data/NCI60_clinical.tsv.gz'), Common::NCI60_CLINICAL]],
             [
                 tRFExpressionDataParser::class,
-                [resource_path('data/NCI60_RPM_matrix.tsv'), Common::NCI60_RPM_MATRIX, Common::NCI60_CLINICAL],
+                [resource_path('data/NCI60_RPM_matrix.tsv.gz'), Common::NCI60_RPM_MATRIX, Common::NCI60_CLINICAL],
             ],
             [
                 tRFExpressionDataParser::class,
-                [resource_path('data/NCI60_TPM_matrix.tsv'), Common::NCI60_TPM_MATRIX, Common::NCI60_CLINICAL],
+                [resource_path('data/NCI60_TPM_matrix.tsv.gz'), Common::NCI60_TPM_MATRIX, Common::NCI60_CLINICAL],
             ],
-            [tRFClinicalDataParser::class, [resource_path('data/TCGA_clinical.tsv'), Common::TCGA_CLINICAL]],
+            [tRFClinicalDataParser::class, [resource_path('data/TCGA_clinical.tsv.gz'), Common::TCGA_CLINICAL]],
             [
                 tRFExpressionDataParser::class,
-                [resource_path('data/TCGA_RPM_matrix.tsv'), Common::TCGA_RPM_MATRIX, Common::TCGA_CLINICAL],
+                [resource_path('data/TCGA_RPM_matrix.tsv.gz'), Common::TCGA_RPM_MATRIX, Common::TCGA_CLINICAL],
             ],
             [
                 tRFExpressionDataParser::class,
-                [resource_path('data/TCGA_TPM_matrix.tsv'), Common::TCGA_TPM_MATRIX, Common::TCGA_CLINICAL],
+                [resource_path('data/TCGA_TPM_matrix.tsv.gz'), Common::TCGA_TPM_MATRIX, Common::TCGA_CLINICAL],
             ],
-            [tRFDEClinicalDataParser::class, [resource_path('data/TCGA_clinical_de.tsv')]],
+            [tRFDEClinicalDataParser::class, [resource_path('data/TCGA_clinical_de.tsv.gz')]],
             [
                 tRFDEExpressionDataParser::class,
-                [resource_path('data/TCGA_raw_counts_matrix.tsv'), resource_path('data/TCGA_clinical_de.tsv')],
+                [resource_path('data/TCGA_raw_counts_matrix.tsv.gz'), resource_path('data/TCGA_clinical_de.tsv.gz')],
             ],
             [
                 CorrelationTablesParser::class,
-                [resource_path('data/correlation_datasets_map.tsv')],
+                [resource_path('data/correlation_datasets_map.tsv.gz')],
             ],
         ];
     }

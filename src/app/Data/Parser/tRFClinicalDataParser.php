@@ -43,7 +43,7 @@ class tRFClinicalDataParser extends AbstractParser
 
     private function readData(): void
     {
-        if (($handle = fopen($this->inputFile, 'r')) !== false) {
+        if (($handle = gzopen($this->inputFile, 'r')) !== false) {
             $variables = fgetcsv($handle, 0, "\t");
             foreach ($variables as $v) {
                 $this->data[$v] = [];
@@ -58,7 +58,7 @@ class tRFClinicalDataParser extends AbstractParser
                     $this->data[$variables[$i]][] = self::handleNA($data[$i], null);
                 }
             }
-            fclose($handle);
+            gzclose($handle);
         } else {
             throw new RuntimeException("Unable to open clinical data file");
         }

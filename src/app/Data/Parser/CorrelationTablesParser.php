@@ -28,7 +28,7 @@ class CorrelationTablesParser extends AbstractParser
 
     private function readDatasetsList(): void
     {
-        if (($handle = fopen($this->inputFile, 'r')) !== false) {
+        if (($handle = gzopen($this->inputFile, 'r')) !== false) {
             while (($data = fgetcsv($handle, 1000, "\t")) !== false) {
                 $num = count($data);
                 if ($num != 2) {
@@ -38,7 +38,7 @@ class CorrelationTablesParser extends AbstractParser
                 $name = trim($data[1]);
                 $this->allDatasets[$id] = $name;
             }
-            fclose($handle);
+            gzclose($handle);
         } else {
             throw new RuntimeException("Unable to open dataset list file");
         }
@@ -98,7 +98,7 @@ class CorrelationTablesParser extends AbstractParser
                 $inputFile = resource_path(sprintf(Common::CORRELATION_INPUT_BASE, $measure, $id));
                 $outputFile = sprintf(Common::CORRELATION_DATASET_BASE, $measure, $id);
                 $tableData = [];
-                if (($handle = fopen($inputFile, 'r')) !== false) {
+                if (($handle = gzopen($inputFile, 'r')) !== false) {
                     $data = fgetcsv($handle, 1000, "\t"); // SKIP FIRST LINE
                     while (($data = fgetcsv($handle, 1000, "\t")) !== false) {
                         $num = count($data);
@@ -115,7 +115,7 @@ class CorrelationTablesParser extends AbstractParser
                             'correlation' => doubleval($data[2]),
                         ];
                     }
-                    fclose($handle);
+                    gzclose($handle);
                 } else {
                     throw new RuntimeException("Unable to open dataset file");
                 }

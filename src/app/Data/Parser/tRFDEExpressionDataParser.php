@@ -64,7 +64,7 @@ class tRFDEExpressionDataParser extends AbstractParser
      */
     private function readClinicalData(): void
     {
-        if (($handle = fopen($this->clinicalInputFile, 'r')) !== false) {
+        if (($handle = gzopen($this->clinicalInputFile, 'r')) !== false) {
             $header = fgetcsv($handle, 1000, "\t");
             $fields = count($header);
             $datasetField = $fields - 2;
@@ -80,7 +80,7 @@ class tRFDEExpressionDataParser extends AbstractParser
                     $this->data[$dataset] = [];
                 }
             }
-            fclose($handle);
+            gzclose($handle);
         } else {
             throw new RuntimeException("Unable to open tRF list file");
         }
@@ -112,7 +112,7 @@ class tRFDEExpressionDataParser extends AbstractParser
      */
     private function readData(): void
     {
-        if (($handle = fopen($this->inputFile, 'r')) !== false) {
+        if (($handle = gzopen($this->inputFile, 'r')) !== false) {
             $samples = fgetcsv($handle, 0, "\t");
             $rowSize = count($samples);
             while (($data = fgetcsv($handle, 0, "\t")) !== false) {
@@ -133,7 +133,7 @@ class tRFDEExpressionDataParser extends AbstractParser
                     $this->data[$dataset][$tRFId][] = self::handleNA($data[$i], NAN, "intval") ?? 0;
                 }
             }
-            fclose($handle);
+            gzclose($handle);
             $datasets = array_keys($this->data);
             foreach ($datasets as $dataset) {
                 $this->data[$dataset] = array_values($this->data[$dataset]);

@@ -37,7 +37,7 @@ class tRFListParser extends AbstractParser
 
     private function readList(): void
     {
-        if (($handle = fopen($this->inputFile, 'r')) !== false) {
+        if (($handle = gzopen($this->inputFile, 'r')) !== false) {
             $data = fgetcsv($handle, 1000, "\t"); // SKIP FIRST LINE
             while (($data = fgetcsv($handle, 1000, "\t")) !== false) {
                 $num = count($data);
@@ -69,7 +69,7 @@ class tRFListParser extends AbstractParser
                 $this->tRFByAminoacid[$aminoacid][$tRF] = $tRF;
                 $this->anticodonsByAminoacids[$aminoacid][$anticodon] = $anticodon;
             }
-            fclose($handle);
+            gzclose($handle);
         } else {
             throw new RuntimeException("Unable to open tRF list file");
         }

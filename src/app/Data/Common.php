@@ -38,6 +38,6 @@ class Common
     const OUTPUT_BASE                    = 'public/output/%s/';
     const OUTPUT_URL_BASE                = 'storage/output/%s/plots/coef-%d.html';
     const CORRELATION_DATASETS           = 'data/correlation.datasets.json';
-    const CORRELATION_INPUT_BASE         = 'data/tables/%s/%s.tsv';
+    const CORRELATION_INPUT_BASE         = 'data/tables/%s/%s.tsv.gz';
     const CORRELATION_DATASET_BASE       = 'data/tables/%s/%s.json';
 }

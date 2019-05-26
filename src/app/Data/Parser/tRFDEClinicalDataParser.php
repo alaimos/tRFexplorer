@@ -33,7 +33,7 @@ class tRFDEClinicalDataParser extends AbstractParser
 
     private function readList(): void
     {
-        if (($handle = fopen($this->inputFile, 'r')) !== false) {
+        if (($handle = gzopen($this->inputFile, 'r')) !== false) {
             $this->headers = fgetcsv($handle, 1000, "\t");
             $fields = count($this->headers);
             $datasetField = $fields - 2;
@@ -61,7 +61,7 @@ class tRFDEClinicalDataParser extends AbstractParser
                     }
                 }
             }
-            fclose($handle);
+            gzclose($handle);
         } else {
             throw new RuntimeException("Unable to open tRF list file");
         }

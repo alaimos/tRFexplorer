@@ -74,7 +74,7 @@ class tRFExpressionDataParser extends AbstractParser
 
     private function readData(): void
     {
-        if (($handle = fopen($this->inputFile, 'r')) !== false) {
+        if (($handle = gzopen($this->inputFile, 'r')) !== false) {
             $samples = fgetcsv($handle, 0, "\t");
             $rowSize = count($samples);
             while (($data = fgetcsv($handle, 0, "\t")) !== false) {
@@ -88,7 +88,7 @@ class tRFExpressionDataParser extends AbstractParser
                     $this->data[$tRFId][$samples[$i]] = self::handleNA($data[$i], NAN, "doubleval");
                 }
             }
-            fclose($handle);
+            gzclose($handle);
         } else {
             throw new RuntimeException("Unable to open expression data file");
         }
