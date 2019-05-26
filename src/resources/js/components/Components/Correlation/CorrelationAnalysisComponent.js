@@ -280,13 +280,23 @@ export default class CorrelationAnalysisComponent extends Component {
                                                 )}
                                             </Col>
                                         </Row>
-                                        {/*showModal ? (
-                                            <GraphModalComponent col={selectedCol}
-                                                                 row={selectedRow}
-                                                                 correlation={selectedMeasure}
-                                                                 dataset={selectedDataset}
-                                                                 getShowModal={(f) => this.showModal = f}/>
-                                        ) : null*/}
+                                        {!showData ? null : (
+                                            <Row className="mt-4">
+                                                <Col sm={12} className="text-center">
+                                                    <Button color="outline-info"
+                                                            href={`/api/correlation/${selectedMeasure}/dataset/${selectedDataset}/download/table`}>
+                                                        <i className="fas fa-download fa-fw"/>
+                                                        &nbsp;Download table data
+                                                    </Button>
+                                                    &nbsp;
+                                                    <Button color="outline-info"
+                                                            href={`/api/correlation/${selectedMeasure}/dataset/${selectedDataset}/download/data`}>
+                                                        <i className="fas fa-download fa-fw"/>
+                                                        &nbsp;Download R dataset
+                                                    </Button>
+                                                </Col>
+                                            </Row>
+                                        )}
                                     </React.Fragment>
                                 )
                             ) : (

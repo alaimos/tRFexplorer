@@ -10,6 +10,7 @@ import Help                             from './Pages/Help';
 import { LoadingComponent }             from './Components/Common/CommonComponent';
 
 const Browse = React.lazy(() => import('./Pages/Browse'));
+const Download = React.lazy(() => import('./Pages/Download'));
 const BrowseByLocation = React.lazy(() => import('./Pages/BrowseByLocation'));
 const BrowseByExpression = React.lazy(() => import('./Pages/BrowseByExpression'));
 const Fragment = React.lazy(() => import('./Pages/Fragment'));
@@ -39,6 +40,7 @@ class App extends Component {
                 <main role="main" className="flex-shrink-0">
                     <Switch>
                         <Route exact path="/" component={Home}/>
+                        <Route path="/download" component={waitingComponent(Download)}/>
                         <Route path="/correlation-analysis" component={waitingComponent(CorrelationAnalysis)}/>
                         <Route path="/de-analysis/:id" component={waitingComponent(DEAnalysisResult)}/>
                         <Route path="/de-analysis" component={waitingComponent(DEAnalysisIndex)}/>

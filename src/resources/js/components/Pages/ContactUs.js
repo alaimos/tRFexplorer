@@ -10,8 +10,8 @@ export default class ContactUs extends Component {
                 <Col lg={12} className="mb-4">
                     <h3>Bug Reports</h3>
                     <p>
-                        For bugs reporting, please contact S. Alaimo at
-                        <a href="mailto:alaimos@dmi.unict.it">alaimos@dmi.unict.it</a>
+                        For bugs reporting, please post a new issue on&nbsp;
+                        <a href="https://github.com/alaimos/tRFexplorer/issues">our GitHub repo</a>.
                     </p>
                 </Col>
             </Row>

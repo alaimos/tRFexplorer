@@ -28,6 +28,10 @@ Route::namespace('API')->group(
         Route::get('/correlation', 'CorrelationController@index');
         Route::get('/correlation/{correlation}/dataset/{dataset}', 'CorrelationController@showDataset');
         Route::post('/correlation/{correlation}/dataset/{dataset}/graph', 'CorrelationController@showGraph');
+        Route::get(
+            '/correlation/{correlation}/dataset/{dataset}/download/{type}',
+            'CorrelationController@downloadDataset'
+        );
     }
 );
 

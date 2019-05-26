@@ -11,7 +11,9 @@ use Illuminate\Http\Request;
 use App\Data\CachedReader;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
 use RuntimeException;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Process\Process;
 
 /**
@@ -173,5 +175,36 @@ class CorrelationController extends Controller
                 'data'    => $data,
             ]
         );
+    }
+
+    public function downloadDataset(string $correlation, string $dataset, string $type): BinaryFileResponse
+    {
+        try {
+            if (empty($correlation)) {
+                throw new RuntimeException("Empty correlation measure");
+            }
+            if (empty($dataset)) {
+                throw new RuntimeException("Empty dataset identifier");
+            }
+            $datasets = CachedReader::json(Common::CORRELATION_DATASETS);
+            $datasetName = Str::kebab($datasets['datasetsByMeasure'][$correlation][$dataset]);
+            if ($type == "table") {
+                $file = resource_path(sprintf(Common::CORRELATION_INPUT_BASE, $correlation, $dataset));
+                $name = $correlation . '-' . $datasetName . '.tsv.gz';
+            } elseif ($type == "data") {
+                $file = resource_path(sprintf(Common::CORRELATION_INPUT_DATA, $dataset));
+                $name = $datasetName . '.rds';
+            } else {
+                throw new RuntimeException("Unsupported type.");
+            }
+
+            return response()->download($file, $name);
+        } catch (Exception $e) {
+            $message = 'Exception ' . get_class($e) . ': ' . $e->getMessage();
+        } catch (Error $e) {
+            $message = 'Error ' . get_class($e) . ': ' . $e->getMessage();
+        }
+
+        abort(500, $message);
     }
 }

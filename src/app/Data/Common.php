@@ -39,5 +39,6 @@ class Common
     const OUTPUT_URL_BASE                = 'storage/output/%s/plots/coef-%d.html';
     const CORRELATION_DATASETS           = 'data/correlation.datasets.json';
     const CORRELATION_INPUT_BASE         = 'data/tables/%s/%s.tsv.gz';
+    const CORRELATION_INPUT_DATA         = 'data/datasets/%s.rds';
     const CORRELATION_DATASET_BASE       = 'data/tables/%s/%s.json';
 }
