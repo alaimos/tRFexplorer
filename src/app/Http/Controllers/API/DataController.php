@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Data\CachedReader;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * Class DataController
@@ -78,5 +79,28 @@ class DataController extends Controller
                 'data'    => $data,
             ]
         );
+    }
+
+    /**
+     * @param string $dataset
+     *
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function download(string $dataset): BinaryFileResponse
+    {
+        $file = null;
+        switch ($dataset) {
+            case 'NCI60_RPM_matrix.tsv.gz':
+            case 'NCI60_TPM_matrix.tsv.gz':
+            case 'TCGA_RPM_matrix.tsv.gz':
+            case 'TCGA_TPM_matrix.tsv.gz':
+            case 'tRNA.fragments.hg19.tsv.gz':
+                $file = realpath(resource_path('/data/' . $dataset));
+                break;
+            default:
+                abort(404, 'Dataset not found');
+        }
+
+        return response()->download($file);
     }
 }

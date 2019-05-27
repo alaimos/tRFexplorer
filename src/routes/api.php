@@ -19,6 +19,7 @@ Route::namespace('API')->group(
         Route::get('/browseByExpression/types', 'BrowseByExpression@types');
         Route::post('/browseByExpression', 'BrowseByExpression@search');
         Route::get('/fragments/{fragment}', 'FragmentController@show');
+        Route::get('/data/download/{dataset}', 'DataController@download');
         Route::get('/data/clinical', 'DataController@clinical');
         Route::get('/data/clinical/de', 'DataController@deClinical');
         Route::post('/de/analysis', 'DEController@runAnalysis');
