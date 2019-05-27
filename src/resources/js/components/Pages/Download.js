@@ -15,31 +15,11 @@ export default class Download extends Component {
             <Row>
                 <Col xs="12" className="mb-4">
                     <Card className="h-100">
-                        <CardHeader tag="h5">Browse by Location</CardHeader>
+                        <CardHeader tag="h5">tRF explorer Release 2019-05</CardHeader>
                         <CardBody>
                             <CardText>Select the following option if you wish to
                                 search for tRNA fragments using our Genomic
                                 Browser.</CardText>
-                            <div className="text-center">
-                                <Button tag={Link} to="/browse/byLocation">Open
-                                    Browser</Button>
-                            </div>
-                        </CardBody>
-                    </Card>
-                </Col>
-            </Row>
-            <Row>
-                <Col xs="12" className="mb-4">
-                    <Card className="h-100">
-                        <CardHeader tag="h5">Browse by Expression</CardHeader>
-                        <CardBody>
-                            <CardText>Select the following option if you wish to
-                                search for tRNA fragments by their expression
-                                profile.</CardText>
-                            <div className="text-center">
-                                <Button tag={Link} to="/browse/byExpression">Open
-                                    Browser</Button>
-                            </div>
                         </CardBody>
                     </Card>
                 </Col>
