@@ -34,3 +34,5 @@ src/public/ext/jbrowse/Makefile
 src/public/ext/jbrowse/setup.log
 src/public/*.js
 src/resources/bin/.Rhistory
+src/resources/data/**/*.tsv.gz
+src/resources/data/**/*.rds
