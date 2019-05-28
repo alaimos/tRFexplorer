@@ -65,7 +65,7 @@ if (is.null(opt$cor.method)) {
 }
 
 tryCatch({
-  saveRDS(opt, file = "/home/alaimos/repos/tRFexplorer/src/storage/app/input.rds")
+  # saveRDS(opt, file = "/home/alaimos/repos/tRFexplorer/src/storage/app/input.rds")
   tmp     <- readRDS(opt$dataset.file)
   if (is.list(tmp) && !is.matrix(tmp)) {
     dataset <- tmp$x
