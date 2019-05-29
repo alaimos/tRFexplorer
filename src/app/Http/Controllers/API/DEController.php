@@ -148,7 +148,7 @@ class DEController extends Controller
             if (!in_array($algorithm, self::$validAlgo)) { //NOT SUPPORTED @TODO
                 throw new RuntimeException("Invalid algorithm " . $algorithm);
             }
-            $id = md5(json_encode([$data, $variables, $contrasts, $maxP, $minLFC, $algorithm]));
+            $id = md5(json_encode([$dataset, $variables, $contrasts, $maxP, $minLFC, $algorithm]));
             $folderBase = sprintf(Common::OUTPUT_BASE, $id);
             $analysisFolder = storage_path('app/' . $folderBase);
             $resultFile = $analysisFolder . '/results.json';
